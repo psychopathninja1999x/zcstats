@@ -10,9 +10,9 @@
                     <a href="#overview" class="flex items-center gap-2 shrink-0 rounded-xl hover:bg-surface-container-high/60 transition-colors -ml-1 px-1 py-0.5" title="{{ __('zcstats.app_title') }}">
                         <img src="{{ asset('images/zcstatslogo.png') }}" alt="{{ __('zcstats.app_title') }}" width="160" height="48" decoding="async" class="h-9 sm:h-10 w-auto max-h-10 object-contain object-left">
                     </a>
-                    <div class="relative flex-1 min-w-0 max-w-[13rem] sm:max-w-md">
+                    <div class="relative flex-1 min-w-0 max-w-[13rem] transition-[max-width] duration-300 ease-out focus-within:max-w-full has-[&_input:not(:placeholder-shown)]:max-w-full sm:max-w-md sm:focus-within:max-w-md sm:has-[&_input:not(:placeholder-shown)]:max-w-md">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl pointer-events-none z-[1]">search</span>
-                        <input id="zc-dashboard-search" class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] focus:ring-2 focus:ring-primary/20 focus:bg-white text-sm" placeholder="{{ __('zcstats.search_placeholder') }}" type="search" autocomplete="off" data-min-length="2" aria-describedby="zc-search-hint" enterkeyhint="search">
+                        <input id="zc-dashboard-search" class="w-full min-w-0 bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] focus:ring-2 focus:ring-primary/20 focus:bg-white text-sm" placeholder="{{ __('zcstats.search_placeholder') }}" type="search" autocomplete="off" data-min-length="2" aria-describedby="zc-search-hint" enterkeyhint="search">
                         <p id="zc-search-hint" class="sr-only">{{ __('zcstats.search_hint') }}</p>
                         <div id="zc-search-feedback" class="hidden absolute left-0 right-0 top-full mt-2 z-50 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-4 text-xs text-on-surface shadow-[0_12px_40px_rgba(25,28,32,0.12)]" role="status" aria-live="polite" aria-hidden="true">
                             <p class="font-semibold text-on-surface">{{ __('zcstats.search_no_match') }}</p>
