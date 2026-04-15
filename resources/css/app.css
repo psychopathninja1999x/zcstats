@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Public+Sans:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Public Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
+    --color-surface-container-high: #e7e8ed;
+    --color-on-tertiary-fixed-variant: #364954;
+    --color-surface-container: #eceef3;
+    --color-tertiary: #2e424c;
+    --color-secondary-container: #90eff0;
+    --color-primary-container: #005a92;
+    --color-outline: #717881;
+    --color-surface-container-highest: #e1e2e7;
+    --color-on-tertiary-fixed: #081e27;
+    --color-on-tertiary: #ffffff;
+    --color-secondary-fixed-dim: #76d6d6;
+    --color-secondary: #00696a;
+    --color-on-secondary: #ffffff;
+    --color-on-surface: #191c20;
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-surface-tint: #15629a;
+    --color-on-error-container: #93000a;
+    --color-secondary-fixed: #93f2f3;
+    --color-on-secondary-fixed: #002020;
+    --color-on-primary-fixed: #001d34;
+    --color-surface-variant: #e1e2e7;
+    --color-primary: #00426d;
+    --color-outline-variant: #c1c7d1;
+    --color-on-secondary-container: #006e6f;
+    --color-tertiary-container: #455964;
+    --color-on-background: #191c20;
+    --color-on-primary-container: #a6d0ff;
+    --color-on-surface-variant: #414750;
+    --color-inverse-surface: #2e3135;
+    --color-tertiary-fixed-dim: #b4cad6;
+    --color-surface-container-lowest: #ffffff;
+    --color-background: #f8f9fe;
+    --color-on-error: #ffffff;
+    --color-on-primary: #ffffff;
+    --color-surface-dim: #d8dadf;
+    --color-on-secondary-fixed-variant: #004f50;
+    --color-inverse-primary: #9acbff;
+    --color-surface: #f8f9fe;
+    --color-on-primary-fixed-variant: #004a79;
+    --color-tertiary-fixed: #d0e6f3;
+    --color-primary-fixed: #cfe4ff;
+    --color-surface-container-low: #f2f3f9;
+    --color-primary-fixed-dim: #9acbff;
+}
+
+@layer base {
+    body {
+        @apply bg-surface text-on-surface antialiased;
+    }
+
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-display);
+    }
+}
+
+@layer components {
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .sidebar-active {
+        background-color: var(--color-primary-fixed);
+        color: var(--color-primary);
+        box-shadow: inset 4px 0 0 0 var(--color-primary);
+        border-radius: 0.75rem;
+    }
+
+    .hero-placeholder-bg {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0, 66, 109, 0.92) 0%,
+                rgba(0, 90, 146, 0.55) 45%,
+                rgba(0, 105, 106, 0.35) 100%
+            ),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath fill='%23ffffff' fill-opacity='0.06' d='M0 80 L40 40 L80 80 L120 40 V120 H0z'/%3E%3C/svg%3E");
+        background-size: cover, 180px 180px;
+    }
+
+    /* ZCWD card — layered water motion (swirl + shore waves).
+       Uses fixed heights (not %) so waves render; card has extra bottom padding so the wave band is visible. */
+    .zcwd-water-fx {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        border-radius: inherit;
+        z-index: 0;
+    }
+
+    .zcwd-water-fx::before,
+    .zcwd-water-fx::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        width: 240%;
+        height: 240%;
+        top: 70%;
+        transform: translate(-50%, -50%);
+        border-radius: 45%;
+        background: rgba(0, 105, 106, 0.18);
+        animation: zcwd-wave-spin 14s linear infinite;
+    }
+
+    .zcwd-water-fx::after {
+        border-radius: 42%;
+        background: rgba(0, 90, 146, 0.14);
+        animation-duration: 9s;
+        animation-direction: reverse;
+    }
+
+    @keyframes zcwd-wave-spin {
+        0% {
+            transform: translate(-50%, -44%) rotate(0deg);
+        }
+        100% {
+            transform: translate(-50%, -44%) rotate(360deg);
+        }
+    }
+
+    .zcwd-water-waves {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 10rem;
+        min-height: 8rem;
+        overflow: hidden;
+        pointer-events: none;
+        border-radius: inherit;
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+        z-index: 1;
+        mask-image: linear-gradient(to top, black 0%, black 70%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to top, black 0%, black 70%, transparent 100%);
+    }
+
+    .zcwd-water-wave {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 200%;
+        height: 100%;
+        min-height: 4rem;
+        background-repeat: repeat-x;
+        background-position: 0 100%;
+        background-size: 50% 100%;
+        will-change: transform;
+        opacity: 1;
+    }
+
+    .zcwd-water-wave-a {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' preserveAspectRatio='none'%3E%3Cpath fill='%2300696a' fill-opacity='0.55' d='M0 50 C200 20 400 80 600 50 S1000 20 1200 50 V80 H0z'/%3E%3C/svg%3E");
+        animation: zcwd-wave-slide 9s linear infinite;
+    }
+
+    .zcwd-water-wave-b {
+        bottom: 0.35rem;
+        height: 92%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' preserveAspectRatio='none'%3E%3Cpath fill='%23005a92' fill-opacity='0.45' d='M0 55 C250 75 450 25 600 55 S950 85 1200 55 V80 H0z'/%3E%3C/svg%3E");
+        animation: zcwd-wave-slide 6.5s linear infinite reverse;
+        opacity: 0.95;
+    }
+
+    .zcwd-water-wave-c {
+        bottom: 0.65rem;
+        height: 78%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' preserveAspectRatio='none'%3E%3Cpath fill='%2376d6d6' fill-opacity='0.65' d='M0 60 C300 40 500 70 600 60 S900 45 1200 60 V80 H0z'/%3E%3C/svg%3E");
+        animation: zcwd-wave-slide 11s linear infinite;
+        opacity: 0.85;
+    }
+
+    @keyframes zcwd-wave-slide {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .zcwd-water-fx::before,
+        .zcwd-water-fx::after,
+        .zcwd-water-wave {
+            animation: none !important;
+        }
+    }
+
+    .zc-search-highlight {
+        outline: 3px solid var(--color-primary);
+        outline-offset: 4px;
+        border-radius: 1.25rem;
+        transition: outline-offset 0.2s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .zc-search-highlight {
+            transition: none;
+        }
+    }
+}
