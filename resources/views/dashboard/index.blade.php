@@ -68,12 +68,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex gap-2 shrink-0">
-                        <a href="{{ route('dashboard.export') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-xl text-sm font-bold shadow-[0_8px_32px_rgba(25,28,32,0.06)] hover:shadow-[0_12px_40px_rgba(25,28,32,0.08)] transition-all text-on-surface-variant" title="{{ __('zcstats.export_title') }}">
-                            <span class="material-symbols-outlined text-lg">download</span>
-                            <span>{{ __('zcstats.export_data') }}</span>
-                        </a>
-                    </div>
                 </div>
             </section>
 
