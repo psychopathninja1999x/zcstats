@@ -1,7 +1,20 @@
 <!DOCTYPE html>
-<html class="light" lang="{{ app()->getLocale() === 'tl' ? 'fil' : str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ app()->getLocale() === 'tl' ? 'fil' : str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
+    <script>
+        (function () {
+            try {
+                var k = 'zc-theme';
+                var r = document.documentElement;
+                var s = localStorage.getItem(k);
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var dark = s === 'dark' ? true : s === 'light' ? false : prefersDark;
+                r.classList.toggle('dark', dark);
+                r.style.colorScheme = dark ? 'dark' : 'light';
+            } catch (e) { /* ignore */ }
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ __('zcstats.meta_description') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">

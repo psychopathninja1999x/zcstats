@@ -8,6 +8,8 @@ return [
     'search_no_match' => 'Nada na este pagina ta coincide con el busqueda.',
     'search_suggestion' => 'Tiene sugerencia? Manda email na',
     'language' => 'Lengua',
+    'theme_use_dark' => 'Cambia na dark mode',
+    'theme_use_light' => 'Cambia na light mode',
     'header_clock_timezone' => 'Hora ahora na Manila (PHT)',
     'lang_en' => 'EN',
     'lang_tl' => 'TL',

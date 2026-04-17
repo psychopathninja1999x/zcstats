@@ -8,6 +8,8 @@ return [
     'search_no_match' => 'Nothing on this page matches that search.',
     'search_suggestion' => 'Have a suggestion? Email me at',
     'language' => 'Language',
+    'theme_use_dark' => 'Switch to dark mode',
+    'theme_use_light' => 'Switch to light mode',
     'header_clock_timezone' => 'Current time in Manila (PHT)',
     'lang_en' => 'EN',
     'lang_tl' => 'TL',

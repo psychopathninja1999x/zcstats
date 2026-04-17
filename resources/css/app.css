@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Public+Sans:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -57,6 +59,55 @@
     --color-primary-fixed-dim: #9acbff;
 }
 
+/* Dark theme — same token names as @theme; toggled via `class="dark"` on <html>. */
+html.dark {
+    color-scheme: dark;
+    --color-surface-container-high: #3f4a5c;
+    --color-on-tertiary-fixed-variant: #c3d4df;
+    --color-surface-container: #2c3644;
+    --color-tertiary: #b4c8d4;
+    --color-secondary-container: #004f50;
+    --color-primary-container: #0a4a73;
+    --color-outline: #8f96a5;
+    --color-surface-container-highest: #4a5466;
+    --color-on-tertiary-fixed: #d0e8f3;
+    --color-on-tertiary: #ffffff;
+    --color-secondary-fixed-dim: #4a9b9c;
+    --color-secondary: #4ddadb;
+    --color-on-secondary: #003738;
+    --color-on-surface: #e2e2e7;
+    --color-error: #ffb4ab;
+    --color-error-container: #93000a;
+    --color-surface-tint: #9acbff;
+    --color-on-error-container: #ffdad6;
+    --color-secondary-fixed: #005455;
+    --color-on-secondary-fixed: #8ef4f5;
+    --color-on-primary-fixed: #001d34;
+    --color-surface-variant: #414a59;
+    --color-primary: #9acbff;
+    --color-outline-variant: #424a5a;
+    --color-on-secondary-container: #8ef4f5;
+    --color-tertiary-container: #4a6576;
+    --color-on-background: #e2e2e7;
+    --color-on-primary-container: #cfe4ff;
+    --color-on-surface-variant: #c3c7cf;
+    --color-inverse-surface: #e2e2e7;
+    --color-tertiary-fixed-dim: #8faec2;
+    --color-surface-container-lowest: #191e26;
+    --color-background: #11161d;
+    --color-on-error: #690005;
+    --color-on-primary: #003258;
+    --color-surface-dim: #0c0f14;
+    --color-on-secondary-fixed-variant: #008688;
+    --color-inverse-primary: #00426d;
+    --color-on-primary-fixed-variant: #9ecbff;
+    --color-tertiary-fixed: #243d4a;
+    --color-primary-fixed: #084a78;
+    --color-surface-container-low: #222b37;
+    --color-primary-fixed-dim: #6fb8ff;
+    --color-surface: #161c24;
+}
+
 @layer base {
     body {
         @apply bg-surface text-on-surface antialiased;
@@ -90,6 +141,18 @@
                 rgba(0, 105, 106, 0.35) 100%
             ),
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath fill='%23ffffff' fill-opacity='0.06' d='M0 80 L40 40 L80 80 L120 40 V120 H0z'/%3E%3C/svg%3E");
+        background-size: cover, 180px 180px;
+    }
+
+    .dark .hero-placeholder-bg {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0, 35, 58, 0.95) 0%,
+                rgba(0, 55, 90, 0.65) 45%,
+                rgba(0, 70, 72, 0.4) 100%
+            ),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cpath fill='%23ffffff' fill-opacity='0.04' d='M0 80 L40 40 L80 80 L120 40 V120 H0z'/%3E%3C/svg%3E");
         background-size: cover, 180px 180px;
     }
 

@@ -4,7 +4,7 @@
 
 @section('body')
     <div class="flex flex-col flex-1 min-w-0 w-full">
-        <header class="sticky top-0 w-full z-40 bg-[#f8f9fe]/85 backdrop-blur-xl border-b border-outline-variant/15">
+        <header class="sticky top-0 w-full z-40 bg-surface/85 dark:bg-background/90 backdrop-blur-xl border-b border-outline-variant/15">
             <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
                 <div class="flex items-center gap-4 flex-1 min-w-0">
                     <a href="#overview" class="flex items-center gap-2 shrink-0 rounded-xl hover:bg-surface-container-high/60 transition-colors -ml-1 px-1 py-0.5" title="{{ __('zcstats.app_title') }}">
@@ -12,20 +12,23 @@
                     </a>
                     <div class="relative flex-1 min-w-0 max-w-[13rem] transition-[max-width] duration-300 ease-out focus-within:max-w-full has-[&_input:not(:placeholder-shown)]:max-w-full sm:max-w-md sm:focus-within:max-w-md sm:has-[&_input:not(:placeholder-shown)]:max-w-md">
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl pointer-events-none z-[1]">search</span>
-                        <input id="zc-dashboard-search" class="w-full min-w-0 bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] focus:ring-2 focus:ring-primary/20 focus:bg-white text-sm" placeholder="{{ __('zcstats.search_placeholder') }}" type="search" autocomplete="off" data-min-length="2" aria-describedby="zc-search-hint" enterkeyhint="search">
+                        <input id="zc-dashboard-search" class="w-full min-w-0 bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest dark:focus:bg-surface-container-high text-sm" placeholder="{{ __('zcstats.search_placeholder') }}" type="search" autocomplete="off" data-min-length="2" aria-describedby="zc-search-hint" enterkeyhint="search">
                         <p id="zc-search-hint" class="sr-only">{{ __('zcstats.search_hint') }}</p>
-                        <div id="zc-search-feedback" class="hidden absolute left-0 right-0 top-full mt-2 z-50 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-4 text-xs text-on-surface shadow-[0_12px_40px_rgba(25,28,32,0.12)]" role="status" aria-live="polite" aria-hidden="true">
+                        <div id="zc-search-feedback" class="hidden absolute left-0 right-0 top-full mt-2 z-50 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-4 text-xs text-on-surface shadow-[0_12px_40px_rgba(25,28,32,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]" role="status" aria-live="polite" aria-hidden="true">
                             <p class="font-semibold text-on-surface">{{ __('zcstats.search_no_match') }}</p>
                             <p class="mt-2 text-on-surface-variant leading-relaxed">{{ __('zcstats.search_suggestion') }} <a href="mailto:mvitem5@gmail.com" class="font-bold text-primary underline decoration-primary/40 hover:decoration-primary">mvitem5@gmail.com</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                    <div class="flex items-center gap-1 rounded-full border border-outline-variant/25 bg-surface-container-high/60 px-2 sm:px-2.5 py-1 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)]" title="{{ __('zcstats.header_clock_timezone') }}">
+                    <button type="button" id="zc-theme-toggle" class="flex items-center justify-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-2 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-label-dark="{{ __('zcstats.theme_use_dark') }}" data-label-light="{{ __('zcstats.theme_use_light') }}">
+                        <span class="material-symbols-outlined zc-theme-icon text-xl" aria-hidden="true">dark_mode</span>
+                    </button>
+                    <div class="flex items-center gap-1 rounded-full border border-outline-variant/25 bg-surface-container-high/60 px-2 sm:px-2.5 py-1 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" title="{{ __('zcstats.header_clock_timezone') }}">
                         <span class="material-symbols-outlined text-on-surface-variant text-base sm:text-lg shrink-0" aria-hidden="true">schedule</span>
                         <time id="zc-header-clock" class="text-[10px] sm:text-xs font-bold tabular-nums text-on-surface whitespace-nowrap" datetime="" aria-label="{{ __('zcstats.header_clock_timezone') }}"></time>
                     </div>
-                    <div class="inline-flex items-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-0.5 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)]" role="group" aria-label="{{ __('zcstats.language') }}">
+                    <div class="inline-flex items-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-0.5 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" role="group" aria-label="{{ __('zcstats.language') }}">
                         <a href="{{ route('locale.switch', 'en') }}" class="px-2 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_en') }}</a>
                         <a href="{{ route('locale.switch', 'tl') }}" class="px-2 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'tl' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_tl') }}</a>
                         <a href="{{ route('locale.switch', 'cbk') }}" title="{{ __('zcstats.lang_cbk_title') }}" class="px-2 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'cbk' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_cbk') }}</a>
@@ -131,7 +134,7 @@
                                 </p>
                             @endif
                         </div>
-                        <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_zamcelco') }}">
+                        <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-2 shadow-sm" title="{{ __('zcstats.logo_zamcelco') }}">
                             <img src="{{ asset('images/logo/zamcelco.png') }}" alt="{{ __('zcstats.logo_zamcelco') }}" width="160" height="48" decoding="async" class="h-8 sm:h-9 w-auto max-w-[8.25rem] object-contain object-center">
                         </div>
                     </div>
@@ -196,7 +199,7 @@
                                     <p class="text-on-surface-variant/80 text-xs mt-1">{{ __('zcstats.as_of') }} {{ $zcwd['as_of'] }} · <a href="https://zcwd.gov.ph/production_new_bak.php" class="text-primary hover:underline font-semibold" target="_blank" rel="noopener noreferrer">zcwd.gov.ph</a></p>
                                 @endif
                             </div>
-                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_zcwd') }}">
+                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-2 shadow-sm" title="{{ __('zcstats.logo_zcwd') }}">
                                 <img src="{{ asset('images/logo/zcwd.png') }}" alt="{{ __('zcstats.logo_zcwd') }}" width="160" height="48" decoding="async" class="h-8 sm:h-9 w-auto max-w-[8.25rem] object-contain object-center">
                             </div>
                         </div>
@@ -286,7 +289,7 @@
                     <div id="fuel" class="sm:col-span-2 bg-surface-container-lowest rounded-3xl p-6 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 scroll-mt-24">
                         <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
                             <div class="flex items-start gap-3 min-w-0">
-                                <div class="rounded-2xl border border-outline-variant/20 bg-white p-1.5 shadow-sm shrink-0" title="{{ __('zcstats.logo_gasmoto') }}">
+                                <div class="rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-1.5 shadow-sm shrink-0" title="{{ __('zcstats.logo_gasmoto') }}">
                                     <img src="{{ asset('images/logo/gasmoto.png') }}" alt="{{ __('zcstats.logo_gasmoto') }}" width="96" height="96" decoding="async" class="h-9 w-9 sm:h-10 sm:w-10 object-contain object-center">
                                 </div>
                                 <div class="min-w-0">
@@ -372,7 +375,7 @@
                 <section class="min-w-0 bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 min-h-0 h-full flex flex-col" aria-labelledby="da-prices-heading">
                     <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
                         <div class="flex items-start gap-4 min-w-0">
-                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_da') }}">
+                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-2 shadow-sm" title="{{ __('zcstats.logo_da') }}">
                                 <img src="{{ asset('images/logo/da.png') }}" alt="{{ __('zcstats.logo_da') }}" width="160" height="48" decoding="async" class="h-10 w-auto max-w-[6.5rem] sm:max-w-[7.5rem] object-contain object-left">
                             </div>
                             <div class="min-w-0">
@@ -399,7 +402,7 @@
                         <div class="mb-4">
                             <div class="relative max-w-sm">
                                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none">search</span>
-                                <input type="search" id="da-prices-filter" class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] focus:ring-2 focus:ring-primary/20 focus:bg-white text-sm" placeholder="{{ __('zcstats.da_prices_search_placeholder') }}" autocomplete="off">
+                                <input type="search" id="da-prices-filter" class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest dark:focus:bg-surface-container-high text-sm" placeholder="{{ __('zcstats.da_prices_search_placeholder') }}" autocomplete="off">
                             </div>
                         </div>
 
@@ -473,7 +476,7 @@
                 <section class="min-w-0 w-full lg:self-start bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 flex flex-col" aria-labelledby="dti-bnpc-heading">
                     <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6 shrink-0">
                         <div class="flex items-start gap-4 min-w-0">
-                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_dti') }}">
+                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-2 shadow-sm" title="{{ __('zcstats.logo_dti') }}">
                                 <img src="{{ asset('images/logo/dti.png') }}" alt="{{ __('zcstats.logo_dti') }}" width="160" height="48" decoding="async" class="h-10 w-auto max-w-[6.5rem] sm:max-w-[7.5rem] object-contain object-left">
                             </div>
                             <div class="min-w-0">
@@ -492,7 +495,7 @@
                     <div class="mb-4 shrink-0">
                         <div class="relative max-w-sm">
                             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none">search</span>
-                            <input type="search" id="dti-bnpc-filter" class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] focus:ring-2 focus:ring-primary/20 focus:bg-white text-sm" placeholder="{{ __('zcstats.dti_bnpc_search_placeholder') }}" autocomplete="off">
+                            <input type="search" id="dti-bnpc-filter" class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest dark:focus:bg-surface-container-high text-sm" placeholder="{{ __('zcstats.dti_bnpc_search_placeholder') }}" autocomplete="off">
                         </div>
                     </div>
                     <div id="dti-bnpc-no-results" class="hidden text-sm text-on-surface-variant py-4 text-center shrink-0">{{ __('zcstats.dti_bnpc_no_results') }}</div>
@@ -665,7 +668,7 @@
 
     {{-- Floating dock (replaces sidebar + full-width mobile bar) --}}
     <nav class="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-0 right-0 z-50 px-4 sm:px-6 pointer-events-none" aria-label="{{ __('zcstats.nav_primary') }}">
-        <div class="pointer-events-auto mx-auto max-w-3xl flex items-stretch gap-2 rounded-[1.35rem] border border-outline-variant/15 bg-white/95 backdrop-blur-xl shadow-[0_12px_48px_rgba(25,28,32,0.14),0_4px_16px_rgba(25,28,32,0.06)] pl-1 pr-2 py-2 sm:pl-2 sm:pr-3">
+        <div class="pointer-events-auto mx-auto max-w-3xl flex items-stretch gap-2 rounded-[1.35rem] border border-outline-variant/15 bg-surface-container-lowest/95 dark:bg-surface-container-low/95 backdrop-blur-xl shadow-[0_12px_48px_rgba(25,28,32,0.14),0_4px_16px_rgba(25,28,32,0.06)] dark:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_4px_16px_rgba(0,0,0,0.35)] pl-1 pr-2 py-2 sm:pl-2 sm:pr-3">
             <div class="flex flex-1 min-w-0 items-center justify-between gap-0.5 sm:gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-primary min-w-[3.25rem] shrink-0 active:scale-95 transition-transform" href="#overview">
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl" style="font-variation-settings: 'FILL' 1">dashboard</span>

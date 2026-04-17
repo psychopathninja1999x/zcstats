@@ -8,6 +8,8 @@ return [
     'search_no_match' => 'Walang tumutugma sa page na ito.',
     'search_suggestion' => 'May mungkahi? I-email ako sa',
     'language' => 'Wika',
+    'theme_use_dark' => 'Lumipat sa dark mode',
+    'theme_use_light' => 'Lumipat sa light mode',
     'header_clock_timezone' => 'Kasalukuyang oras sa Manila (PHT)',
     'lang_en' => 'EN',
     'lang_tl' => 'TL',
