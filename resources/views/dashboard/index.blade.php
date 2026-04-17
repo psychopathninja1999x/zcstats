@@ -88,7 +88,6 @@
                                         <p class="text-xs text-on-surface-variant self-center">{{ __('zcstats.ph_no_holiday_today') }}</p>
                                     @endif
                                 </div>
-                                <p class="text-[10px] text-on-surface-variant/80 max-w-2xl leading-relaxed">{{ __('zcstats.ph_holidays_note_islamic_short') }}</p>
                             </div>
                         @endisset
                     </div>

@@ -152,7 +152,6 @@ return [
     'ph_holidays_heading' => 'Upcoming Philippine holidays',
     'ph_holidays_source_official' => 'Presidential proclamation list for :year',
     'ph_holidays_note_fallback' => 'No proclamation list is stored for :year yet—these dates use standard movable Christian holidays and fixed national dates. Chinese New Year and Eid’l Fitr/Eid’l Adha are not included; check the Official Gazette.',
-    'ph_holidays_note_islamic_short' => 'Eid’l Fitr & Eid’l Adha use the Islamic lunar calendar; the national holiday date can move after moon sighting and a presidential proclamation—check the Official Gazette.',
     'ph_holidays_note_islamic' => 'Eid’l Fitr and Eid’l Adha follow the Islamic lunar calendar. The nationwide non-working date is set by presidential proclamation (after moon-sighting guidance, e.g. from the National Commission on Muslim Filipinos). Dates shown here may still be moved—confirm with the Official Gazette or Palace announcements.',
     'ph_no_holiday_today' => 'No national holiday today.',
     'ph_holiday_kind_regular' => 'Regular holiday',

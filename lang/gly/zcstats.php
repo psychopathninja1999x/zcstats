@@ -152,7 +152,6 @@ return [
     'ph_holidays_heading' => 'Upcoming PH holidays (official ganap when meron)',
     'ph_holidays_source_official' => 'Proclamation list for :year — slay, may resibo',
     'ph_holidays_note_fallback' => 'Wala pang stored proc for :year—ito ay core movable + fixed dates lang; walang CNY o Eid’l Fitr/Eid’l Adha; Official Gazette ang final word, lodi.',
-    'ph_holidays_note_islamic_short' => 'Eid’l Fitr & Eid’l Adha — lunar tea; pwede mag-move ang national date after moon sighting + proclamation—Official Gazette ang chika.',
     'ph_holidays_note_islamic' => 'Eid’l Fitr & Eid’l Adha — lunar calendar ang tea; ang national holiday date ay Malacañang proclamation (moon sighting / NCMF chika). Pwede mag-shift ang date—Official Gazette o Palace post ang receipts, bhie.',
     'ph_no_holiday_today' => 'Walang national holiday today — regular day ang peg.',
     'ph_holiday_kind_regular' => 'Regular holiday',
