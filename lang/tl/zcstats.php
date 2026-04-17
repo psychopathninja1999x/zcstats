@@ -157,6 +157,8 @@ return [
     'ph_holiday_kind_special' => 'Special non-working',
     'ph_holiday_new_year' => 'Araw ng Bagong Taon',
     'ph_holiday_chinese_new_year' => 'Chinese New Year',
+    'ph_holiday_eidl_fitr' => 'Eid’l Fitr (Pagtatapos ng Ramadan)',
+    'ph_holiday_eidl_adha' => 'Eid’l Adha (Pista ng Sakripisyo)',
     'ph_holiday_maundy_thursday' => 'Huwebes Santo',
     'ph_holiday_good_friday' => 'Biyernes Santo',
     'ph_holiday_black_saturday' => 'Sabado de Gloria',

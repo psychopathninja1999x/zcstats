@@ -157,6 +157,8 @@ return [
     'ph_holiday_kind_special' => 'Special non-working',
     'ph_holiday_new_year' => 'New Year\'s Day',
     'ph_holiday_chinese_new_year' => 'Chinese New Year',
+    'ph_holiday_eidl_fitr' => 'Eid’l Fitr (Feast of Ramadhan)',
+    'ph_holiday_eidl_adha' => 'Eid’l Adha (Feast of Sacrifice)',
     'ph_holiday_maundy_thursday' => 'Maundy Thursday',
     'ph_holiday_good_friday' => 'Good Friday',
     'ph_holiday_black_saturday' => 'Black Saturday',
