@@ -43,6 +43,56 @@ return [
     ],
 
     /*
+    | Earthquakes near the civic reference point — U.S. Geological Survey FDSN API (free, no key).
+    | Official Philippines agency: PHIVOLCS (link shown on dashboard for cross-check).
+    */
+    'earthquake' => [
+        'enabled' => filter_var(env('EARTHQUAKE_ENABLED', 'true'), FILTER_VALIDATE_BOOLEAN),
+        'lat' => env('EARTHQUAKE_LAT', env('OPENWEATHER_LAT', 6.9214)),
+        'lon' => env('EARTHQUAKE_LON', env('OPENWEATHER_LON', 122.079)),
+        'city_label' => env('EARTHQUAKE_CITY_LABEL', 'Zamboanga City'),
+        'radius_km' => (float) env('EARTHQUAKE_RADIUS_KM', 650),
+        'min_magnitude' => (float) env('EARTHQUAKE_MIN_MAGNITUDE', 4.0),
+        'lookback_days' => (int) env('EARTHQUAKE_LOOKBACK_DAYS', 30),
+        'limit' => (int) env('EARTHQUAKE_LIMIT', 35),
+        'cache_ttl' => (int) env('EARTHQUAKE_CACHE_SECONDS', 600),
+        'usgs_query_url' => env('EARTHQUAKE_USGS_QUERY_URL', 'https://earthquake.usgs.gov/fdsnws/event/1/query'),
+        'usgs_home_url' => env('EARTHQUAKE_USGS_HOME_URL', 'https://earthquake.usgs.gov/earthquakes/map/'),
+        'phivolcs_url' => env('EARTHQUAKE_PHIVOLCS_URL', 'https://www.phivolcs.dost.gov.ph/'),
+        'verify_ssl' => filter_var(
+            env('EARTHQUAKE_VERIFY_SSL', env('OPENWEATHER_VERIFY_SSL', 'true')),
+            FILTER_VALIDATE_BOOLEAN
+        ),
+    ],
+
+    /*
+    | Tropical cyclones — GDACS public GeoJSON (event list + track geometry; sources include JTWC).
+    | Official Philippines agency for domestic warnings: PAGASA (link on dashboard).
+    */
+    'typhoon' => [
+        'enabled' => filter_var(env('TYPHOON_ENABLED', 'true'), FILTER_VALIDATE_BOOLEAN),
+        'lat' => env('TYPHOON_LAT', env('OPENWEATHER_LAT', 6.9214)),
+        'lon' => env('TYPHOON_LON', env('OPENWEATHER_LON', 122.079)),
+        'city_label' => env('TYPHOON_CITY_LABEL', 'Zamboanga City'),
+        'radius_km' => (float) env('TYPHOON_RADIUS_KM', 2800),
+        'max_storms' => (int) env('TYPHOON_MAX_STORMS', 4),
+        'list_lookback_days' => (int) env('TYPHOON_LIST_LOOKBACK_DAYS', 120),
+        'list_cache_ttl' => (int) env('TYPHOON_LIST_CACHE_SECONDS', 1200),
+        'geometry_cache_ttl' => (int) env('TYPHOON_GEOMETRY_CACHE_SECONDS', 1800),
+        'gdacs_list_url' => env('TYPHOON_GDACS_LIST_URL', 'https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH'),
+        'gdacs_geometry_url_template' => env(
+            'TYPHOON_GDACS_GEOMETRY_URL',
+            'https://www.gdacs.org/gdacsapi/api/polygons/getgeometry?eventtype={eventtype}&eventid={eventid}&episodeid={episodeid}'
+        ),
+        'gdacs_url' => env('TYPHOON_GDACS_HOME_URL', 'https://www.gdacs.org/'),
+        'pagasa_url' => env('TYPHOON_PAGASA_URL', 'https://bagong.pagasa.dost.gov.ph/tropical-cyclone'),
+        'verify_ssl' => filter_var(
+            env('TYPHOON_VERIFY_SSL', env('OPENWEATHER_VERIFY_SSL', 'true')),
+            FILTER_VALIDATE_BOOLEAN
+        ),
+    ],
+
+    /*
     | Prayer times for Zamboanga City via Aladhan (JSON API). Muslim Pro’s web app
     | is behind Vercel bot protection, so it cannot be scraped from PHP; times here
     | use the same coordinates with a configurable calculation method (default MWL).

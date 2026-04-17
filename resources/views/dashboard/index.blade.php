@@ -499,6 +499,163 @@
                 </div>
                 @endif
 
+                @if(config('services.earthquake.enabled', true))
+                <section id="earthquakes" class="md:col-span-12 scroll-mt-24" aria-labelledby="earthquakes-heading">
+                    <div class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 overflow-hidden">
+                        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
+                            <div class="flex items-start gap-4 min-w-0">
+                                <div class="w-12 h-12 rounded-2xl bg-orange-500/15 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-orange-700 dark:text-orange-300 text-2xl" aria-hidden="true">crisis_alert</span>
+                                </div>
+                                <div class="min-w-0">
+                                    <h2 id="earthquakes-heading" class="text-lg font-extrabold text-on-surface leading-tight">{{ __('zcstats.earthquake_title') }}</h2>
+                                    <p class="text-xs text-on-surface-variant font-medium mt-1">{{ __('zcstats.earthquake_subtitle', ['city' => config('services.earthquake.city_label')]) }}</p>
+                                </div>
+                            </div>
+                            @if($earthquakes)
+                                <div class="flex flex-col items-start lg:items-end gap-1 shrink-0 text-[10px] text-on-surface-variant">
+                                    <span class="font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-800 uppercase tracking-wide">{{ __('zcstats.live_data') }}</span>
+                                    <span>{{ $earthquakes['fetched_at']->format('M j, g:i A') }}</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        @if($earthquakes === null)
+                            <p class="text-sm text-on-surface-variant">{{ __('zcstats.earthquake_unavailable') }}</p>
+                        @else
+                            <p class="text-[11px] text-on-surface-variant leading-relaxed mb-4">{{ __('zcstats.earthquake_note', ['radius' => number_format($earthquakes['radius_km'], 0), 'mag' => number_format($earthquakes['min_magnitude'], 1), 'days' => (int) $earthquakes['lookback_days']]) }}</p>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                                <div class="min-h-[280px] md:min-h-[320px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-inner z-0 isolate">
+                                    <div id="zc-earthquake-map" class="h-[280px] md:h-[320px] w-full z-0" role="application" aria-label="{{ __('zcstats.earthquake_map_aria') }}"></div>
+                                </div>
+                                <div class="min-w-0">
+                                    @if(count($earthquakes['events']) === 0)
+                                        <p class="text-sm text-on-surface-variant">{{ __('zcstats.earthquake_none_in_range') }}</p>
+                                    @else
+                                        <div class="overflow-x-auto rounded-xl border border-outline-variant/10 max-h-[320px] overflow-y-auto">
+                                            <table class="w-full text-left text-xs">
+                                                <thead class="sticky top-0 bg-surface-container-high/95 z-[1] text-on-surface-variant font-bold uppercase tracking-wider">
+                                                    <tr>
+                                                        <th class="px-3 py-2">{{ __('zcstats.earthquake_col_when') }}</th>
+                                                        <th class="px-2 py-2 text-right">{{ __('zcstats.earthquake_col_mag') }}</th>
+                                                        <th class="px-2 py-2 text-right whitespace-nowrap">{{ __('zcstats.earthquake_col_km') }}</th>
+                                                        <th class="px-3 py-2">{{ __('zcstats.earthquake_col_place') }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y divide-outline-variant/10">
+                                                    @foreach($earthquakes['events'] as $ev)
+                                                        @php $at = $ev['at']; @endphp
+                                                        <tr class="hover:bg-surface-container-high/40">
+                                                            <td class="px-3 py-2 tabular-nums text-on-surface whitespace-nowrap">@if($at instanceof \Illuminate\Support\Carbon){{ $at->format('M j, g:i A') }}@else — @endif</td>
+                                                            <td class="px-2 py-2 text-right font-bold tabular-nums">{{ number_format($ev['mag'], 1) }}</td>
+                                                            <td class="px-2 py-2 text-right tabular-nums text-on-surface-variant">{{ number_format($ev['distance_km'], 0) }}</td>
+                                                            <td class="px-3 py-2 text-on-surface min-w-[8rem]">
+                                                                @if($ev['url'] !== '')
+                                                                    <a href="{{ $ev['url'] }}" target="_blank" rel="noopener noreferrer" class="font-medium text-primary hover:underline">{{ $ev['place'] }}</a>
+                                                                @else
+                                                                    {{ $ev['place'] }}
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @endif
+                                    <div class="flex flex-wrap gap-x-4 gap-y-2 mt-4 text-xs font-bold">
+                                        <a href="{{ $earthquakes['usgs_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary hover:underline">{{ __('zcstats.earthquake_open_usgs') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                        <a href="{{ $earthquakes['phivolcs_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary hover:underline">{{ __('zcstats.earthquake_open_phivolcs') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="application/json" id="zc-earthquake-data">@json($earthquakes['map'])</script>
+                        @endif
+                    </div>
+                </section>
+                @endif
+
+                @if(config('services.typhoon.enabled', true))
+                <section id="typhoons" class="md:col-span-12 scroll-mt-24" aria-labelledby="typhoons-heading">
+                    <div class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 overflow-hidden">
+                        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
+                            <div class="flex items-start gap-4 min-w-0">
+                                <div class="w-12 h-12 rounded-2xl bg-sky-500/15 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined text-sky-700 dark:text-sky-300 text-2xl" aria-hidden="true">cyclone</span>
+                                </div>
+                                <div class="min-w-0">
+                                    <h2 id="typhoons-heading" class="text-lg font-extrabold text-on-surface leading-tight">{{ __('zcstats.typhoon_title') }}</h2>
+                                    <p class="text-xs text-on-surface-variant font-medium mt-1">{{ __('zcstats.typhoon_subtitle', ['city' => config('services.typhoon.city_label')]) }}</p>
+                                </div>
+                            </div>
+                            @if($typhoons)
+                                <div class="flex flex-col items-start lg:items-end gap-1 shrink-0 text-[10px] text-on-surface-variant">
+                                    <span class="font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-800 uppercase tracking-wide">{{ __('zcstats.live_data') }}</span>
+                                    <span>{{ $typhoons['fetched_at']->format('M j, g:i A') }}</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        @if($typhoons === null)
+                            <p class="text-sm text-on-surface-variant">{{ __('zcstats.typhoon_unavailable') }}</p>
+                        @else
+                            <p class="text-[11px] text-on-surface-variant leading-relaxed mb-4">{{ __('zcstats.typhoon_note', ['radius' => number_format($typhoons['radius_km'], 0), 'city' => config('services.typhoon.city_label')]) }}</p>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                                <div class="min-h-[280px] md:min-h-[320px] rounded-2xl overflow-hidden border border-outline-variant/20 shadow-inner z-0 isolate">
+                                    <div id="zc-typhoon-map" class="h-[280px] md:h-[320px] w-full z-0" role="application" aria-label="{{ __('zcstats.typhoon_map_aria') }}"></div>
+                                </div>
+                                <div class="min-w-0">
+                                    @if(count($typhoons['storms']) === 0)
+                                        <p class="text-sm text-on-surface-variant">{{ __('zcstats.typhoon_none') }}</p>
+                                    @else
+                                        <div class="overflow-x-auto rounded-xl border border-outline-variant/10 max-h-[320px] overflow-y-auto">
+                                            <table class="w-full text-left text-xs">
+                                                <thead class="sticky top-0 bg-surface-container-high/95 z-[1] text-on-surface-variant font-bold uppercase tracking-wider">
+                                                    <tr>
+                                                        <th class="px-3 py-2">{{ __('zcstats.typhoon_col_storm') }}</th>
+                                                        <th class="px-2 py-2">{{ __('zcstats.typhoon_col_alert') }}</th>
+                                                        <th class="px-2 py-2 text-right whitespace-nowrap">{{ __('zcstats.typhoon_col_km') }}</th>
+                                                        <th class="px-2 py-2 text-right whitespace-nowrap">{{ __('zcstats.typhoon_col_wind') }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y divide-outline-variant/10">
+                                                    @foreach($typhoons['storms'] as $s)
+                                                        <tr class="hover:bg-surface-container-high/40">
+                                                            <td class="px-3 py-2 text-on-surface font-medium">
+                                                                @if($s['report_url'] !== '')
+                                                                    <a href="{{ $s['report_url'] }}" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">{{ $s['name'] !== '' ? $s['name'] : $s['eventname'] }}</a>
+                                                                @else
+                                                                    {{ $s['name'] !== '' ? $s['name'] : $s['eventname'] }}
+                                                                @endif
+                                                            </td>
+                                                            <td class="px-2 py-2">
+                                                                <span @class([
+                                                                    'text-[10px] font-bold px-2 py-0.5 rounded-full',
+                                                                    'bg-red-100 text-red-800' => $s['alertlevel'] === 'Red',
+                                                                    'bg-orange-100 text-orange-900' => $s['alertlevel'] === 'Orange',
+                                                                    'bg-emerald-100 text-emerald-900' => $s['alertlevel'] === 'Green',
+                                                                    'bg-surface-container-high text-on-surface-variant' => ! in_array($s['alertlevel'], ['Red', 'Orange', 'Green'], true),
+                                                                ])>{{ $s['alertlevel'] }}</span>
+                                                            </td>
+                                                            <td class="px-2 py-2 text-right tabular-nums text-on-surface-variant">{{ number_format($s['distance_km'], 0) }}</td>
+                                                            <td class="px-2 py-2 text-right tabular-nums text-on-surface">@if($s['wind_kmh'] !== null){{ number_format($s['wind_kmh'], 0) }}@else — @endif</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @endif
+                                    <div class="flex flex-wrap gap-x-4 gap-y-2 mt-4 text-xs font-bold">
+                                        <a href="{{ $typhoons['gdacs_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary hover:underline">{{ __('zcstats.typhoon_open_gdacs') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                        <a href="{{ $typhoons['pagasa_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary hover:underline">{{ __('zcstats.typhoon_open_pagasa') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="application/json" id="zc-typhoon-data">@json($typhoons['map'])</script>
+                        @endif
+                    </div>
+                </section>
+                @endif
+
                 <div id="prices" class="md:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 scroll-mt-24 items-stretch">
                 <section class="min-w-0 bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 min-h-0 h-full flex flex-col" aria-labelledby="da-prices-heading">
                     <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
@@ -834,6 +991,18 @@
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl">shopping_basket</span>
                     <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_prices') }}</span>
                 </a>
+                @if(config('services.earthquake.enabled', true))
+                <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high/80 min-w-[3.25rem] shrink-0 active:scale-95 transition-all" href="#earthquakes">
+                    <span class="material-symbols-outlined text-[22px] sm:text-2xl">earthquake</span>
+                    <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_earthquake') }}</span>
+                </a>
+                @endif
+                @if(config('services.typhoon.enabled', true))
+                <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high/80 min-w-[3.25rem] shrink-0 active:scale-95 transition-all" href="#typhoons">
+                    <span class="material-symbols-outlined text-[22px] sm:text-2xl">cyclone</span>
+                    <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_typhoon') }}</span>
+                </a>
+                @endif
                 <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high/80 min-w-[3.25rem] shrink-0 active:scale-95 transition-all" href="#emergency">
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl">emergency</span>
                     <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_911') }}</span>

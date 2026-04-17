@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Public+Sans:wght@300;400;500;600;700&display=swap');
+@import 'leaflet/dist/leaflet.css';
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -586,5 +587,15 @@ html.dark {
         .zc-search-highlight {
             transition: none;
         }
+    }
+
+    /* Leaflet map (earthquake tracker) */
+    .leaflet-container {
+        font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+        z-index: 0;
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: 0.75rem;
     }
 }

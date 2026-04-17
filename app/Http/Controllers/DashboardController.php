@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Services\DaPriceMonitoringService;
 use App\Services\DtiBnpcSrpService;
+use App\Services\EarthquakeUsgsService;
 use App\Services\GasmotoFuelService;
 use App\Services\OpenWeatherService;
 use App\Services\PhilippineHolidaysService;
 use App\Services\PrayerTimesService;
+use App\Services\TyphoonGdacsService;
 use App\Services\ZamcelcoPowerService;
 use App\Services\ZcwdWaterService;
 use DateTimeInterface;
@@ -24,7 +26,9 @@ class DashboardController extends Controller
         protected DaPriceMonitoringService $daPrices,
         protected DtiBnpcSrpService $dtiBnpcSrp,
         protected PrayerTimesService $prayerTimes,
-        protected PhilippineHolidaysService $philippineHolidays
+        protected PhilippineHolidaysService $philippineHolidays,
+        protected EarthquakeUsgsService $earthquakeUsgs,
+        protected TyphoonGdacsService $typhoonGdacs
     ) {}
 
     public function index(): View
@@ -39,6 +43,8 @@ class DashboardController extends Controller
             'dti_bnpc' => $this->dtiBnpcSrp->getBulletinData(),
             'search_index' => $this->searchIndex(),
             'philippine_holidays' => $this->philippineHolidays->getDashboardData(),
+            'earthquakes' => $this->earthquakeUsgs->getDashboardData(),
+            'typhoons' => $this->typhoonGdacs->getDashboardData(),
         ]);
     }
 
@@ -136,6 +142,26 @@ class DashboardController extends Controller
                 )),
             ],
             [
+                'id' => 'earthquakes',
+                'terms' => $norm(array_merge(
+                    [
+                        __('zcstats.earthquake_title'),
+                        __('zcstats.earthquake_subtitle'),
+                    ],
+                    ['earthquake', 'earthquakes', 'seismic', 'tremor', 'usgs', 'lindol', 'linog', 'phivolcs', 'fault', 'magnitude', 'tsunami']
+                )),
+            ],
+            [
+                'id' => 'typhoons',
+                'terms' => $norm(array_merge(
+                    [
+                        __('zcstats.typhoon_title'),
+                        __('zcstats.typhoon_subtitle'),
+                    ],
+                    ['typhoon', 'cyclone', 'bagyo', 'tropical storm', 'gdacs', 'jtwc', 'pagasa', 'signal', 'hurricane', 'track']
+                )),
+            ],
+            [
                 'id' => 'emergency',
                 'terms' => $norm(array_merge(
                     [
@@ -177,6 +203,14 @@ class DashboardController extends Controller
             ]]);
         }
 
+        if (! config('services.earthquake.enabled', true)) {
+            $index = array_values(array_filter($index, fn (array $r): bool => ($r['id'] ?? '') !== 'earthquakes'));
+        }
+
+        if (! config('services.typhoon.enabled', true)) {
+            $index = array_values(array_filter($index, fn (array $r): bool => ($r['id'] ?? '') !== 'typhoons'));
+        }
+
         return $index;
     }
 
@@ -193,6 +227,8 @@ class DashboardController extends Controller
             'prayer_times' => $this->prayerTimes->getDashboardData(),
             'da_prices' => $this->daPrices->getDashboardData(),
             'dti_bnpc' => $this->dtiBnpcSrp->getBulletinData(),
+            'earthquakes' => $this->earthquakeUsgs->getDashboardData(),
+            'typhoons' => $this->typhoonGdacs->getDashboardData(),
         ];
 
         $filename = 'zcstats-snapshot-'.now()->format('Y-m-d-His').'.json';
