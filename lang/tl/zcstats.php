@@ -155,6 +155,8 @@ return [
     'notify_opt_prayer_disabled' => 'Naka-off ang oras ng dasal sa settings',
     'notify_opt_live' => 'Kapag may bagong datos sa dashboard (panahon, tubig, kuryente, gasolina, lindol, bagyo, atbp.)',
     'notify_enable' => 'Payagan ang mga notification',
+    'notify_disable' => 'I-off ang mga alerto',
+    'notify_turned_off' => 'Naka-off ang mga alerto para sa site na ito. Pumili sa taas tapos i-tap ang Payagan ang mga notification para magsimula ulit.',
     'notify_pick_one' => 'Pumili ng kahit isa sa taas, tapos subukan ulit.',
     'notify_denied' => 'Naka-block ang notification. Paganahin sa browser o site settings.',
     'notify_granted' => 'Naka-on ang alerto para sa browser na ito. Maaari mong baguhin ang mga opsyon anumang oras.',

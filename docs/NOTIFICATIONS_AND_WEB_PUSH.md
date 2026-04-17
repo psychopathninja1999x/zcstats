@@ -43,6 +43,7 @@ The UI shows the bell whenever `window.Notification` exists. On insecure HTTP (n
 - `config/webpush.php` — **`webpush.enabled`** is true only if `WEBPUSH_ENABLED` and **both** VAPID keys are non-empty in `.env`.
 - `.env` (not in git): `WEBPUSH_VAPID_PUBLIC_KEY`, `WEBPUSH_VAPID_PRIVATE_KEY`, `WEBPUSH_VAPID_SUBJECT` (must be `mailto:...` or `https:...`), `WEBPUSH_ENABLED`.
 - Generate keys: `php artisan zcstats:webpush-vapid` (may fail on some Windows PHP/OpenSSL builds) or `npx --yes web-push generate-vapid-keys`.
+- **Outbound TLS to FCM** (`fcm.googleapis.com`): if `zcstats:push-test` reports **`cURL error 60: SSL certificate problem: unable to get local issuer certificate`**, PHP/cURL cannot verify Google’s certificate. Fix the **CA bundle** on the server (`php.ini` `curl.cainfo` / `openssl.cafile`), or set **`WEBPUSH_CURL_CAINFO`** in `.env` to a readable PEM (e.g. download [cacert.pem](https://curl.se/ca/cacert.pem) into `storage/app/cacert.pem`, or on many Linux images use `/etc/ssl/certs/ca-certificates.crt`). Laravel Cloud: ensure the runtime image has current CA certs or use that env path after uploading a bundle.
 
 ## Database
 

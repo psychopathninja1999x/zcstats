@@ -155,6 +155,8 @@ return [
     'notify_opt_prayer_disabled' => 'El hora del sala ta off na settings',
     'notify_opt_live' => 'Si el datos del dashboard ta cambia (clima, agua, kuryente, gasolina, lindol, bagyo, etc.)',
     'notify_enable' => 'Permite notifications',
+    'notify_disable' => 'Apaga alertas',
+    'notify_turned_off' => 'Ta off el alertas para este site. Escoge opciones arriba y toca Permite notifications para empeza otra vez.',
     'notify_pick_one' => 'Escoge por lo menos uno arriba, despues intenta otra vez.',
     'notify_denied' => 'Ta block el notifications. Prende na browser o site settings.',
     'notify_granted' => 'Ta on el alertas para este browser. Puede cambia el opciones cuando quieres.',

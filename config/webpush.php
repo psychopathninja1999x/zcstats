@@ -24,4 +24,12 @@ return [
 
     'subject' => env('WEBPUSH_VAPID_SUBJECT', 'mailto:admin@localhost'),
 
+    /*
+    | If push fails with "cURL error 60: SSL certificate problem: unable to get local issuer certificate",
+    | set this to a readable PEM file (Mozilla CA bundle or your OS store). Examples:
+    | - Download https://curl.se/ca/cacert.pem and use WEBPUSH_CURL_CAINFO=storage/app/cacert.pem
+    | - Linux: /etc/ssl/certs/ca-certificates.crt
+    */
+    'curl_ca_bundle' => env('WEBPUSH_CURL_CAINFO', ''),
+
 ];

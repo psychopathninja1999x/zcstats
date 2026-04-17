@@ -155,6 +155,8 @@ return [
     'notify_opt_prayer_disabled' => 'Prayer times off sa config, deads',
     'notify_opt_live' => 'Kapag may bagong chika sa dashboard (weather, tubig, kuryente, gas, lindol, bagyo, etc.)',
     'notify_enable' => 'Allow notifications',
+    'notify_disable' => 'I-off ang alerts',
+    'notify_turned_off' => 'Off na ang alerts sa site na ’to—piliin ulit sa taas tapos Allow notifications para bumalik.',
     'notify_pick_one' => 'Pumili ng isa sa taas muna, then try ulit.',
     'notify_denied' => 'Blocked ang notifs—i-unlock sa browser/site settings, mhie.',
     'notify_granted' => 'On na ang alerts sa browser na ’to—edit anytime ang options.',

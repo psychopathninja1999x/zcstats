@@ -53,6 +53,9 @@ export function initDashboardNotifications() {
 
     wrap.hidden = false;
 
+    /** Replaced when notification prefs are wired; no-op until then. */
+    let syncNotifyButtonLabel = () => {};
+
     function closeNotifyMenu() {
         if (notifyDialog.open) {
             notifyDialog.close();
@@ -73,6 +76,7 @@ export function initDashboardNotifications() {
             notifyDialog.showModal();
         }
         menuBtn.setAttribute('aria-expanded', 'true');
+        syncNotifyButtonLabel();
     }
 
     function toggleNotifyMenu() {
@@ -122,6 +126,32 @@ export function initDashboardNotifications() {
     if (!digestUrl) {
         return;
     }
+
+    const allowBtnClass =
+        'inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-extrabold text-white shadow-sm hover:opacity-95 transition-opacity';
+    const disableBtnClass =
+        'inline-flex items-center justify-center rounded-full border border-outline-variant/35 bg-surface-container-high px-4 py-2 text-xs font-extrabold text-on-surface shadow-sm hover:bg-surface-container-highest transition-colors dark:border-outline-variant/25';
+
+    syncNotifyButtonLabel = function syncNotifyButtonLabelFn() {
+        const enableLabel = panel.getAttribute('data-notify-enable-label') || '';
+        const disableLabel = panel.getAttribute('data-notify-disable-label') || '';
+        const engaged =
+            Notification.permission === 'granted' && (cbPrayer.checked || cbLive.checked);
+        if (engaged) {
+            btn.textContent = disableLabel;
+            btn.dataset.notifyMode = 'disable';
+            btn.className = disableBtnClass;
+        } else {
+            btn.textContent = enableLabel;
+            btn.dataset.notifyMode = 'allow';
+            btn.className = allowBtnClass;
+        }
+        if (Notification.permission === 'granted') {
+            statusEl.textContent = engaged
+                ? panel.getAttribute('data-notify-active') || ''
+                : panel.getAttribute('data-notify-turned-off') || '';
+        }
+    };
 
     const notifyIcon = icon || undefined;
     const prayerWindowMs = 120000;
@@ -409,6 +439,17 @@ export function initDashboardNotifications() {
         }
     }
 
+    async function disableAlertsForDevice() {
+        stopWatchers();
+        digestBaseline = null;
+        cbPrayer.checked = false;
+        cbLive.checked = false;
+        savePrefs();
+        statusEl.textContent = panel.getAttribute('data-notify-turned-off') || '';
+        await teardownWebPushSubscription();
+        syncNotifyButtonLabel();
+    }
+
     async function teardownWebPushSubscription() {
         if (!webpushEnabled || !webPushSupported() || !deleteUrl) {
             return;
@@ -470,6 +511,10 @@ export function initDashboardNotifications() {
     });
 
     btn.addEventListener('click', async () => {
+        if (btn.dataset.notifyMode === 'disable') {
+            await disableAlertsForDevice();
+            return;
+        }
         savePrefs();
         if (!cbPrayer.checked && !cbLive.checked) {
             statusEl.textContent = panel.getAttribute('data-notify-pick-one') || '';
@@ -478,11 +523,13 @@ export function initDashboardNotifications() {
         const perm = await Notification.requestPermission();
         if (perm !== 'granted') {
             statusEl.textContent = panel.getAttribute('data-notify-denied') || '';
+            syncNotifyButtonLabel();
             return;
         }
         statusEl.textContent = panel.getAttribute('data-notify-granted') || '';
         startWatchers();
         await syncWebPushSubscription();
+        syncNotifyButtonLabel();
     });
 
     cbPrayer.addEventListener('change', () => {
@@ -490,6 +537,7 @@ export function initDashboardNotifications() {
         if (Notification.permission === 'granted') {
             startWatchers();
         }
+        syncNotifyButtonLabel();
     });
     cbLive.addEventListener('change', () => {
         void syncPushAfterPreferenceChange();
@@ -497,6 +545,7 @@ export function initDashboardNotifications() {
             digestBaseline = null;
             startWatchers();
         }
+        syncNotifyButtonLabel();
     });
 
     if (
@@ -509,4 +558,6 @@ export function initDashboardNotifications() {
         startWatchers();
         void syncWebPushSubscription();
     }
+
+    syncNotifyButtonLabel();
 }

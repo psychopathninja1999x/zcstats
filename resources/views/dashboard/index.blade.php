@@ -59,6 +59,9 @@
                                 data-push-delete-url="{{ route('push.destroy') }}"
                                 data-app-locale="{{ app()->getLocale() }}"
                                 data-notify-requires-https="{{ e(__('zcstats.notify_requires_https')) }}"
+                                data-notify-enable-label="{{ e(__('zcstats.notify_enable')) }}"
+                                data-notify-disable-label="{{ e(__('zcstats.notify_disable')) }}"
+                                data-notify-turned-off="{{ e(__('zcstats.notify_turned_off')) }}"
                             >
                                 <button
                                     type="button"
@@ -82,7 +85,7 @@
                                         </label>
                                     </div>
                                     <div class="flex flex-wrap items-center gap-2">
-                                        <button type="button" id="zc-notify-enable" class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-extrabold text-white shadow-sm hover:opacity-95 transition-opacity">
+                                        <button type="button" id="zc-notify-enable" class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-extrabold text-white shadow-sm hover:opacity-95 transition-opacity" data-notify-mode="allow">
                                             {{ __('zcstats.notify_enable') }}
                                         </button>
                                     </div>

@@ -32,7 +32,7 @@ class ZcstatsPushTestCommand extends Command
         $customBody = $this->option('message');
         $tag = 'zc-test-'.bin2hex(random_bytes(6));
 
-        $webPush->sendToMany($subs, function (PushSubscription $sub) use ($baseUrl, $customBody, $tag): array {
+        $result = $webPush->sendToMany($subs, function (PushSubscription $sub) use ($baseUrl, $customBody, $tag): array {
             $locale = in_array($sub->locale, ['en', 'tl', 'cbk', 'gly'], true) ? $sub->locale : 'en';
             app()->setLocale($locale);
 
@@ -46,7 +46,23 @@ class ZcstatsPushTestCommand extends Command
             ];
         });
 
-        $this->info('Sent test push to '.$subs->count().' subscription(s).');
+        if ($result['success'] > 0) {
+            $this->info("Push service accepted delivery for {$result['success']} subscription(s).");
+            $this->comment('If no banner appears: allow site notifications in the browser, turn off Do Not Disturb, try a foreground tab once, and on iOS use the app added to the Home Screen.');
+        }
+
+        if ($result['failed'] > 0) {
+            $this->newLine();
+            $this->warn("Failed for {$result['failed']} subscription(s) (often VAPID keys changed, wrong APP_URL origin, or stale subscription).");
+            foreach ($result['errors'] as $err) {
+                $this->line('  <fg=yellow>'.$err['endpoint'].'</>');
+                $this->line('  <fg=red>'.$err['reason'].'</>');
+            }
+        }
+
+        if ($result['success'] === 0 && $result['failed'] > 0) {
+            return self::FAILURE;
+        }
 
         return self::SUCCESS;
     }

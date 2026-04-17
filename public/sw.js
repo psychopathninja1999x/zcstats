@@ -29,12 +29,18 @@ self.addEventListener('push', (event) => {
     const url = typeof payload.url === 'string' && payload.url.length > 0 ? payload.url : '/';
 
     event.waitUntil(
-        self.registration.showNotification(payload.title || 'ZCStats', {
-            body: payload.body || '',
-            icon: '/images/zcstatslogo.png',
-            tag: payload.tag || 'zcstats',
-            data: { url },
-        })
+        (async () => {
+            try {
+                await self.registration.showNotification(payload.title || 'ZCStats', {
+                    body: payload.body || '',
+                    icon: '/images/zcstatslogo.png',
+                    tag: payload.tag || 'zcstats',
+                    data: { url },
+                });
+            } catch (err) {
+                console.error('[ZCStats SW] showNotification failed (push was received)', err);
+            }
+        })()
     );
 });
 

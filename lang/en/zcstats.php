@@ -155,6 +155,8 @@ return [
     'notify_opt_prayer_disabled' => 'Prayer times are off in settings',
     'notify_opt_live' => 'When dashboard data changes (weather, water, power, fuel, quakes, typhoons, etc.)',
     'notify_enable' => 'Allow notifications',
+    'notify_disable' => 'Turn off alerts',
+    'notify_turned_off' => 'Alerts are off for this site. Pick options above and tap Allow notifications to start again.',
     'notify_pick_one' => 'Turn on at least one option above, then try again.',
     'notify_denied' => 'Notifications are blocked. Enable them in your browser or site settings.',
     'notify_granted' => 'Alerts are on for this browser. You can change options anytime.',
