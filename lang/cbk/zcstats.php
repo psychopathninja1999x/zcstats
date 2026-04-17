@@ -15,6 +15,8 @@ return [
     'lang_tl' => 'TL',
     'lang_cbk' => 'CBK',
     'lang_cbk_title' => 'Chavacano (Zamboanga)',
+    'lang_gly' => 'GLG',
+    'lang_gly_title' => 'Gaylingo / swardspeak (Philippines)',
     'breadcrumb_dashboard' => 'Dashboard',
     'breadcrumb_live' => 'Estado ahora',
     'greeting_morning' => 'Buenos días',

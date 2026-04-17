@@ -68,7 +68,7 @@ class DashboardController extends Controller
                         __('zcstats.app_title'),
                         __('zcstats.export_data'),
                     ],
-                    ['dashboard', 'overview', 'export', 'download', 'json', 'status', 'live', 'zcstats', 'everything', 'zamboanga', 'todo']
+                    ['dashboard', 'overview', 'export', 'download', 'json', 'status', 'live', 'zcstats', 'everything', 'zamboanga', 'todo', 'gaylingo', 'glg', 'beki', 'swardspeak', 'lodi', 'language', 'locale']
                 )),
             ],
             [
@@ -115,7 +115,7 @@ class DashboardController extends Controller
                     ['fuel', 'gas', 'gasoline', 'diesel', 'gasmoto', 'petrol', 'station', 'doe', 'kerosene', 'gasolina', 'presyo']
                 )),
             ],
-                       [
+            [
                 'id' => 'prices',
                 'terms' => $norm(array_merge(
                     [

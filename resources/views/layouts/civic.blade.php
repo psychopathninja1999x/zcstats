@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() === 'tl' ? 'fil' : str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ match (app()->getLocale()) { 'tl' => 'fil', 'gly' => 'en-PH', default => str_replace('_', '-', app()->getLocale()) } }}">
 <head>
     <meta charset="utf-8">
     <script>
