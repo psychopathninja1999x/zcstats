@@ -5,21 +5,10 @@
 @section('body')
     <div class="flex flex-col flex-1 min-w-0 w-full">
         <header class="sticky top-0 w-full z-40 bg-surface/85 dark:bg-background/90 backdrop-blur-xl border-b border-outline-variant/15">
-            <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
-                <div class="flex items-center gap-4 flex-1 min-w-0">
-                    <a href="#overview" class="flex items-center gap-2 shrink-0 rounded-xl hover:bg-surface-container-high/60 transition-colors -ml-1 px-1 py-0.5" title="{{ __('zcstats.app_title') }}">
-                        <img src="{{ asset('images/zcstatslogo.png') }}" alt="{{ __('zcstats.app_title') }}" width="160" height="48" decoding="async" class="h-9 sm:h-10 w-auto max-h-10 object-contain object-left">
-                    </a>
-                    <div class="relative flex-1 min-w-0 max-w-[13rem] transition-[max-width] duration-300 ease-out focus-within:max-w-full has-[&_input:not(:placeholder-shown)]:max-w-full sm:max-w-md sm:focus-within:max-w-md sm:has-[&_input:not(:placeholder-shown)]:max-w-md">
-                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl pointer-events-none z-[1]">search</span>
-                        <input id="zc-dashboard-search" class="w-full min-w-0 bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest dark:focus:bg-surface-container-high text-sm" placeholder="{{ __('zcstats.search_placeholder') }}" type="search" autocomplete="off" data-min-length="2" aria-describedby="zc-search-hint" enterkeyhint="search">
-                        <p id="zc-search-hint" class="sr-only">{{ __('zcstats.search_hint') }}</p>
-                        <div id="zc-search-feedback" class="hidden absolute left-0 right-0 top-full mt-2 z-50 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-4 text-xs text-on-surface shadow-[0_12px_40px_rgba(25,28,32,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]" role="status" aria-live="polite" aria-hidden="true">
-                            <p class="font-semibold text-on-surface">{{ __('zcstats.search_no_match') }}</p>
-                            <p class="mt-2 text-on-surface-variant leading-relaxed">{{ __('zcstats.search_suggestion') }} <a href="mailto:mvitem5@gmail.com" class="font-bold text-primary underline decoration-primary/40 hover:decoration-primary">mvitem5@gmail.com</a></p>
-                        </div>
-                    </div>
-                </div>
+            <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto gap-4">
+                <a href="#overview" class="flex items-center gap-2 shrink-0 rounded-xl hover:bg-surface-container-high/60 transition-colors -ml-1 px-1 py-0.5 min-w-0" title="{{ __('zcstats.app_title') }}">
+                    <img src="{{ asset('images/zcstatslogo.png') }}" alt="{{ __('zcstats.app_title') }}" width="160" height="48" decoding="async" class="h-9 sm:h-10 w-auto max-h-10 object-contain object-left">
+                </a>
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                     <button type="button" id="zc-theme-toggle" class="flex items-center justify-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-2 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-label-dark="{{ __('zcstats.theme_use_dark') }}" data-label-light="{{ __('zcstats.theme_use_light') }}">
                         <span class="material-symbols-outlined zc-theme-icon text-xl" aria-hidden="true">dark_mode</span>
@@ -666,9 +655,19 @@
 
     </div>
 
-    {{-- Floating dock (replaces sidebar + full-width mobile bar) --}}
+    {{-- Floating dock: page search + tab bar --}}
     <nav class="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-0 right-0 z-50 px-4 sm:px-6 pointer-events-none" aria-label="{{ __('zcstats.nav_primary') }}">
-        <div class="pointer-events-auto mx-auto max-w-3xl flex items-stretch gap-2 rounded-[1.35rem] border border-outline-variant/15 bg-surface-container-lowest/95 dark:bg-surface-container-low/95 backdrop-blur-xl shadow-[0_12px_48px_rgba(25,28,32,0.14),0_4px_16px_rgba(25,28,32,0.06)] dark:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_4px_16px_rgba(0,0,0,0.35)] pl-1 pr-2 py-2 sm:pl-2 sm:pr-3">
+        <div class="pointer-events-auto mx-auto max-w-3xl flex flex-col gap-2 rounded-[1.35rem] border border-outline-variant/15 bg-surface-container-lowest/95 dark:bg-surface-container-low/95 backdrop-blur-xl shadow-[0_12px_48px_rgba(25,28,32,0.14),0_4px_16px_rgba(25,28,32,0.06)] dark:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_4px_16px_rgba(0,0,0,0.35)] px-2.5 py-2 sm:px-3 sm:py-2.5">
+            <div class="relative w-full shrink-0">
+                <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none z-[1]" aria-hidden="true">search</span>
+                <input id="zc-dashboard-search" class="w-full min-w-0 bg-surface-container rounded-full py-2 pl-9 pr-3 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest dark:focus:bg-surface-container-high text-xs sm:text-sm" placeholder="{{ __('zcstats.search_placeholder') }}" type="search" autocomplete="off" data-min-length="2" aria-describedby="zc-search-hint" enterkeyhint="search">
+                <p id="zc-search-hint" class="sr-only">{{ __('zcstats.search_hint') }}</p>
+                <div id="zc-search-feedback" class="hidden absolute left-0 right-0 bottom-full mb-2 z-[60] rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-3 sm:p-4 text-xs text-on-surface shadow-[0_12px_40px_rgba(25,28,32,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)]" role="status" aria-live="polite" aria-hidden="true">
+                    <p class="font-semibold text-on-surface">{{ __('zcstats.search_no_match') }}</p>
+                    <p class="mt-2 text-on-surface-variant leading-relaxed">{{ __('zcstats.search_suggestion') }} <a href="mailto:mvitem5@gmail.com" class="font-bold text-primary underline decoration-primary/40 hover:decoration-primary">mvitem5@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="flex items-stretch gap-2 min-h-0">
             <div class="flex flex-1 min-w-0 items-center justify-between gap-0.5 sm:gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-primary min-w-[3.25rem] shrink-0 active:scale-95 transition-transform" href="#overview">
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl" style="font-variation-settings: 'FILL' 1">dashboard</span>
@@ -704,6 +703,7 @@
                 <span class="material-symbols-outlined text-xl">flag</span>
                 <span class="leading-tight">{{ __('zcstats.dock_report') }}</span>
             </button>
+            </div>
         </div>
     </nav>
 

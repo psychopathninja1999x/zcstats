@@ -31,7 +31,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
-<body class="text-on-surface flex flex-col min-h-screen pb-28 md:pb-32">
+<body class="text-on-surface flex flex-col min-h-screen pb-40 md:pb-44">
     @yield('body')
 </body>
 </html>
