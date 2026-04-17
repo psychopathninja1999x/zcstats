@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\DaPriceMonitoringService;
+use App\Services\DtiBnpcSrpService;
 use App\Services\GasmotoFuelService;
 use App\Services\OpenWeatherService;
 use App\Services\ZamcelcoPowerService;
@@ -16,7 +18,9 @@ class DashboardController extends Controller
         protected OpenWeatherService $openWeather,
         protected ZcwdWaterService $zcwdWater,
         protected ZamcelcoPowerService $zamcelcoPower,
-        protected GasmotoFuelService $gasmotoFuel
+        protected GasmotoFuelService $gasmotoFuel,
+        protected DaPriceMonitoringService $daPrices,
+        protected DtiBnpcSrpService $dtiBnpcSrp
     ) {}
 
     public function index(): View
@@ -26,6 +30,8 @@ class DashboardController extends Controller
             'zcwd' => $this->zcwdWater->getReservoirData(),
             'zamcelco' => $this->zamcelcoPower->getDashboardData(),
             'fuel' => $this->gasmotoFuel->getDashboardData(),
+            'da_prices' => $this->daPrices->getDashboardData(),
+            'dti_bnpc' => $this->dtiBnpcSrp->getBulletinData(),
             'search_index' => $this->searchIndex(),
         ]);
     }
@@ -109,6 +115,18 @@ class DashboardController extends Controller
                     ['fuel', 'gas', 'gasoline', 'diesel', 'gasmoto', 'petrol', 'station', 'doe', 'kerosene', 'gasolina', 'presyo']
                 )),
             ],
+                       [
+                'id' => 'prices',
+                'terms' => $norm(array_merge(
+                    [
+                        __('zcstats.da_prices_title'),
+                        __('zcstats.da_prices_subtitle'),
+                        __('zcstats.dti_bnpc_title'),
+                        __('zcstats.dti_bnpc_subtitle'),
+                    ],
+                    ['price', 'prices', 'agriculture', 'da', 'dti', 'trade', 'industry', 'bnpc', 'srp', 'suggested retail', 'basic necessities', 'prime commodities', 'food', 'rice', 'vegetables', 'meat', 'fish', 'commodity', 'presyo', 'pagkain', 'bigas', 'gulay', 'department of agriculture', 'price monitoring', 'bantay presyo']
+                )),
+            ],
             [
                 'id' => 'emergency',
                 'terms' => $norm(array_merge(
@@ -150,6 +168,8 @@ class DashboardController extends Controller
             'zcwd' => $this->zcwdWater->getReservoirData(),
             'zamcelco' => $this->zamcelcoPower->getDashboardData(),
             'fuel' => $this->gasmotoFuel->getDashboardData(),
+            'da_prices' => $this->daPrices->getDashboardData(),
+            'dti_bnpc' => $this->dtiBnpcSrp->getBulletinData(),
         ];
 
         $filename = 'zcstats-snapshot-'.now()->format('Y-m-d-His').'.json';

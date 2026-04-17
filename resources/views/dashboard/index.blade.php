@@ -84,9 +84,12 @@
                                 <h2 class="text-white text-3xl md:text-4xl font-extrabold mb-2">@if($weather){{ $weather['location'] }}@if($weather['country']), {{ $weather['country'] }}@endif @else{{ __('zcstats.station_tbd') }}@endif</h2>
                                 <p class="text-white/85 font-medium max-w-md text-sm md:text-base">@if($weather){{ __('zcstats.weather_ok') }}@else{{ __('zcstats.weather_placeholder') }}@endif</p>
                             </div>
-                            <div class="text-right text-white">
-                                <span class="text-5xl md:text-6xl font-black">@if($weather && $weather['temp'] !== null){{ $weather['temp'] }}°C @else —°C @endif</span>
-                                <p class="text-sm font-bold opacity-90 uppercase tracking-widest mt-1">{{ __('zcstats.condition') }} @if($weather && $weather['description'] !== ''){{ $weather['description'] }} @else — @endif</p>
+                            <div class="flex flex-col items-end gap-3 text-right text-white">
+                                <div>
+                                    <span class="text-5xl md:text-6xl font-black">@if($weather && $weather['temp'] !== null){{ $weather['temp'] }}°C @else —°C @endif</span>
+                                    <p class="text-sm font-bold opacity-90 uppercase tracking-widest mt-1">{{ __('zcstats.condition') }} @if($weather && $weather['description'] !== ''){{ $weather['description'] }} @else — @endif</p>
+                                </div>
+                                <img src="{{ asset('images/sources/openweather.png') }}" alt="{{ __('zcstats.logo_openweather') }}" width="120" height="40" decoding="async" class="h-8 sm:h-9 w-auto max-w-[9rem] object-contain object-right opacity-90 drop-shadow-md">
                             </div>
                         </div>
                     </div>
@@ -103,8 +106,8 @@
                                 </p>
                             @endif
                         </div>
-                        <div class="bg-yellow-50 p-4 rounded-2xl">
-                            <span class="material-symbols-outlined text-yellow-600 text-3xl" style="font-variation-settings: 'FILL' 1">bolt</span>
+                        <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_zamcelco') }}">
+                            <img src="{{ asset('images/logo/zamcelco.png') }}" alt="{{ __('zcstats.logo_zamcelco') }}" width="160" height="48" decoding="async" class="h-8 sm:h-9 w-auto max-w-[8.25rem] object-contain object-center">
                         </div>
                     </div>
                     <div class="mb-6 flex-1 space-y-4">
@@ -168,8 +171,8 @@
                                     <p class="text-on-surface-variant/80 text-xs mt-1">{{ __('zcstats.as_of') }} {{ $zcwd['as_of'] }} · <a href="https://zcwd.gov.ph/production_new_bak.php" class="text-primary hover:underline font-semibold" target="_blank" rel="noopener noreferrer">zcwd.gov.ph</a></p>
                                 @endif
                             </div>
-                            <div class="bg-blue-50 p-4 rounded-2xl">
-                                <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1">water_drop</span>
+                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_zcwd') }}">
+                                <img src="{{ asset('images/logo/zcwd.png') }}" alt="{{ __('zcstats.logo_zcwd') }}" width="160" height="48" decoding="async" class="h-8 sm:h-9 w-auto max-w-[8.25rem] object-contain object-center">
                             </div>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:items-center gap-8 mb-8">
@@ -257,9 +260,9 @@
                     </div>
                     <div id="fuel" class="sm:col-span-2 bg-surface-container-lowest rounded-3xl p-6 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 scroll-mt-24">
                         <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
-                            <div class="flex items-start gap-4 min-w-0">
-                                <div class="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined text-amber-800 text-2xl" style="font-variation-settings: 'FILL' 1">local_gas_station</span>
+                            <div class="flex items-start gap-3 min-w-0">
+                                <div class="rounded-2xl border border-outline-variant/20 bg-white p-1.5 shadow-sm shrink-0" title="{{ __('zcstats.logo_gasmoto') }}">
+                                    <img src="{{ asset('images/logo/gasmoto.png') }}" alt="{{ __('zcstats.logo_gasmoto') }}" width="96" height="96" decoding="async" class="h-9 w-9 sm:h-10 sm:w-10 object-contain object-center">
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-xs font-bold text-on-surface-variant uppercase tracking-tighter">{{ __('zcstats.fuel_title') }}</p>
@@ -340,6 +343,166 @@
                     </div>
                 </div>
 
+                <div id="prices" class="md:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 scroll-mt-24 items-stretch">
+                <section class="min-w-0 bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 min-h-0 h-full flex flex-col" aria-labelledby="da-prices-heading">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_da') }}">
+                                <img src="{{ asset('images/logo/da.png') }}" alt="{{ __('zcstats.logo_da') }}" width="160" height="48" decoding="async" class="h-10 w-auto max-w-[6.5rem] sm:max-w-[7.5rem] object-contain object-left">
+                            </div>
+                            <div class="min-w-0">
+                                <h2 id="da-prices-heading" class="text-lg font-extrabold text-on-surface leading-tight">{{ __('zcstats.da_prices_title') }}</h2>
+                                <p class="text-xs text-on-surface-variant font-medium mt-1">{{ __('zcstats.da_prices_subtitle') }}</p>
+                                @if($da_prices !== null)
+                                    <p class="text-[10px] text-on-surface-variant/80 mt-1 flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">schedule</span>
+                                        {{ $da_prices['updated_at']->format('M j, g:i A') }}
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+                        @if($da_prices !== null)
+                            <div class="flex items-center gap-2 shrink-0">
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-800 uppercase tracking-wide">{{ __('zcstats.live_data') }}</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    @if($da_prices === null)
+                        <p class="text-sm text-on-surface-variant">{{ __('zcstats.da_prices_unavailable') }}</p>
+                    @else
+                        <div class="mb-4">
+                            <div class="relative max-w-sm">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none">search</span>
+                                <input type="search" id="da-prices-filter" class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] focus:ring-2 focus:ring-primary/20 focus:bg-white text-sm" placeholder="{{ __('zcstats.da_prices_search_placeholder') }}" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div id="da-prices-no-results" class="hidden text-sm text-on-surface-variant py-4 text-center">{{ __('zcstats.da_prices_no_results') }}</div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="da-prices-grid">
+                            @if($da_prices['daily'] !== [])
+                                <div class="da-prices-col">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm text-green-700">today</span>
+                                        {{ __('zcstats.da_prices_daily') }}
+                                    </h3>
+                                    <div class="space-y-2">
+                                        @foreach($da_prices['daily'] as $entry)
+                                            <a href="{{ $entry['url'] }}" target="_blank" rel="noopener noreferrer"
+                                               class="da-price-row flex items-center justify-between gap-3 p-3 rounded-2xl bg-surface-container-low border border-outline-variant/10 hover:border-primary/25 hover:bg-surface-container-high/60 transition-colors group"
+                                               data-filter-text="{{ strtolower($entry['date']) }}">
+                                                <div class="flex items-center gap-3 min-w-0">
+                                                    <div class="w-9 h-9 rounded-xl bg-green-100/80 flex items-center justify-center shrink-0 group-hover:bg-green-200/80 transition-colors">
+                                                        <span class="material-symbols-outlined text-green-800 text-lg">description</span>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <p class="text-sm font-semibold text-on-surface truncate">{{ $entry['date'] }}</p>
+                                                        @if($entry['size'] !== '')
+                                                            <p class="text-[10px] text-on-surface-variant">{{ $entry['size'] }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <span class="material-symbols-outlined text-on-surface-variant text-lg shrink-0 group-hover:text-primary transition-colors">download</span>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($da_prices['weekly'] !== [])
+                                <div class="da-prices-col">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3 flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-sm text-green-700">date_range</span>
+                                        {{ __('zcstats.da_prices_weekly') }}
+                                    </h3>
+                                    <div class="space-y-2">
+                                        @foreach($da_prices['weekly'] as $entry)
+                                            <a href="{{ $entry['url'] }}" target="_blank" rel="noopener noreferrer"
+                                               class="da-price-row flex items-center justify-between gap-3 p-3 rounded-2xl bg-surface-container-low border border-outline-variant/10 hover:border-primary/25 hover:bg-surface-container-high/60 transition-colors group"
+                                               data-filter-text="{{ strtolower($entry['date']) }}">
+                                                <div class="flex items-center gap-3 min-w-0">
+                                                    <div class="w-9 h-9 rounded-xl bg-green-100/80 flex items-center justify-center shrink-0 group-hover:bg-green-200/80 transition-colors">
+                                                        <span class="material-symbols-outlined text-green-800 text-lg">description</span>
+                                                    </div>
+                                                    <div class="min-w-0">
+                                                        <p class="text-sm font-semibold text-on-surface truncate">{{ $entry['date'] }}</p>
+                                                        @if($entry['size'] !== '')
+                                                            <p class="text-[10px] text-on-surface-variant">{{ $entry['size'] }}</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <span class="material-symbols-outlined text-on-surface-variant text-lg shrink-0 group-hover:text-primary transition-colors">download</span>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+                        <a href="{{ $da_prices['source_url'] }}" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline">{{ __('zcstats.da_prices_open_da') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                    @endif
+                </section>
+
+                @if($dti_bnpc)
+                <section class="min-w-0 w-full lg:self-start bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 flex flex-col" aria-labelledby="dti-bnpc-heading">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6 shrink-0">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="shrink-0 rounded-2xl border border-outline-variant/20 bg-white p-2 shadow-sm" title="{{ __('zcstats.logo_dti') }}">
+                                <img src="{{ asset('images/logo/dti.png') }}" alt="{{ __('zcstats.logo_dti') }}" width="160" height="48" decoding="async" class="h-10 w-auto max-w-[6.5rem] sm:max-w-[7.5rem] object-contain object-left">
+                            </div>
+                            <div class="min-w-0">
+                                <h2 id="dti-bnpc-heading" class="text-lg font-extrabold text-on-surface leading-tight">{{ __('zcstats.dti_bnpc_title') }}</h2>
+                                <p class="text-xs text-on-surface-variant font-medium mt-1">{{ __('zcstats.dti_bnpc_subtitle') }}</p>
+                                @if(! empty($dti_bnpc['effective_period']))
+                                    <p class="text-[10px] text-on-surface-variant/80 mt-1 flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">event</span>
+                                        {{ $dti_bnpc['effective_period'] }}
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-on-surface-variant/90 leading-relaxed mb-4 shrink-0">{{ $dti_bnpc['source_note'] ?? '' }}</p>
+                    <div class="mb-4 shrink-0">
+                        <div class="relative max-w-sm">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg pointer-events-none">search</span>
+                            <input type="search" id="dti-bnpc-filter" class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 border-none shadow-[inset_0_0_0_1px_rgba(193,199,209,0.15)] focus:ring-2 focus:ring-primary/20 focus:bg-white text-sm" placeholder="{{ __('zcstats.dti_bnpc_search_placeholder') }}" autocomplete="off">
+                        </div>
+                    </div>
+                    <div id="dti-bnpc-no-results" class="hidden text-sm text-on-surface-variant py-4 text-center shrink-0">{{ __('zcstats.dti_bnpc_no_results') }}</div>
+                    <div class="min-h-[6rem] max-h-[min(15rem,36vh)] lg:max-h-[21rem] overflow-y-auto overscroll-contain pr-1 -mr-1 space-y-2" id="dti-bnpc-list">
+                        @foreach($dti_bnpc['items'] as $row)
+                            @php
+                                $kind = $row['kind'] ?? 'basic';
+                                $kindLabel = $kind === 'prime' ? __('zcstats.dti_bnpc_prime') : __('zcstats.dti_bnpc_basic');
+                                $filterText = mb_strtolower(
+                                    ($row['category'] ?? '') . ' ' . ($row['product'] ?? '') . ' ' . ($row['unit'] ?? '') . ' ' . $kindLabel . ' ' . ($kind ?? '')
+                                );
+                            @endphp
+                            <div class="dti-srp-row flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 rounded-2xl bg-surface-container-low border border-outline-variant/10 hover:border-sky-500/25 hover:bg-surface-container-high/50 transition-colors" data-filter-text="{{ $filterText }}">
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-[10px] font-bold text-sky-800/90 uppercase tracking-wide">{{ $row['category'] ?? '—' }}</p>
+                                    <p class="text-sm font-semibold text-on-surface leading-snug">{{ $row['product'] ?? '—' }}</p>
+                                    <div class="flex flex-wrap items-center gap-2 mt-1.5">
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant">{{ $row['unit'] ?? '—' }}</span>
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {{ $kind === 'prime' ? 'bg-amber-50 text-amber-900' : 'bg-emerald-50 text-emerald-900' }}">{{ $kindLabel }}</span>
+                                    </div>
+                                </div>
+                                <div class="shrink-0 text-left sm:text-right">
+                                    <span class="text-lg font-extrabold text-on-surface tabular-nums"><span class="text-base font-bold text-on-surface-variant mr-0.5">&#8369;</span>{{ number_format((float) ($row['srp'] ?? 0), 2) }}</span>
+                                    <span class="block text-[10px] font-semibold text-on-surface-variant uppercase tracking-wide">{{ __('zcstats.dti_bnpc_srp_label') }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    @if(! empty($dti_bnpc['pdf_href']))
+                        <a href="{{ $dti_bnpc['pdf_href'] }}" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline shrink-0">{{ __('zcstats.dti_bnpc_open_pdf') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                    @endif
+                </section>
+                @endif
+                </div>
+
                 <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0">
                     <section id="emergency" class="min-w-0 bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-red-200/40 scroll-mt-24 h-full flex flex-col" aria-labelledby="emergency-hotlines-heading">
                     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
@@ -357,42 +520,48 @@
                             {{ __('zcstats.dial_911') }}
                         </a>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-red-800 uppercase tracking-wider mb-3">{{ __('zcstats.universal_emergency') }}</h3>
-                            <p class="text-sm text-on-surface-variant mb-2">{{ __('zcstats.universal_emergency_desc') }}</p>
-                            <a href="tel:911" class="text-lg font-extrabold text-primary hover:underline">911</a>
+                    <div class="flex flex-col gap-4 flex-1">
+                        <div class="flex flex-col sm:flex-row gap-4 sm:items-start">
+                            <div class="flex flex-col gap-4 flex-1 min-w-0">
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-red-800 uppercase tracking-wider mb-3">{{ __('zcstats.universal_emergency') }}</h3>
+                                    <p class="text-sm text-on-surface-variant mb-2">{{ __('zcstats.universal_emergency_desc') }}</p>
+                                    <a href="tel:911" class="text-lg font-extrabold text-primary hover:underline">911</a>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.rescue_ems') }}</h3>
+                                    <p class="text-sm text-on-surface mb-1"><a href="tel:+63629261849" class="font-bold hover:text-primary hover:underline">(062) 926-1849</a></p>
+                                    <p class="text-xs text-on-surface-variant">{{ __('zcstats.rescue_ems_desc') }}</p>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.bfp') }}</h3>
+                                    <ul class="space-y-2 text-sm font-medium text-on-surface">
+                                        <li><a href="tel:+63629912267" class="hover:text-primary hover:underline">(062) 991-2267</a></li>
+                                        <li><a href="tel:+63629915320" class="hover:text-primary hover:underline">(062) 991-5320</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-4 flex-1 min-w-0">
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.cdrrmo') }}</h3>
+                                    <ul class="space-y-2 text-sm font-medium text-on-surface">
+                                        <li><a href="tel:+63629901171" class="hover:text-primary hover:underline">(062) 990-1171</a></li>
+                                        <li><a href="tel:+63629261848" class="hover:text-primary hover:underline">(062) 926-1848</a></li>
+                                        <li><a href="tel:+63629559601" class="hover:text-primary hover:underline">(062) 955-9601</a></li>
+                                        <li class="pt-1 text-on-surface-variant text-xs font-normal">{{ __('zcstats.mobile') }} <a href="tel:+639177113536" class="font-medium text-on-surface hover:text-primary hover:underline">+63 917 711 3536</a> · <a href="tel:+639176560891" class="font-medium text-on-surface hover:text-primary hover:underline">+63 917 656 0891</a></li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.pnp') }}</h3>
+                                    <ul class="space-y-2 text-sm font-medium text-on-surface">
+                                        <li><a href="tel:+63629924385" class="hover:text-primary hover:underline">(062) 992-4385</a></li>
+                                        <li><a href="tel:+63629922300" class="hover:text-primary hover:underline">(062) 992-2300</a></li>
+                                        <li><a href="tel:+63629913000" class="hover:text-primary hover:underline">(062) 991-3000</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.cdrrmo') }}</h3>
-                            <ul class="space-y-2 text-sm font-medium text-on-surface">
-                                <li><a href="tel:+63629901171" class="hover:text-primary hover:underline">(062) 990-1171</a></li>
-                                <li><a href="tel:+63629261848" class="hover:text-primary hover:underline">(062) 926-1848</a></li>
-                                <li><a href="tel:+63629559601" class="hover:text-primary hover:underline">(062) 955-9601</a></li>
-                                <li class="pt-1 text-on-surface-variant text-xs font-normal">{{ __('zcstats.mobile') }} <a href="tel:+639177113536" class="font-medium text-on-surface hover:text-primary hover:underline">+63 917 711 3536</a> · <a href="tel:+639176560891" class="font-medium text-on-surface hover:text-primary hover:underline">+63 917 656 0891</a></li>
-                            </ul>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.rescue_ems') }}</h3>
-                            <p class="text-sm text-on-surface mb-1"><a href="tel:+63629261849" class="font-bold hover:text-primary hover:underline">(062) 926-1849</a></p>
-                            <p class="text-xs text-on-surface-variant">{{ __('zcstats.rescue_ems_desc') }}</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.pnp') }}</h3>
-                            <ul class="space-y-2 text-sm font-medium text-on-surface">
-                                <li><a href="tel:+63629924385" class="hover:text-primary hover:underline">(062) 992-4385</a></li>
-                                <li><a href="tel:+63629922300" class="hover:text-primary hover:underline">(062) 992-2300</a></li>
-                                <li><a href="tel:+63629913000" class="hover:text-primary hover:underline">(062) 991-3000</a></li>
-                            </ul>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.bfp') }}</h3>
-                            <ul class="space-y-2 text-sm font-medium text-on-surface">
-                                <li><a href="tel:+63629912267" class="hover:text-primary hover:underline">(062) 991-2267</a></li>
-                                <li><a href="tel:+63629915320" class="hover:text-primary hover:underline">(062) 991-5320</a></li>
-                            </ul>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10 sm:col-span-2">
                             <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.official_ref') }}</h3>
                             <p class="text-xs text-on-surface-variant leading-relaxed">{{ __('zcstats.official_ref_desc') }}</p>
                             <a href="https://www.zamboangacity.gov.ph/citydisasterriskreduction/operations-and-warning-services/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">{{ __('zcstats.cdrrmo_link') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
@@ -412,39 +581,45 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-primary uppercase tracking-wider mb-3">{{ __('zcstats.hospital_zcmc') }}</h3>
-                            <ul class="space-y-2 text-sm font-medium text-on-surface">
-                                <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_main_line') }}</span><a href="tel:+63629912934" class="hover:text-primary hover:underline">(062) 991-2934</a></li>
-                                <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_mobile') }}</span><a href="tel:+639155365583" class="hover:text-primary hover:underline">0915 536 5583</a></li>
-                                <li class="text-xs text-on-surface-variant pt-1"><span class="font-semibold text-on-surface uppercase tracking-wide">{{ __('zcstats.hospital_chat') }}</span><br><a href="tel:+639772016640" class="font-medium text-on-surface hover:text-primary hover:underline">0977 201 6640</a> · <a href="tel:+639397845513" class="font-medium text-on-surface hover:text-primary hover:underline">0939 784 5513</a></li>
-                            </ul>
-                            <a href="https://zcmc.doh.gov.ph/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">zcmc.doh.gov.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                    <div class="flex flex-col gap-4 flex-1">
+                        <div class="flex flex-col sm:flex-row gap-4 sm:items-start">
+                            <div class="flex flex-col gap-4 flex-1 min-w-0">
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-primary uppercase tracking-wider mb-3">{{ __('zcstats.hospital_zcmc') }}</h3>
+                                    <ul class="space-y-2 text-sm font-medium text-on-surface">
+                                        <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_main_line') }}</span><a href="tel:+63629912934" class="hover:text-primary hover:underline">(062) 991-2934</a></li>
+                                        <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_mobile') }}</span><a href="tel:+639155365583" class="hover:text-primary hover:underline">0915 536 5583</a></li>
+                                        <li class="text-xs text-on-surface-variant pt-1"><span class="font-semibold text-on-surface uppercase tracking-wide">{{ __('zcstats.hospital_chat') }}</span><br><a href="tel:+639772016640" class="font-medium text-on-surface hover:text-primary hover:underline">0977 201 6640</a> · <a href="tel:+639397845513" class="font-medium text-on-surface hover:text-primary hover:underline">0939 784 5513</a></li>
+                                    </ul>
+                                    <a href="https://zcmc.doh.gov.ph/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">zcmc.doh.gov.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.hospital_ciudad') }}</h3>
+                                    <p class="text-xs text-on-surface-variant mb-1 font-semibold uppercase">{{ __('zcstats.hospital_customer_care') }}</p>
+                                    <p class="text-sm font-medium text-on-surface"><a href="tel:+639178546329" class="hover:text-primary hover:underline">(0917) 854-6329</a></p>
+                                    <a href="https://ciudadmedicalzamboanga.com.ph/contact-us/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">ciudadmedicalzamboanga.com.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-4 flex-1 min-w-0">
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.hospital_zrmc') }}</h3>
+                                    <ul class="space-y-2 text-sm font-medium text-on-surface">
+                                        <li><a href="tel:+63629571494" class="hover:text-primary hover:underline">(062) 957-1494</a></li>
+                                        <li><a href="tel:+63629759533" class="hover:text-primary hover:underline">(062) 975-9533</a></li>
+                                    </ul>
+                                    <a href="https://mcs.doh.gov.ph/contact-us/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">mcs.doh.gov.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
+                                    <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.hospital_westmetro') }}</h3>
+                                    <ul class="space-y-2 text-sm font-medium text-on-surface">
+                                        <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_main_line') }}</span><a href="tel:+63629912506" class="hover:text-primary hover:underline">(062) 991-2506</a></li>
+                                        <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_emergency_line') }}</span><a href="tel:+639989783820" class="hover:text-primary hover:underline">0998 978 3820</a></li>
+                                    </ul>
+                                    <a href="https://new.westmetro.com.ph/connect-with-us/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">westmetro.com.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.hospital_zrmc') }}</h3>
-                            <ul class="space-y-2 text-sm font-medium text-on-surface">
-                                <li><a href="tel:+63629571494" class="hover:text-primary hover:underline">(062) 957-1494</a></li>
-                                <li><a href="tel:+63629759533" class="hover:text-primary hover:underline">(062) 975-9533</a></li>
-                            </ul>
-                            <a href="https://mcs.doh.gov.ph/contact-us/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">mcs.doh.gov.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.hospital_ciudad') }}</h3>
-                            <p class="text-xs text-on-surface-variant mb-1 font-semibold uppercase">{{ __('zcstats.hospital_customer_care') }}</p>
-                            <p class="text-sm font-medium text-on-surface"><a href="tel:+639178546329" class="hover:text-primary hover:underline">(0917) 854-6329</a></p>
-                            <a href="https://ciudadmedicalzamboanga.com.ph/contact-us/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">ciudadmedicalzamboanga.com.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
-                            <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.hospital_westmetro') }}</h3>
-                            <ul class="space-y-2 text-sm font-medium text-on-surface">
-                                <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_main_line') }}</span><a href="tel:+63629912506" class="hover:text-primary hover:underline">(062) 991-2506</a></li>
-                                <li><span class="text-on-surface-variant text-xs font-semibold uppercase block mb-0.5">{{ __('zcstats.hospital_emergency_line') }}</span><a href="tel:+639989783820" class="hover:text-primary hover:underline">0998 978 3820</a></li>
-                            </ul>
-                            <a href="https://new.westmetro.com.ph/connect-with-us/" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">westmetro.com.ph<span class="material-symbols-outlined text-sm">open_in_new</span></a>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10 sm:col-span-2">
                             <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-3">{{ __('zcstats.hospital_brent') }}</h3>
                             <ul class="space-y-2 text-sm font-medium text-on-surface">
                                 <li><a href="tel:+63629901963" class="hover:text-primary hover:underline">(062) 990-1963</a></li>
@@ -452,7 +627,7 @@
                             </ul>
                             <a href="https://healthspace.ph/facility/brent-hospital-and-colleges-inc-FCD01417/details" class="inline-flex items-center gap-1 mt-3 text-xs font-bold text-primary hover:underline" target="_blank" rel="noopener noreferrer">{{ __('zcstats.hospital_brent_ref') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
                         </div>
-                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10 sm:col-span-2">
+                        <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/10">
                             <p class="text-xs text-on-surface-variant leading-relaxed">{{ __('zcstats.hospitals_note') }}</p>
                         </div>
                     </div>
@@ -483,6 +658,10 @@
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl">local_gas_station</span>
                     <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_fuel') }}</span>
                 </a>
+                <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high/80 min-w-[3.25rem] shrink-0 active:scale-95 transition-all" href="#prices">
+                    <span class="material-symbols-outlined text-[22px] sm:text-2xl">shopping_basket</span>
+                    <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_prices') }}</span>
+                </a>
                 <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high/80 min-w-[3.25rem] shrink-0 active:scale-95 transition-all" href="#emergency">
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl">emergency</span>
                     <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_911') }}</span>
@@ -501,4 +680,61 @@
     </nav>
 
     <script type="application/json" id="zc-search-index">@json($search_index ?? [])</script>
+
+    <script>
+    (function() {
+        var input = document.getElementById('da-prices-filter');
+        if (!input) return;
+        var rows = document.querySelectorAll('.da-price-row');
+        var cols = document.querySelectorAll('.da-prices-col');
+        var noResults = document.getElementById('da-prices-no-results');
+
+        input.addEventListener('input', function() {
+            var q = this.value.trim().toLowerCase();
+            var visible = 0;
+
+            rows.forEach(function(row) {
+                var text = row.getAttribute('data-filter-text') || '';
+                var show = q === '' || text.indexOf(q) !== -1;
+                row.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+
+            cols.forEach(function(col) {
+                var hasVisible = col.querySelector('.da-price-row:not([style*="display: none"])');
+                col.style.display = hasVisible ? '' : 'none';
+            });
+
+            if (noResults) {
+                noResults.style.display = (visible === 0 && q !== '') ? '' : 'none';
+                noResults.classList.toggle('hidden', visible > 0 || q === '');
+            }
+        });
+    })();
+    </script>
+    <script>
+    (function() {
+        var input = document.getElementById('dti-bnpc-filter');
+        if (!input) return;
+        var rows = document.querySelectorAll('.dti-srp-row');
+        var noResults = document.getElementById('dti-bnpc-no-results');
+
+        input.addEventListener('input', function() {
+            var q = this.value.trim().toLowerCase();
+            var visible = 0;
+
+            rows.forEach(function(row) {
+                var text = row.getAttribute('data-filter-text') || '';
+                var show = q === '' || text.indexOf(q) !== -1;
+                row.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+
+            if (noResults) {
+                noResults.style.display = (visible === 0 && q !== '') ? '' : 'none';
+                noResults.classList.toggle('hidden', visible > 0 || q === '');
+            }
+        });
+    })();
+    </script>
 @endsection

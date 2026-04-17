@@ -1,0 +1,736 @@
+{
+    "bulletin_title": "BNPC SRP Bulletin",
+    "effective_period": "2026-02-02 — 2026-04-16",
+    "source_note": "Suggested Retail Prices — Basic Necessities and Prime Commodities (DTI). Verify against the official PDF for revisions.",
+    "pdf_href": "\/docs\/dti-bnpc-srp-bulletin.pdf",
+    "items": [
+        {
+            "category": "Beef loaf",
+            "product": "Argentina",
+            "unit": "150 g",
+            "srp": 22,
+            "kind": "prime"
+        },
+        {
+            "category": "Beef loaf",
+            "product": "Argentina",
+            "unit": "170 g",
+            "srp": 25,
+            "kind": "prime"
+        },
+        {
+            "category": "Beef loaf",
+            "product": "Bingo",
+            "unit": "150 g",
+            "srp": 19.5,
+            "kind": "prime"
+        },
+        {
+            "category": "Beef loaf",
+            "product": "El Rancho — SMKT",
+            "unit": "155 g",
+            "srp": 19.5,
+            "kind": "prime"
+        },
+        {
+            "category": "Beef loaf",
+            "product": "Purefoods",
+            "unit": "150 g",
+            "srp": 18.15,
+            "kind": "prime"
+        },
+        {
+            "category": "Beef loaf",
+            "product": "Purefoods",
+            "unit": "200 g",
+            "srp": 24.9,
+            "kind": "prime"
+        },
+        {
+            "category": "Bread",
+            "product": "Pinoy Pandesal (10 pcs. \/ pack)",
+            "unit": "250 g",
+            "srp": 27.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Bread",
+            "product": "Pinoy Tasty",
+            "unit": "450 g",
+            "srp": 44,
+            "kind": "basic"
+        },
+        {
+            "category": "COFFEE 3-in-1 ORIGINAL",
+            "product": "Tide Bar ORIGINAL SCENT",
+            "unit": "380g",
+            "srp": 24,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "555 Bonus Pack",
+            "unit": "155 g",
+            "srp": 19.65,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Atami EOC",
+            "unit": "155 g",
+            "srp": 21.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Atami Regular Lid",
+            "unit": "155 g",
+            "srp": 20.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Fidel Free Flowing (Green) — Luzon",
+            "unit": "500 g",
+            "srp": 25,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "King Cup Regular Lid",
+            "unit": "155 g",
+            "srp": 18,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Lucky 7",
+            "unit": "155 g",
+            "srp": 19.65,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Mariko Regular Lid",
+            "unit": "155 g",
+            "srp": 19.75,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Mikado EOC",
+            "unit": "155 g",
+            "srp": 21.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Mikado Regular Lid",
+            "unit": "155 g",
+            "srp": 20.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Saba Phil. Sardines — Luzon \/ Visayas \/ Mindanao",
+            "unit": "155 g",
+            "srp": 17.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Saba Phil. Sardines — NCR",
+            "unit": "155 g",
+            "srp": 17.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Sallenas Regular Lid",
+            "unit": "155 g",
+            "srp": 18.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Toyo Bonus Green EOC",
+            "unit": "155 g",
+            "srp": 19.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Canned sardines in tomato sauce",
+            "product": "Toyo Bonus Green Regular Lid",
+            "unit": "155 g",
+            "srp": 18.7,
+            "kind": "basic"
+        },
+        {
+            "category": "Coffee 3-in-1 original",
+            "product": "Blend 45 3-in-1 Original",
+            "unit": "18 g",
+            "srp": 5.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Coffee 3-in-1 original",
+            "product": "Café Puro",
+            "unit": "17 g",
+            "srp": 4.7,
+            "kind": "basic"
+        },
+        {
+            "category": "Coffee 3-in-1 original",
+            "product": "Great Taste Original Twin Pack",
+            "unit": "33 g",
+            "srp": 10,
+            "kind": "basic"
+        },
+        {
+            "category": "Coffee 3-in-1 original",
+            "product": "Kopiko Black",
+            "unit": "30 g",
+            "srp": 8.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Coffee 3-in-1 original",
+            "product": "Nescafe Original",
+            "unit": "20 g",
+            "srp": 7.75,
+            "kind": "basic"
+        },
+        {
+            "category": "Coffee 3-in-1 original",
+            "product": "San Mig Coffee 3-in-1 Original",
+            "unit": "20 g",
+            "srp": 7,
+            "kind": "basic"
+        },
+        {
+            "category": "Condensed milk",
+            "product": "Family's Budget Pack Plain",
+            "unit": "130 g",
+            "srp": 15.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Corned beef",
+            "product": "Argentina",
+            "unit": "150 g",
+            "srp": 36.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Corned beef",
+            "product": "Argentina",
+            "unit": "175 g",
+            "srp": 41.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Corned beef",
+            "product": "Bingo",
+            "unit": "150 g",
+            "srp": 23,
+            "kind": "prime"
+        },
+        {
+            "category": "Corned beef",
+            "product": "El Rancho — SMKT",
+            "unit": "150 g",
+            "srp": 31.25,
+            "kind": "prime"
+        },
+        {
+            "category": "Corned beef",
+            "product": "Star Corned Beef",
+            "unit": "150 g",
+            "srp": 34,
+            "kind": "prime"
+        },
+        {
+            "category": "Corned beef",
+            "product": "Winner — SMKT",
+            "unit": "150 g",
+            "srp": 33.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Corned beef",
+            "product": "Young's Town Premium",
+            "unit": "150 g",
+            "srp": 34.25,
+            "kind": "prime"
+        },
+        {
+            "category": "Evaporated milk",
+            "product": "Angel Filled Milk",
+            "unit": "370 mL",
+            "srp": 48,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized rock salt",
+            "product": "Fidel Coarse (Red) — Luzon",
+            "unit": "250 g",
+            "srp": 11,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized rock salt",
+            "product": "Fidel Coarse (Red) — Luzon",
+            "unit": "500 g",
+            "srp": 21.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized rock salt",
+            "product": "Lasap Rock Salt",
+            "unit": "250 g",
+            "srp": 7.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized rock salt",
+            "product": "Lasap Rock Salt",
+            "unit": "500 g",
+            "srp": 13.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized rock salt",
+            "product": "Lasap Rock Salt",
+            "unit": "1 kg",
+            "srp": 25,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized salt",
+            "product": "Fidel Refined (Blue) — Luzon",
+            "unit": "250 g",
+            "srp": 11.75,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized salt",
+            "product": "Fidel Refined (Blue) — Luzon",
+            "unit": "500 g",
+            "srp": 23,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized salt",
+            "product": "Lasap Iodized Salt",
+            "unit": "100 g",
+            "srp": 4.75,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized salt",
+            "product": "Lasap Iodized Salt",
+            "unit": "250 g",
+            "srp": 9.75,
+            "kind": "basic"
+        },
+        {
+            "category": "Iodized salt",
+            "product": "Lasap Iodized Salt",
+            "unit": "500 g",
+            "srp": 17.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Luncheon meat",
+            "product": "CDO Chinese Style",
+            "unit": "165 g",
+            "srp": 41,
+            "kind": "prime"
+        },
+        {
+            "category": "Luncheon meat",
+            "product": "Purefoods Chinese Style",
+            "unit": "165 g",
+            "srp": 40,
+            "kind": "prime"
+        },
+        {
+            "category": "Meat loaf",
+            "product": "555",
+            "unit": "150 g",
+            "srp": 19.5,
+            "kind": "prime"
+        },
+        {
+            "category": "Meat loaf",
+            "product": "Argentina",
+            "unit": "150 g",
+            "srp": 23.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Meat loaf",
+            "product": "Argentina",
+            "unit": "170 g",
+            "srp": 25.25,
+            "kind": "prime"
+        },
+        {
+            "category": "Meat loaf",
+            "product": "CDO",
+            "unit": "150 g",
+            "srp": 21.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Meat loaf",
+            "product": "Winner — Supermarket (SMKT)",
+            "unit": "150 g",
+            "srp": 18,
+            "kind": "prime"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Hidden Spring",
+            "unit": "500 mL",
+            "srp": 12.1,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Refresh",
+            "unit": "350 mL",
+            "srp": 6.6,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Robinsons Mall",
+            "unit": "500 mL",
+            "srp": 10.45,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Summit",
+            "unit": "350 mL",
+            "srp": 10,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Summit",
+            "unit": "500 mL",
+            "srp": 12,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Summit",
+            "unit": "1 L",
+            "srp": 19.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Summit",
+            "unit": "6 L",
+            "srp": 75,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Supersavers Nature's Pure",
+            "unit": "330 mL",
+            "srp": 7.15,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Supersavers Nature's Pure",
+            "unit": "500 mL",
+            "srp": 8.7,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Viva — Nationwide",
+            "unit": "500 mL",
+            "srp": 13,
+            "kind": "basic"
+        },
+        {
+            "category": "Mineralized water",
+            "product": "Viva — Nationwide",
+            "unit": "1 L",
+            "srp": 19,
+            "kind": "basic"
+        },
+        {
+            "category": "Patis (PET)",
+            "product": "Datu Puti — SMKT",
+            "unit": "350 mL",
+            "srp": 27,
+            "kind": "prime"
+        },
+        {
+            "category": "Patis (PET)",
+            "product": "Datu Puti — WMKT",
+            "unit": "350 mL",
+            "srp": 28.25,
+            "kind": "prime"
+        },
+        {
+            "category": "Patis (PET)",
+            "product": "Lorins PET Bottle",
+            "unit": "350 mL",
+            "srp": 25,
+            "kind": "prime"
+        },
+        {
+            "category": "Patis (PET)",
+            "product": "Nelicom Special — SMKT",
+            "unit": "350 mL",
+            "srp": 30.5,
+            "kind": "prime"
+        },
+        {
+            "category": "Patis (PET)",
+            "product": "Nelicom Special — WMKT",
+            "unit": "350 mL",
+            "srp": 31.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Patis (PET)",
+            "product": "Silver Swan Special",
+            "unit": "350 mL",
+            "srp": 24.5,
+            "kind": "prime"
+        },
+        {
+            "category": "Powdered milk",
+            "product": "Alaska Fortified Powdered Milk Drink",
+            "unit": "165 g",
+            "srp": 44,
+            "kind": "basic"
+        },
+        {
+            "category": "Powdered milk",
+            "product": "Bear Brand",
+            "unit": "135 g",
+            "srp": 50,
+            "kind": "basic"
+        },
+        {
+            "category": "Powdered milk",
+            "product": "Birch Tree Full Cream Milk",
+            "unit": "150 g",
+            "srp": 70.75,
+            "kind": "basic"
+        },
+        {
+            "category": "Powdered milk",
+            "product": "Jersey Fortified Instant Powdered Milk Drink",
+            "unit": "300 g",
+            "srp": 96.25,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Absolute",
+            "unit": "1 L",
+            "srp": 25,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Absolute",
+            "unit": "6 L",
+            "srp": 82,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Magnolia Pure",
+            "unit": "355 mL",
+            "srp": 8.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Magnolia Pure",
+            "unit": "500 mL",
+            "srp": 10.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Magnolia Pure",
+            "unit": "1 L",
+            "srp": 19.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Natures Spring",
+            "unit": "500 mL",
+            "srp": 10.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Natures Spring",
+            "unit": "1 L",
+            "srp": 16.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Refresh",
+            "unit": "500 mL",
+            "srp": 6.75,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "SM Bonus",
+            "unit": "300 mL",
+            "srp": 5,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "SM Bonus",
+            "unit": "6.6 L",
+            "srp": 54.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Wilkins",
+            "unit": "7 L",
+            "srp": 88,
+            "kind": "basic"
+        },
+        {
+            "category": "Purified water",
+            "product": "Wilkins Pure",
+            "unit": "500 mL",
+            "srp": 11,
+            "kind": "basic"
+        },
+        {
+            "category": "Soy sauce (PET)",
+            "product": "Datu Puti — SMKT",
+            "unit": "350 mL",
+            "srp": 19.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Soy sauce (PET)",
+            "product": "Datu Puti — WMKT",
+            "unit": "350 mL",
+            "srp": 20.5,
+            "kind": "prime"
+        },
+        {
+            "category": "Soy sauce (PET)",
+            "product": "Silver Swan — SMKT",
+            "unit": "350 mL",
+            "srp": 20.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Tide Bar ORIGINAL SCENT",
+            "product": "SM Bonus",
+            "unit": "325mL",
+            "srp": 6.5,
+            "kind": "basic"
+        },
+        {
+            "category": "Tide Bar ORIGINAL SCENT",
+            "product": "Wilkins",
+            "unit": "330mL",
+            "srp": 12,
+            "kind": "basic"
+        },
+        {
+            "category": "Toilet soap",
+            "product": "Green Cross (Pure Care)",
+            "unit": "55 g",
+            "srp": 15,
+            "kind": "prime"
+        },
+        {
+            "category": "Toilet soap",
+            "product": "Green Cross (Pure Care)",
+            "unit": "85 g",
+            "srp": 25.75,
+            "kind": "prime"
+        },
+        {
+            "category": "Toilet soap",
+            "product": "Green Cross (Pure Care)",
+            "unit": "125 g",
+            "srp": 37.25,
+            "kind": "prime"
+        },
+        {
+            "category": "Toilet soap",
+            "product": "Safeguard Pure White",
+            "unit": "55 g",
+            "srp": 22,
+            "kind": "prime"
+        },
+        {
+            "category": "Toilet soap",
+            "product": "Safeguard Pure White",
+            "unit": "82 g",
+            "srp": 31.25,
+            "kind": "prime"
+        },
+        {
+            "category": "Toilet soap",
+            "product": "Safeguard Pure White",
+            "unit": "119 g",
+            "srp": 49,
+            "kind": "prime"
+        },
+        {
+            "category": "Vinegar (PET \/ gin bottle)",
+            "product": "Absolute",
+            "unit": "350 mL",
+            "srp": 12,
+            "kind": "prime"
+        },
+        {
+            "category": "Vinegar (PET \/ gin bottle)",
+            "product": "Absolute",
+            "unit": "500 mL",
+            "srp": 16.25,
+            "kind": "prime"
+        },
+        {
+            "category": "Vinegar (PET \/ gin bottle)",
+            "product": "SM Bonus",
+            "unit": "500 mL",
+            "srp": 8.5,
+            "kind": "prime"
+        },
+        {
+            "category": "Vinegar (PET \/ gin bottle)",
+            "product": "Wilkins",
+            "unit": "500 mL",
+            "srp": 17,
+            "kind": "prime"
+        },
+        {
+            "category": "Vinegar (PET \/ gin bottle)",
+            "product": "Wilkins",
+            "unit": "1 L",
+            "srp": 25,
+            "kind": "prime"
+        }
+    ]
+}

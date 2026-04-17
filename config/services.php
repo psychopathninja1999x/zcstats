@@ -100,6 +100,18 @@ return [
     ],
 
     /*
+    | DA Price Monitoring — scrapes https://www.da.gov.ph/price-monitoring/ for
+    | Weekly Average Prices and Daily Price Index PDFs.
+    */
+    'da_prices' => [
+        'url' => env('DA_PRICES_URL', 'https://www.da.gov.ph/price-monitoring/'),
+        'cache_ttl' => (int) env('DA_PRICES_CACHE_SECONDS', 3600),
+        'max_daily' => (int) env('DA_PRICES_MAX_DAILY', 7),
+        'max_weekly' => (int) env('DA_PRICES_MAX_WEEKLY', 4),
+        'verify_ssl' => filter_var(env('DA_PRICES_VERIFY_SSL', 'true'), FILTER_VALIDATE_BOOLEAN),
+    ],
+
+    /*
     | PCSO lotto: optional JSON (PCSO_LOTTO_API_URL), else HTML scrape of PCSO_LOTTO_PAGE_URL (default lottopcso.com).
     | JSON success uses PCSO_LOTTO_PCSO_OFFICIAL_URL for the dashboard “official” link.
     */
