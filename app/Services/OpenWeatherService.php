@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +42,8 @@ class OpenWeatherService
 
             $w = $weather->json();
             $main = $w['main'] ?? [];
-            $weatherItem = $w['weather'][0] ?? [];
+            $weatherItem = is_array($w['weather'][0] ?? null) ? $w['weather'][0] : [];
+            $icon = (string) ($weatherItem['icon'] ?? '');
 
             $air = $this->httpClient()
                 ->get('https://api.openweathermap.org/data/2.5/air_pollution', [
@@ -83,6 +85,9 @@ class OpenWeatherService
                 'updated_at' => $updatedAt,
                 'aqi' => $aqi,
                 'aqi_label' => $aqiLabel,
+                'weather_icon' => $icon,
+                'is_night' => $icon !== '' && str_ends_with($icon, 'n'),
+                'weather_effect' => $this->normalizeWeatherEffect($weatherItem),
             ];
         } catch (\Throwable $e) {
             report($e);
@@ -91,7 +96,51 @@ class OpenWeatherService
         }
     }
 
-    private function httpClient(): \Illuminate\Http\Client\PendingRequest
+    /**
+     * Map OpenWeather condition codes to dashboard animation presets.
+     *
+     * @param  array<string, mixed>  $weatherItem
+     */
+    private function normalizeWeatherEffect(array $weatherItem): string
+    {
+        $id = (int) ($weatherItem['id'] ?? 0);
+        $main = strtoupper((string) ($weatherItem['main'] ?? ''));
+
+        if ($id >= 200 && $id < 300) {
+            return 'thunderstorm';
+        }
+        if ($id >= 300 && $id < 400) {
+            return 'drizzle';
+        }
+        if ($id >= 500 && $id < 600) {
+            return 'rain';
+        }
+        if ($id >= 600 && $id < 700) {
+            return 'snow';
+        }
+        if ($id >= 701 && $id < 800) {
+            return 'fog';
+        }
+        if ($id === 800) {
+            return 'clear';
+        }
+        if ($id >= 801 && $id <= 804) {
+            return 'clouds';
+        }
+
+        return match ($main) {
+            'THUNDERSTORM' => 'thunderstorm',
+            'DRIZZLE' => 'drizzle',
+            'RAIN' => 'rain',
+            'SNOW' => 'snow',
+            'MIST', 'SMOKE', 'HAZE', 'DUST', 'FOG', 'SAND', 'ASH', 'SQUALL', 'TORNADO' => 'fog',
+            'CLEAR' => 'clear',
+            'CLOUDS' => 'clouds',
+            default => 'clouds',
+        };
+    }
+
+    private function httpClient(): PendingRequest
     {
         $options = [];
         if (! config('services.openweather.verify_ssl', true)) {

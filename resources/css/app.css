@@ -195,11 +195,320 @@
         }
     }
 
+    /* Live weather hero — condition-based motion (OpenWeather `weather_effect`). */
+    .zc-weather-fx {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+        pointer-events: none;
+        border-radius: inherit;
+    }
+
+    .zc-wx-layer {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.65s ease;
+    }
+
+    .zc-weather-fx--clouds .zc-wx-clouds {
+        opacity: 1;
+    }
+
+    .zc-weather-fx--clear .zc-wx-clear {
+        opacity: 1;
+    }
+
+    .zc-weather-fx--rain .zc-wx-rain {
+        opacity: 1;
+    }
+
+    .zc-weather-fx--drizzle .zc-wx-drizzle {
+        opacity: 1;
+    }
+
+    .zc-weather-fx--thunderstorm .zc-wx-rain {
+        opacity: 1;
+    }
+
+    .zc-weather-fx--thunderstorm .zc-wx-lightning {
+        opacity: 1;
+    }
+
+    .zc-weather-fx--snow .zc-wx-snow {
+        opacity: 1;
+    }
+
+    .zc-weather-fx--fog .zc-wx-fog {
+        opacity: 1;
+    }
+
+    /* Drifting clouds */
+    .zc-wx-clouds .zc-cloud {
+        position: absolute;
+        display: block;
+        width: min(58%, 24rem);
+        height: min(30%, 10rem);
+        border-radius: 50%;
+        background: radial-gradient(
+            ellipse 85% 72% at 42% 48%,
+            rgba(255, 255, 255, 0.55) 0%,
+            rgba(255, 255, 255, 0.12) 52%,
+            transparent 72%
+        );
+        filter: blur(14px);
+        will-change: transform;
+        animation: zc-cloud-drift linear infinite;
+    }
+
+    .zc-cloud--1 {
+        top: 5%;
+        left: -18%;
+        animation-duration: 52s;
+    }
+
+    .zc-cloud--2 {
+        top: 12%;
+        left: 25%;
+        width: min(44%, 18rem);
+        height: min(22%, 7rem);
+        opacity: 0.88;
+        animation-duration: 68s;
+        animation-delay: -14s;
+    }
+
+    .zc-cloud--3 {
+        top: 2%;
+        left: 48%;
+        width: min(36%, 15rem);
+        height: min(18%, 6rem);
+        opacity: 0.72;
+        animation-duration: 40s;
+        animation-delay: -22s;
+    }
+
+    @keyframes zc-cloud-drift {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(125%);
+        }
+    }
+
+    /* Rain */
+    .zc-wx-rain::before {
+        content: '';
+        position: absolute;
+        inset: -30% 0 0 0;
+        background-image: repeating-linear-gradient(
+            163deg,
+            transparent,
+            transparent 9px,
+            rgba(255, 255, 255, 0.16) 9px,
+            rgba(255, 255, 255, 0.16) 10px
+        );
+        animation: zc-rain-fall 0.55s linear infinite;
+    }
+
+    @keyframes zc-rain-fall {
+        0% {
+            transform: translateY(-24px);
+        }
+        100% {
+            transform: translateY(24px);
+        }
+    }
+
+    /* Light rain / drizzle */
+    .zc-wx-drizzle::before {
+        content: '';
+        position: absolute;
+        inset: -20% 0 0 0;
+        background-image: repeating-linear-gradient(
+            168deg,
+            transparent,
+            transparent 14px,
+            rgba(255, 255, 255, 0.09) 14px,
+            rgba(255, 255, 255, 0.09) 14.5px
+        );
+        animation: zc-drizzle-fall 1.15s linear infinite;
+    }
+
+    @keyframes zc-drizzle-fall {
+        0% {
+            transform: translateY(-18px);
+        }
+        100% {
+            transform: translateY(18px);
+        }
+    }
+
+    /* Snow */
+    .zc-wx-snow::before {
+        content: '';
+        position: absolute;
+        inset: -15% -10% 0 -10%;
+        background-image:
+            radial-gradient(1.4px 1.4px at 8% 12%, rgba(255, 255, 255, 0.95), transparent),
+            radial-gradient(1.2px 1.2px at 32% 28%, rgba(255, 255, 255, 0.85), transparent),
+            radial-gradient(1.5px 1.5px at 71% 8%, rgba(255, 255, 255, 0.9), transparent),
+            radial-gradient(1px 1px at 55% 45%, rgba(255, 255, 255, 0.8), transparent),
+            radial-gradient(1.3px 1.3px at 88% 32%, rgba(255, 255, 255, 0.88), transparent),
+            radial-gradient(1.2px 1.2px at 18% 62%, rgba(255, 255, 255, 0.82), transparent),
+            radial-gradient(1.4px 1.4px at 48% 78%, rgba(255, 255, 255, 0.9), transparent),
+            radial-gradient(1px 1px at 92% 68%, rgba(255, 255, 255, 0.75), transparent);
+        background-size:
+            120% 120%,
+            115% 115%,
+            130% 130%,
+            110% 110%,
+            125% 125%,
+            118% 118%,
+            122% 122%,
+            116% 116%;
+        animation: zc-snow-drift 12s linear infinite;
+        opacity: 0.85;
+    }
+
+    @keyframes zc-snow-drift {
+        0% {
+            background-position:
+                0 0,
+                0 0,
+                0 0,
+                0 0,
+                0 0,
+                0 0,
+                0 0,
+                0 0;
+        }
+        100% {
+            background-position:
+                0 140px,
+                -20px 120px,
+                15px 160px,
+                -10px 130px,
+                25px 150px,
+                -15px 125px,
+                10px 145px,
+                -8px 135px;
+        }
+    }
+
+    /* Fog / haze */
+    .zc-wx-fog::before,
+    .zc-wx-fog::after {
+        content: '';
+        position: absolute;
+        left: -25%;
+        width: 150%;
+        height: 42%;
+        top: 38%;
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.22) 35%,
+            rgba(255, 255, 255, 0.32) 50%,
+            rgba(255, 255, 255, 0.2) 65%,
+            transparent 100%
+        );
+        filter: blur(22px);
+        animation: zc-fog-drift 22s ease-in-out infinite alternate;
+    }
+
+    .zc-wx-fog::after {
+        top: 52%;
+        height: 38%;
+        opacity: 0.75;
+        animation-duration: 28s;
+        animation-delay: -6s;
+    }
+
+    @keyframes zc-fog-drift {
+        0% {
+            transform: translateX(-4%) scaleY(1);
+        }
+        100% {
+            transform: translateX(4%) scaleY(1.05);
+        }
+    }
+
+    /* Clear sky — soft sun or moon glow */
+    .zc-wx-clear::before {
+        content: '';
+        position: absolute;
+        width: min(55%, 18rem);
+        height: min(55%, 18rem);
+        top: -8%;
+        right: -6%;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 224, 160, 0.5) 0%, rgba(255, 200, 120, 0.15) 42%, transparent 68%);
+        animation: zc-sun-glow 10s ease-in-out infinite alternate;
+    }
+
+    .zc-weather-fx--night.zc-weather-fx--clear .zc-wx-clear::before {
+        background: radial-gradient(circle at 35% 40%, rgba(230, 238, 255, 0.45) 0%, rgba(180, 200, 255, 0.12) 45%, transparent 62%);
+        animation-duration: 14s;
+    }
+
+    @keyframes zc-sun-glow {
+        0% {
+            opacity: 0.85;
+            transform: scale(1);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1.06);
+        }
+    }
+
+    /* Lightning (paired with rain in thunderstorm) */
+    .zc-wx-lightning {
+        mix-blend-mode: screen;
+        background-color: transparent;
+    }
+
+    .zc-weather-fx--thunderstorm .zc-wx-lightning {
+        animation: zc-lightning 5.2s ease-in-out infinite;
+    }
+
+    @keyframes zc-lightning {
+        0%,
+        100%,
+        2.4%,
+        2.7%,
+        52%,
+        52.6% {
+            background-color: transparent;
+        }
+        2.55% {
+            background-color: rgba(255, 255, 255, 0.42);
+        }
+        2.62% {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        52.35% {
+            background-color: rgba(220, 235, 255, 0.32);
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .zcwd-water-fx::before,
         .zcwd-water-fx::after,
         .zcwd-water-wave {
             animation: none !important;
+        }
+
+        .zc-weather-fx *,
+        .zc-weather-fx *::before,
+        .zc-weather-fx *::after {
+            animation: none !important;
+        }
+
+        .zc-wx-layer {
+            transition: none;
         }
     }
 

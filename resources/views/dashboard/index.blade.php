@@ -62,26 +62,51 @@
                                 <span class="material-symbols-outlined text-sm">schedule</span>
                                 <span class="text-xs font-medium">{{ __('zcstats.last_updated') }} @if($weather){{ $weather['updated_at']->format('M j, g:i A') }}@else{{ __('zcstats.weather_unavailable') }}@endif</span>
                             </div>
-                            <div class="flex items-center gap-2 text-on-surface-variant">
-                                <div class="w-2 h-2 rounded-full @if($weather) bg-green-600 @else bg-outline-variant @endif" aria-hidden="true"></div>
-                                <span class="font-bold text-xs uppercase">{{ __('zcstats.overall_status') }} @if($weather){{ __('zcstats.status_live_weather') }}@else{{ __('zcstats.status_pending') }}@endif</span>
-                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                @php
+                    $weatherFx = $weather ? ($weather['weather_effect'] ?? 'clouds') : null;
+                    $weatherNight = $weather && ! empty($weather['is_night']);
+                @endphp
                 <div id="weather" class="md:col-span-8 min-h-[380px] md:h-[420px] rounded-3xl overflow-hidden relative group shadow-[0_8px_48px_rgba(25,28,32,0.06)] scroll-mt-24">
-                    <div class="absolute inset-0 hero-placeholder-bg"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/25 to-transparent flex flex-col justify-end p-8 md:p-10">
+                    <div class="absolute inset-0 z-0 hero-placeholder-bg"></div>
+                    @if($weatherFx)
+                        <div @class([
+                            'zc-weather-fx',
+                            'zc-weather-fx--'.$weatherFx,
+                            'zc-weather-fx--night' => $weatherFx === 'clear' && $weatherNight,
+                        ]) aria-hidden="true">
+                            <div class="zc-wx-layer zc-wx-clouds">
+                                <span class="zc-cloud zc-cloud--1"></span>
+                                <span class="zc-cloud zc-cloud--2"></span>
+                                <span class="zc-cloud zc-cloud--3"></span>
+                            </div>
+                            <div class="zc-wx-layer zc-wx-rain" aria-hidden="true"></div>
+                            <div class="zc-wx-layer zc-wx-drizzle" aria-hidden="true"></div>
+                            <div class="zc-wx-layer zc-wx-snow" aria-hidden="true"></div>
+                            <div class="zc-wx-layer zc-wx-fog" aria-hidden="true"></div>
+                            <div class="zc-wx-layer zc-wx-clear" aria-hidden="true"></div>
+                            <div class="zc-wx-layer zc-wx-lightning" aria-hidden="true"></div>
+                        </div>
+                    @endif
+                    <div class="absolute inset-0 z-[2] bg-gradient-to-t from-primary/95 via-primary/25 to-transparent flex flex-col justify-end p-8 md:p-10">
                         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
                             <div>
                                 <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold uppercase mb-4 border border-white/10">
                                     <span class="material-symbols-outlined text-sm">thermostat</span>
                                     {{ __('zcstats.live_weather') }}
                                 </div>
-                                <h2 class="text-white text-3xl md:text-4xl font-extrabold mb-2">@if($weather){{ $weather['location'] }}@if($weather['country']), {{ $weather['country'] }}@endif @else{{ __('zcstats.station_tbd') }}@endif</h2>
+                                <h2 class="text-white text-3xl md:text-4xl font-extrabold mb-2">
+                                    @if($weather)
+                                        {{ $weather['location'] }}@if($weather['country']), {{ $weather['country'] }}@endif
+                                    @else
+                                        {{ __('zcstats.station_tbd') }}
+                                    @endif
+                                </h2>
                                 <p class="text-white/85 font-medium max-w-md text-sm md:text-base">@if($weather){{ __('zcstats.weather_ok') }}@else{{ __('zcstats.weather_placeholder') }}@endif</p>
                             </div>
                             <div class="flex flex-col items-end gap-3 text-right text-white">

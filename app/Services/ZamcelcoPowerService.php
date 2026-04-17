@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -82,11 +83,16 @@ class ZamcelcoPowerService
                 }
             }
 
+            $visibleRates = array_values(array_filter(
+                $normalized,
+                fn (array $row): bool => ! $this->isHighVoltageRateHidden($row)
+            ));
+
             return [
                 'current_month' => isset($data['current_month']) ? (string) $data['current_month'] : null,
                 'previous_month' => isset($data['previous_month']) ? (string) $data['previous_month'] : null,
                 'next_month' => isset($data['next_month']) ? (string) $data['next_month'] : null,
-                'rates' => $normalized,
+                'rates' => $visibleRates,
                 'residential' => $residential,
                 'api_source' => $url,
             ];
@@ -97,7 +103,22 @@ class ZamcelcoPowerService
         }
     }
 
-    private function httpClient(): \Illuminate\Http\Client\PendingRequest
+    /**
+     * High Voltage row is hidden from the dashboard until we surface it again.
+     *
+     * @param  array{code: string, description: string, ...}  $row
+     */
+    private function isHighVoltageRateHidden(array $row): bool
+    {
+        $code = strtoupper((string) ($row['code'] ?? ''));
+        if (in_array($code, ['HV', 'HVT', 'HVOLT'], true)) {
+            return true;
+        }
+
+        return str_contains(strtolower((string) ($row['description'] ?? '')), 'high voltage');
+    }
+
+    private function httpClient(): PendingRequest
     {
         $options = [];
         if (! config('services.zamcelco.verify_ssl', true)) {
