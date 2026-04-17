@@ -33,7 +33,8 @@ class ZcstatsWebpushVapidCommand extends Command
         $this->line('WEBPUSH_VAPID_PRIVATE_KEY='.$keys['privateKey']);
         $this->line('WEBPUSH_VAPID_SUBJECT=mailto:you@example.com');
         $this->newLine();
-        $this->comment('Then run: php artisan migrate');
+        $this->comment('Safari / Apple push: if you later see 403 BadJwtToken, try WEBPUSH_VAPID_SUBJECT=https://your-production-host (no path).');
+        $this->comment('Then run: php artisan migrate && php artisan zcstats:webpush-verify');
 
         return self::SUCCESS;
     }

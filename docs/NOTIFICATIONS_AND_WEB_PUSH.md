@@ -78,6 +78,17 @@ Validation: `App\Http\Requests\PushSubscriptionRequest`.
 
 **Manual test**: `php artisan zcstats:push-test` (optional `--message=`). Requires rows in `push_subscriptions` and VAPID configured.
 
+**VAPID sanity check**: `php artisan zcstats:webpush-verify` — confirms public/private keys are a real pair and a sample JWT verifies for `https://web.push.apple.com`.
+
+### Apple / Safari: `403` + `BadJwtToken`
+
+Apple’s endpoint (`web.push.apple.com`) returns this when it rejects the **VAPID JWT**. Typical fixes:
+
+1. **Key pair mismatch** — public key in `.env` does not match the private key (copy/paste or truncation in Laravel Cloud). Run `zcstats:webpush-verify`; if it fails, regenerate keys and redeploy.
+2. **Stale subscription** — the device subscribed with an **old** public key. After rotating VAPID keys, delete affected rows in `push_subscriptions` and have the user subscribe again from the bell UI.
+3. **`WEBPUSH_VAPID_SUBJECT`** — use `mailto:…` or `https://…` (RFC 8292). If problems persist with `mailto:`, set `WEBPUSH_VAPID_SUBJECT=https://your-live-host` (no path), matching the host users open (same as `APP_URL`).
+4. **Server time** — sync NTP so JWT `exp` is valid.
+
 ## iOS / Safari notes
 
 Web Push and notification behavior on iOS change by version; installing the PWA to the home screen is often required for a fuller experience. Do not assume parity with Chrome/Android.
