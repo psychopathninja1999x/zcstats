@@ -42,6 +42,26 @@ return [
         'verify_ssl' => filter_var(env('OPENWEATHER_VERIFY_SSL', 'true'), FILTER_VALIDATE_BOOLEAN),
     ],
 
+    /*
+    | Prayer times for Zamboanga City via Aladhan (JSON API). Muslim Pro’s web app
+    | is behind Vercel bot protection, so it cannot be scraped from PHP; times here
+    | use the same coordinates with a configurable calculation method (default MWL).
+    */
+    'prayer_times' => [
+        'enabled' => filter_var(env('PRAYER_TIMES_ENABLED', 'true'), FILTER_VALIDATE_BOOLEAN),
+        'api_base' => env('PRAYER_TIMES_API_BASE', 'https://api.aladhan.com/v1'),
+        'lat' => env('PRAYER_TIMES_LAT', env('OPENWEATHER_LAT', 6.9214)),
+        'lon' => env('PRAYER_TIMES_LON', env('OPENWEATHER_LON', 122.079)),
+        'method' => (int) env('PRAYER_TIMES_METHOD', 3),
+        'city_label' => env('PRAYER_TIMES_CITY_LABEL', 'Zamboanga City'),
+        'source_url' => env('PRAYER_TIMES_SOURCE_URL', 'https://aladhan.com'),
+        'cache_ttl' => (int) env('PRAYER_TIMES_CACHE_SECONDS', 3600),
+        'verify_ssl' => filter_var(
+            env('PRAYER_TIMES_VERIFY_SSL', env('OPENWEATHER_VERIFY_SSL', 'true')),
+            FILTER_VALIDATE_BOOLEAN
+        ),
+    ],
+
     'zcwd' => [
         'url' => env('ZCWD_WATER_URL', 'https://zcwd.gov.ph/production_new_bak.php'),
         'cache_ttl' => (int) env('ZCWD_WATER_CACHE_SECONDS', 900),

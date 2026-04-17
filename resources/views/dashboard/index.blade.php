@@ -56,6 +56,40 @@
                                 <span class="text-xs font-medium">{{ __('zcstats.last_updated') }} @if($weather){{ $weather['updated_at']->format('M j, g:i A') }}@else{{ __('zcstats.weather_unavailable') }}@endif</span>
                             </div>
                         </div>
+
+                        @isset($philippine_holidays)
+                            @php $ph = $philippine_holidays; @endphp
+                            <div id="ph-calendar" class="mt-6 space-y-4 scroll-mt-24">
+                                <div class="flex flex-wrap items-start gap-3">
+                                    <div class="flex items-center gap-2 min-w-0 rounded-2xl border border-outline-variant/20 bg-surface-container-lowest/80 dark:bg-surface-container-high/30 px-4 py-3 shadow-sm">
+                                        <span class="material-symbols-outlined text-primary text-xl shrink-0" aria-hidden="true">calendar_month</span>
+                                        <div class="min-w-0">
+                                            <p class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-0.5">{{ __('zcstats.ph_calendar_heading') }}</p>
+                                            <p class="text-sm sm:text-base font-bold text-on-surface leading-snug">
+                                                <time datetime="{{ $ph['today']->format('Y-m-d') }}">{{ $ph['today_label'] }}</time>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @if(count($ph['today_holidays']) > 0)
+                                        <div class="flex flex-wrap gap-2" role="status">
+                                            @foreach($ph['today_holidays'] as $h)
+                                                <span @class([
+                                                    'inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold border',
+                                                    'bg-primary/12 text-primary border-primary/25' => $h['kind'] === 'regular',
+                                                    'bg-amber-500/10 text-amber-900 dark:text-amber-100 border-amber-500/25' => $h['kind'] === 'special',
+                                                ])>
+                                                    <span class="material-symbols-outlined text-sm" aria-hidden="true">celebration</span>
+                                                    {{ __('zcstats.'.$h['name']) }}
+                                                    <span class="opacity-75 font-semibold">({{ $h['kind'] === 'regular' ? __('zcstats.ph_holiday_kind_regular') : __('zcstats.ph_holiday_kind_special') }})</span>
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <p class="text-xs text-on-surface-variant self-center">{{ __('zcstats.ph_no_holiday_today') }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                        @endisset
                     </div>
                 </div>
             </section>
@@ -171,6 +205,36 @@
                         @endif
                     </div>
                 </div>
+
+                @isset($philippine_holidays)
+                    @php $phUpcoming = $philippine_holidays; @endphp
+                    <div id="ph-holidays-upcoming" class="md:col-span-12 scroll-mt-24">
+                        <div class="rounded-3xl border border-outline-variant/15 bg-surface-container-lowest/60 dark:bg-surface-container-high/20 p-4 sm:p-6 shadow-[0_8px_32px_rgba(25,28,32,0.04)]">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                                <h2 class="text-xs font-bold uppercase tracking-widest text-secondary">{{ __('zcstats.ph_holidays_heading') }}</h2>
+                                @if($phUpcoming['official_for_year'])
+                                    <p class="text-[10px] text-on-surface-variant/90">{{ __('zcstats.ph_holidays_source_official', ['year' => $phUpcoming['today']->format('Y')]) }}</p>
+                                @endif
+                            </div>
+                            @if(! empty($phUpcoming['note_key']))
+                                <p class="text-[11px] text-on-surface-variant mb-3">{{ __('zcstats.'.$phUpcoming['note_key'], ['year' => (int) $phUpcoming['today']->format('Y')]) }}</p>
+                            @endif
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm" role="list">
+                                @foreach($phUpcoming['upcoming'] as $h)
+                                    <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-outline-variant/10 sm:border-0 pb-2 sm:pb-0">
+                                        <time class="font-bold tabular-nums text-on-surface shrink-0 w-[4.25rem]" datetime="{{ $h['date']->format('Y-m-d') }}">{{ $h['date']->copy()->locale(match (app()->getLocale()) { 'tl' => 'fil', 'cbk' => 'es', default => 'en' })->isoFormat('MMM D') }}</time>
+                                        <span class="text-on-surface min-w-0 flex-1">{{ __('zcstats.'.$h['name']) }}</span>
+                                        <span @class([
+                                            'text-[10px] font-bold uppercase tracking-wide shrink-0',
+                                            'text-primary' => $h['kind'] === 'regular',
+                                            'text-amber-800 dark:text-amber-200' => $h['kind'] === 'special',
+                                        ])>{{ $h['kind'] === 'regular' ? __('zcstats.ph_holiday_kind_regular') : __('zcstats.ph_holiday_kind_special') }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endisset
 
                 <div id="water" class="md:col-span-6 bg-surface-container-lowest rounded-3xl px-8 pt-8 pb-36 md:pb-40 min-h-[20rem] shadow-[0_8px_32px_rgba(25,28,32,0.04)] relative overflow-hidden isolate scroll-mt-24">
                     <div class="zcwd-water-fx" aria-hidden="true"></div>
@@ -360,6 +424,80 @@
                         @endif
                     </div>
                 </div>
+
+                @if(config('services.prayer_times.enabled', true))
+                <div id="prayer" class="md:col-span-12 bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 scroll-mt-24">
+                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-6">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary text-2xl" aria-hidden="true">mosque</span>
+                            </div>
+                            <div class="min-w-0">
+                                <h2 class="text-lg font-extrabold text-on-surface leading-tight">{{ __('zcstats.prayer_title') }}</h2>
+                                @if($prayer_times)
+                                    <p class="text-[10px] text-on-surface-variant/80 mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                        <span class="material-symbols-outlined text-sm shrink-0">calendar_today</span>
+                                        <span>{{ $prayer_times['date_readable'] }}</span>
+                                        @if(! empty($prayer_times['hijri_readable']))
+                                            <span class="text-on-surface-variant/50">·</span>
+                                            <span>{{ $prayer_times['hijri_readable'] }}</span>
+                                        @endif
+                                    </p>
+                                    @if($prayer_times['method_name'] !== '')
+                                        <p class="text-[10px] text-on-surface-variant/80 mt-1">{{ __('zcstats.prayer_method', ['method' => $prayer_times['method_name']]) }}</p>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        @if($prayer_times)
+                            <div class="flex flex-col items-start lg:items-end gap-1 shrink-0">
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-800 uppercase tracking-wide">{{ __('zcstats.live_data') }}</span>
+                                <span class="text-[10px] text-on-surface-variant">{{ $prayer_times['fetched_at']->format('M j, g:i A') }}</span>
+                            </div>
+                        @endif
+                    </div>
+                    @if($prayer_times === null)
+                        <p class="text-sm text-on-surface-variant">{{ __('zcstats.prayer_unavailable') }}</p>
+                    @else
+                        @php $nextKey = $prayer_times['next']['key'] ?? null; @endphp
+                        <div
+                            id="zc-prayer-next-root"
+                            class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-4"
+                            @if(! empty($prayer_times['next']))
+                                data-tpl-h="{{ e(__('zcstats.prayer_countdown_h_m', ['hours' => '%H%', 'minutes' => '%M%'])) }}"
+                                data-tpl-m="{{ e(__('zcstats.prayer_countdown_m', ['minutes' => '%M%'])) }}"
+                            @endif
+                        >
+                            @foreach($prayer_times['times'] as $row)
+                                <div @class([
+                                    'p-4 rounded-2xl border text-center flex flex-col min-h-[5.5rem] justify-center relative transition-[box-shadow,background-color] duration-300',
+                                    'bg-surface-container-low border-outline-variant/10' => $row['key'] !== $nextKey,
+                                    'bg-green-50/90 dark:bg-green-950/30 border-green-600 dark:border-green-500 ring-2 ring-green-600/35 dark:ring-green-500/40 shadow-[0_4px_20px_rgba(22,163,74,0.12)]' => $row['key'] === $nextKey,
+                                ])>
+                                    @if($row['key'] === $nextKey)
+                                        <span class="absolute top-2 left-2 text-[9px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-green-600 text-white dark:bg-green-500 dark:text-green-950">{{ __('zcstats.prayer_next_badge') }}</span>
+                                    @endif
+                                    <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1 {{ $row['key'] === $nextKey ? 'mt-4' : '' }}">{{ __('zcstats.prayer_'.$row['key']) }}</p>
+                                    <p class="text-xl font-extrabold tabular-nums text-on-surface">{{ $row['time'] }}</p>
+                                    @if($row['key'] === $nextKey && ! empty($prayer_times['next']['countdown']))
+                                        <p class="zc-prayer-countdown mt-2 text-xs font-bold tabular-nums text-green-800 dark:text-green-300"
+                                            data-prayer-countdown-ms="{{ (int) $prayer_times['next']['at_ms'] }}"
+                                        >{{ $prayer_times['next']['countdown'] }}</p>
+                                        @if(! empty($prayer_times['next']['is_tomorrow']))
+                                            <p class="text-[10px] font-semibold text-green-700/90 dark:text-green-400/90 mt-0.5">{{ __('zcstats.prayer_next_tomorrow') }}</p>
+                                        @endif
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                        <p class="text-[11px] text-on-surface-variant leading-relaxed mb-3">{{ __('zcstats.prayer_note') }}</p>
+                        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold">
+                            <a href="{{ $prayer_times['source_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary hover:underline">{{ __('zcstats.prayer_open_aladhan') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                            <a href="{{ $prayer_times['reference_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-primary hover:underline">{{ __('zcstats.prayer_open_muslimpro') }}<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+                        </div>
+                    @endif
+                </div>
+                @endif
 
                 <div id="prices" class="md:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 scroll-mt-24 items-stretch">
                 <section class="min-w-0 bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-[0_8px_32px_rgba(25,28,32,0.04)] border border-outline-variant/15 min-h-0 h-full flex flex-col" aria-labelledby="da-prices-heading">
@@ -686,6 +824,12 @@
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl">local_gas_station</span>
                     <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_fuel') }}</span>
                 </a>
+                @if(config('services.prayer_times.enabled', true))
+                <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high/80 min-w-[3.25rem] shrink-0 active:scale-95 transition-all" href="#prayer">
+                    <span class="material-symbols-outlined text-[22px] sm:text-2xl">mosque</span>
+                    <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_prayer') }}</span>
+                </a>
+                @endif
                 <a class="dock-nav-item flex flex-col items-center justify-center gap-0.5 rounded-xl px-2 sm:px-3 py-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high/80 min-w-[3.25rem] shrink-0 active:scale-95 transition-all" href="#prices">
                     <span class="material-symbols-outlined text-[22px] sm:text-2xl">shopping_basket</span>
                     <span class="font-sans text-[9px] sm:text-[10px] font-semibold leading-tight text-center">{{ __('zcstats.dock_prices') }}</span>
@@ -764,6 +908,32 @@
                 noResults.classList.toggle('hidden', visible > 0 || q === '');
             }
         });
+    })();
+    </script>
+    <script>
+    (function() {
+        var root = document.getElementById('zc-prayer-next-root');
+        if (!root) return;
+        var el = root.querySelector('[data-prayer-countdown-ms]');
+        if (!el) return;
+        var tplH = root.getAttribute('data-tpl-h') || '';
+        var tplM = root.getAttribute('data-tpl-m') || '';
+        function tick() {
+            var ms = parseInt(el.getAttribute('data-prayer-countdown-ms'), 10);
+            if (isNaN(ms)) return;
+            var diff = ms - Date.now();
+            if (diff <= 0) {
+                el.textContent = '\u2014';
+                return;
+            }
+            var h = Math.floor(diff / 3600000);
+            var m = Math.floor((diff % 3600000) / 60000);
+            el.textContent = h > 0
+                ? tplH.replace(/%H%/g, String(h)).replace(/%M%/g, String(m))
+                : tplM.replace(/%M%/g, String(m));
+        }
+        tick();
+        setInterval(tick, 30000);
     })();
     </script>
 @endsection

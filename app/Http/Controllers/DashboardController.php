@@ -6,6 +6,8 @@ use App\Services\DaPriceMonitoringService;
 use App\Services\DtiBnpcSrpService;
 use App\Services\GasmotoFuelService;
 use App\Services\OpenWeatherService;
+use App\Services\PhilippineHolidaysService;
+use App\Services\PrayerTimesService;
 use App\Services\ZamcelcoPowerService;
 use App\Services\ZcwdWaterService;
 use DateTimeInterface;
@@ -20,7 +22,9 @@ class DashboardController extends Controller
         protected ZamcelcoPowerService $zamcelcoPower,
         protected GasmotoFuelService $gasmotoFuel,
         protected DaPriceMonitoringService $daPrices,
-        protected DtiBnpcSrpService $dtiBnpcSrp
+        protected DtiBnpcSrpService $dtiBnpcSrp,
+        protected PrayerTimesService $prayerTimes,
+        protected PhilippineHolidaysService $philippineHolidays
     ) {}
 
     public function index(): View
@@ -30,9 +34,11 @@ class DashboardController extends Controller
             'zcwd' => $this->zcwdWater->getReservoirData(),
             'zamcelco' => $this->zamcelcoPower->getDashboardData(),
             'fuel' => $this->gasmotoFuel->getDashboardData(),
+            'prayer_times' => $this->prayerTimes->getDashboardData(),
             'da_prices' => $this->daPrices->getDashboardData(),
             'dti_bnpc' => $this->dtiBnpcSrp->getBulletinData(),
             'search_index' => $this->searchIndex(),
+            'philippine_holidays' => $this->philippineHolidays->getDashboardData(),
         ]);
     }
 
@@ -58,7 +64,7 @@ class DashboardController extends Controller
             return array_values(array_unique($out));
         };
 
-        return [
+        $index = [
             [
                 'id' => 'overview',
                 'terms' => $norm(array_merge(
@@ -67,8 +73,10 @@ class DashboardController extends Controller
                         __('zcstats.breadcrumb_live'),
                         __('zcstats.app_title'),
                         __('zcstats.export_data'),
+                        __('zcstats.ph_calendar_heading'),
+                        __('zcstats.ph_holidays_heading'),
                     ],
-                    ['dashboard', 'overview', 'export', 'download', 'json', 'status', 'live', 'zcstats', 'everything', 'zamboanga', 'todo', 'gaylingo', 'glg', 'beki', 'swardspeak', 'lodi', 'language', 'locale']
+                    ['dashboard', 'overview', 'export', 'download', 'json', 'status', 'live', 'zcstats', 'everything', 'zamboanga', 'todo', 'gaylingo', 'glg', 'beki', 'swardspeak', 'lodi', 'language', 'locale', 'holiday', 'holidays', 'philippines', 'proclamation', 'pista', 'regular holiday']
                 )),
             ],
             [
@@ -156,6 +164,20 @@ class DashboardController extends Controller
                 )),
             ],
         ];
+
+        if (config('services.prayer_times.enabled', true)) {
+            array_splice($index, 5, 0, [[
+                'id' => 'prayer',
+                'terms' => $norm(array_merge(
+                    [
+                        __('zcstats.prayer_title'),
+                    ],
+                    ['prayer', 'salah', 'salat', 'fajr', 'dhuhr', 'zuhr', 'asr', 'maghrib', 'isha', 'islam', 'muslim', 'muslimpro', 'aladhan']
+                )),
+            ]]);
+        }
+
+        return $index;
     }
 
     public function export(): JsonResponse
@@ -168,6 +190,7 @@ class DashboardController extends Controller
             'zcwd' => $this->zcwdWater->getReservoirData(),
             'zamcelco' => $this->zamcelcoPower->getDashboardData(),
             'fuel' => $this->gasmotoFuel->getDashboardData(),
+            'prayer_times' => $this->prayerTimes->getDashboardData(),
             'da_prices' => $this->daPrices->getDashboardData(),
             'dti_bnpc' => $this->dtiBnpcSrp->getBulletinData(),
         ];
