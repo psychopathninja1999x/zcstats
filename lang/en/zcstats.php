@@ -150,6 +150,7 @@ return [
 
     'notify_heading' => 'Alerts (this device)',
     'notify_requires_https' => 'Notifications need a secure page. Use https:// on your server, or open the site via http://localhost (not a raw LAN IP over plain http). Web Push also requires HTTPS.',
+    'notify_close_overlay' => 'Close',
     'notify_opt_prayer' => 'Prayer time (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'Prayer times are off in settings',
     'notify_opt_live' => 'When dashboard data changes (weather, water, power, fuel, quakes, typhoons, etc.)',

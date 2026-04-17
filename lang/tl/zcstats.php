@@ -150,6 +150,7 @@ return [
 
     'notify_heading' => 'Mga alerto (sa device na ito)',
     'notify_requires_https' => 'Kailangan ng notification ang secure na pahina. Gumamit ng https:// sa server, o buksan sa http://localhost (hindi raw LAN IP sa plain http). Kailangan din ng HTTPS ang Web Push.',
+    'notify_close_overlay' => 'Isara',
     'notify_opt_prayer' => 'Oras ng dasal (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'Naka-off ang oras ng dasal sa settings',
     'notify_opt_live' => 'Kapag may bagong datos sa dashboard (panahon, tubig, kuryente, gasolina, lindol, bagyo, atbp.)',

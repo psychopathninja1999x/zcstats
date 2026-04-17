@@ -34,13 +34,21 @@
                         </button>
                         <div
                             id="zc-notify-dropdown"
-                            class="hidden absolute right-0 top-full mt-2 w-[min(calc(100vw-2rem),22rem)] rounded-2xl border border-outline-variant/20 bg-surface-container-lowest dark:bg-surface-container-high shadow-[0_12px_40px_rgba(25,28,32,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] z-[60] overflow-hidden"
+                            class="hidden max-md:fixed max-md:inset-0 max-md:z-[70] max-md:flex max-md:flex-col max-md:justify-end md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 md:z-[60] md:block md:w-[min(22rem,calc(100vw-2rem))] md:rounded-2xl md:border md:border-outline-variant/20 md:bg-surface-container-lowest md:dark:bg-surface-container-high md:shadow-[0_12px_40px_rgba(25,28,32,0.12)] md:dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] md:overflow-hidden"
                             role="dialog"
                             aria-label="{{ __('zcstats.notify_heading') }}"
+                            aria-modal="true"
                         >
+                            <button
+                                type="button"
+                                id="zc-notify-backdrop"
+                                class="max-md:flex-1 max-md:min-h-0 max-md:w-full max-md:border-0 max-md:bg-black/45 max-md:p-0 max-md:cursor-default md:hidden dark:max-md:bg-black/55"
+                                aria-label="{{ __('zcstats.notify_close_overlay') }}"
+                                tabindex="-1"
+                            ></button>
                             <div
                                 id="zc-notify-panel"
-                                class="p-4 max-h-[min(70vh,28rem)] overflow-y-auto"
+                                class="p-4 max-h-[min(75vh,28rem)] overflow-y-auto max-md:shrink-0 max-md:rounded-t-3xl max-md:border-t max-md:border-x border-outline-variant/20 max-md:bg-surface-container-lowest max-md:dark:bg-surface-container-high max-md:shadow-[0_-12px_40px_rgba(25,28,32,0.12)] max-md:dark:shadow-[0_-12px_40px_rgba(0,0,0,0.35)] max-md:pb-[calc(1rem+env(safe-area-inset-bottom,0px))] md:max-h-[min(70vh,28rem)]"
                                 data-digest-url="{{ url('/live-digest.json') }}"
                                 data-prayer-enabled="{{ config('services.prayer_times.enabled', true) ? '1' : '0' }}"
                                 data-prayer-labels="{{ e(json_encode($zcPrayerLabels, JSON_UNESCAPED_UNICODE)) }}"

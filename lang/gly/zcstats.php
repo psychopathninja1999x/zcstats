@@ -150,6 +150,7 @@ return [
 
     'notify_heading' => 'Alerts (this device, lodi)',
     'notify_requires_https' => 'Kailangan ng notifications ang HTTPS (secure page)—wag http + LAN IP lang. Localhost ok; Web Push = HTTPS din, bhie.',
+    'notify_close_overlay' => 'Close',
     'notify_opt_prayer' => 'Prayer time (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'Prayer times off sa config, deads',
     'notify_opt_live' => 'Kapag may bagong chika sa dashboard (weather, tubig, kuryente, gas, lindol, bagyo, etc.)',

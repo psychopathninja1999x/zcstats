@@ -150,6 +150,7 @@ return [
 
     'notify_heading' => 'Alertas (este device)',
     'notify_requires_https' => 'El notification necesita pagina seguro (https). Usa https en el server o http://localhost (no usa LAN IP con http solo). Web Push tambien necesita HTTPS.',
+    'notify_close_overlay' => 'Cierra',
     'notify_opt_prayer' => 'Hora del sala (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'El hora del sala ta off na settings',
     'notify_opt_live' => 'Si el datos del dashboard ta cambia (clima, agua, kuryente, gasolina, lindol, bagyo, etc.)',

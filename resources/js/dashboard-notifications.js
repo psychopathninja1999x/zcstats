@@ -53,9 +53,17 @@ export function initDashboardNotifications() {
 
     wrap.hidden = false;
 
+    function setNotifyBodyScrollLock(lock) {
+        if (!window.matchMedia('(max-width: 767px)').matches) {
+            return;
+        }
+        document.body.style.overflow = lock ? 'hidden' : '';
+    }
+
     function closeNotifyMenu() {
         dropdown.classList.add('hidden');
         menuBtn.setAttribute('aria-expanded', 'false');
+        setNotifyBodyScrollLock(false);
     }
 
     function openNotifyMenu() {
@@ -69,6 +77,7 @@ export function initDashboardNotifications() {
         }
         dropdown.classList.remove('hidden');
         menuBtn.setAttribute('aria-expanded', 'true');
+        setNotifyBodyScrollLock(true);
     }
 
     function toggleNotifyMenu() {
@@ -91,6 +100,14 @@ export function initDashboardNotifications() {
     wrap.addEventListener('click', (e) => {
         e.stopPropagation();
     });
+
+    const notifyBackdrop = document.getElementById('zc-notify-backdrop');
+    if (notifyBackdrop) {
+        notifyBackdrop.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeNotifyMenu();
+        });
+    }
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
