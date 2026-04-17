@@ -23,7 +23,7 @@ class PrayerTimesService
 
         $tz = config('app.timezone', 'Asia/Manila');
         $today = Carbon::now($tz)->startOfDay();
-        $cacheKey = 'prayer_times_zamboanga_v12hnext_'.$today->toDateString();
+        $cacheKey = 'prayer_times_zamboanga_v13nextclient_'.$today->toDateString();
         $ttl = max(300, (int) config('services.prayer_times.cache_ttl', 3600));
 
         $cached = Cache::get($cacheKey);
@@ -73,9 +73,11 @@ class PrayerTimesService
                 if (! isset($timings[$key])) {
                     continue;
                 }
+                $at = $this->wallClockOnDate((string) $timings[$key], $date, $timezone);
                 $rows[] = [
                     'key' => $key,
                     'time' => $this->formatDisplayTime((string) $timings[$key]),
+                    'at_ms' => $at !== null ? $at->getTimestamp() * 1000 : 0,
                 ];
             }
 
@@ -83,8 +85,19 @@ class PrayerTimesService
                 return null;
             }
 
+            $tomorrow = $date->copy()->addDay();
+            $tomData = $this->requestTimingsForDate($tomorrow);
+            $tomTimings = is_array($tomData['timings'] ?? null) ? $tomData['timings'] : [];
+            $fajrTomorrowMs = null;
+            if (isset($tomTimings['Fajr'])) {
+                $fajrAt = $this->wallClockOnDate((string) $tomTimings['Fajr'], $tomorrow, $timezone);
+                if ($fajrAt !== null) {
+                    $fajrTomorrowMs = $fajrAt->getTimestamp() * 1000;
+                }
+            }
+
             $now = Carbon::now($timezone);
-            $next = $this->resolveNextPrayer($order, $timings, $date, $timezone, $now);
+            $next = $this->resolveNextPrayer($order, $timings, $date, $timezone, $now, $tomTimings);
 
             return [
                 'city' => (string) config('services.prayer_times.city_label', 'Zamboanga City'),
@@ -93,6 +106,7 @@ class PrayerTimesService
                 'method_name' => $methodName,
                 'times' => $rows,
                 'next' => $next,
+                'fajr_tomorrow_ms' => $fajrTomorrowMs,
                 'source_url' => (string) config('services.prayer_times.source_url', 'https://aladhan.com'),
                 'reference_url' => self::MUSLIMPRO_REFERENCE_URL,
                 'fetched_at' => now($timezone),
@@ -107,9 +121,10 @@ class PrayerTimesService
     /**
      * @param  list<string>  $order
      * @param  array<string, mixed>  $timings
+     * @param  array<string, mixed>|null  $tomorrowTimings  Pre-fetched timings for the day after {@see $date} (avoids duplicate HTTP).
      * @return array<string, mixed>|null
      */
-    private function resolveNextPrayer(array $order, array $timings, Carbon $date, string $timezone, Carbon $now): ?array
+    private function resolveNextPrayer(array $order, array $timings, Carbon $date, string $timezone, Carbon $now, ?array $tomorrowTimings = null): ?array
     {
         $nextKey = null;
         $nextAt = null;
@@ -128,8 +143,11 @@ class PrayerTimesService
 
         if ($nextAt === null) {
             $tomorrow = $date->copy()->addDay();
-            $tomData = $this->requestTimingsForDate($tomorrow);
-            $tomTimings = is_array($tomData['timings'] ?? null) ? $tomData['timings'] : null;
+            $tomTimings = $tomorrowTimings;
+            if (! is_array($tomTimings)) {
+                $tomData = $this->requestTimingsForDate($tomorrow);
+                $tomTimings = is_array($tomData['timings'] ?? null) ? $tomData['timings'] : null;
+            }
             if (is_array($tomTimings) && isset($tomTimings['Fajr'])) {
                 $nextKey = 'Fajr';
                 $nextAt = $this->wallClockOnDate((string) $tomTimings['Fajr'], $tomorrow, $timezone);

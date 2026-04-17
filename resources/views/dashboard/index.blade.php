@@ -464,30 +464,41 @@
                         <div
                             id="zc-prayer-next-root"
                             class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-4"
-                            @if(! empty($prayer_times['next']))
-                                data-tpl-h="{{ e(__('zcstats.prayer_countdown_h_m', ['hours' => '%H%', 'minutes' => '%M%'])) }}"
-                                data-tpl-m="{{ e(__('zcstats.prayer_countdown_m', ['minutes' => '%M%'])) }}"
-                            @endif
+                            data-tpl-h="{{ e(__('zcstats.prayer_countdown_h_m', ['hours' => '%H%', 'minutes' => '%M%'])) }}"
+                            data-tpl-m="{{ e(__('zcstats.prayer_countdown_m', ['minutes' => '%M%'])) }}"
+                            data-fajr-tomorrow-ms="{{ (int) ($prayer_times['fajr_tomorrow_ms'] ?? 0) }}"
                         >
                             @foreach($prayer_times['times'] as $row)
-                                <div @class([
-                                    'p-4 rounded-2xl border text-center flex flex-col min-h-[5.5rem] justify-center relative transition-[box-shadow,background-color] duration-300',
-                                    'bg-surface-container-low border-outline-variant/10' => $row['key'] !== $nextKey,
-                                    'bg-green-50/90 dark:bg-green-950/30 border-green-600 dark:border-green-500 ring-2 ring-green-600/35 dark:ring-green-500/40 shadow-[0_4px_20px_rgba(22,163,74,0.12)]' => $row['key'] === $nextKey,
-                                ])>
-                                    @if($row['key'] === $nextKey)
-                                        <span class="absolute top-2 left-2 text-[9px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-green-600 text-white dark:bg-green-500 dark:text-green-950">{{ __('zcstats.prayer_next_badge') }}</span>
-                                    @endif
-                                    <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1 {{ $row['key'] === $nextKey ? 'mt-4' : '' }}">{{ __('zcstats.prayer_'.$row['key']) }}</p>
+                                <div
+                                    data-prayer-card
+                                    data-prayer-key="{{ $row['key'] }}"
+                                    data-prayer-at-ms="{{ (int) ($row['at_ms'] ?? 0) }}"
+                                    @class([
+                                        'prayer-card p-4 rounded-2xl border text-center flex flex-col min-h-[5.5rem] justify-center relative transition-[box-shadow,background-color] duration-300',
+                                        'prayer-card--idle' => $row['key'] !== $nextKey,
+                                        'prayer-card--next' => $row['key'] === $nextKey,
+                                    ])
+                                >
+                                    <span @class([
+                                        'zc-prayer-next-badge absolute top-2 left-2 text-[9px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-green-600 text-white dark:bg-green-500 dark:text-green-950',
+                                        'hidden' => $row['key'] !== $nextKey,
+                                    ])>{{ __('zcstats.prayer_next_badge') }}</span>
+                                    <p @class([
+                                        'prayer-card__label text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1',
+                                        'mt-4' => $row['key'] === $nextKey,
+                                    ])>{{ __('zcstats.prayer_'.$row['key']) }}</p>
                                     <p class="text-xl font-extrabold tabular-nums text-on-surface">{{ $row['time'] }}</p>
-                                    @if($row['key'] === $nextKey && ! empty($prayer_times['next']['countdown']))
-                                        <p class="zc-prayer-countdown mt-2 text-xs font-bold tabular-nums text-green-800 dark:text-green-300"
-                                            data-prayer-countdown-ms="{{ (int) $prayer_times['next']['at_ms'] }}"
-                                        >{{ $prayer_times['next']['countdown'] }}</p>
-                                        @if(! empty($prayer_times['next']['is_tomorrow']))
-                                            <p class="text-[10px] font-semibold text-green-700/90 dark:text-green-400/90 mt-0.5">{{ __('zcstats.prayer_next_tomorrow') }}</p>
-                                        @endif
-                                    @endif
+                                    <p
+                                        @class([
+                                            'zc-prayer-countdown mt-2 text-xs font-bold tabular-nums text-green-800 dark:text-green-300',
+                                            'hidden' => $row['key'] !== $nextKey || empty($prayer_times['next']['countdown']),
+                                        ])
+                                        data-prayer-countdown-ms="{{ $row['key'] === $nextKey && ! empty($prayer_times['next']['at_ms']) ? (int) $prayer_times['next']['at_ms'] : '' }}"
+                                    >@if($row['key'] === $nextKey && ! empty($prayer_times['next']['countdown'])){{ $prayer_times['next']['countdown'] }}@endif</p>
+                                    <p @class([
+                                        'zc-prayer-next-tomorrow text-[10px] font-semibold text-green-700/90 dark:text-green-400/90 mt-0.5',
+                                        'hidden' => $row['key'] !== $nextKey || empty($prayer_times['next']['is_tomorrow']),
+                                    ])>{{ __('zcstats.prayer_next_tomorrow') }}</p>
                                 </div>
                             @endforeach
                         </div>
@@ -1084,26 +1095,72 @@
     (function() {
         var root = document.getElementById('zc-prayer-next-root');
         if (!root) return;
-        var el = root.querySelector('[data-prayer-countdown-ms]');
-        if (!el) return;
         var tplH = root.getAttribute('data-tpl-h') || '';
         var tplM = root.getAttribute('data-tpl-m') || '';
-        function tick() {
-            var ms = parseInt(el.getAttribute('data-prayer-countdown-ms'), 10);
-            if (isNaN(ms)) return;
-            var diff = ms - Date.now();
-            if (diff <= 0) {
-                el.textContent = '\u2014';
-                return;
+        var fajrTomorrowMs = parseInt(root.getAttribute('data-fajr-tomorrow-ms') || '0', 10) || 0;
+
+        function pickNextPrayer() {
+            var now = Date.now();
+            var cards = root.querySelectorAll('[data-prayer-card]');
+            var i;
+            for (i = 0; i < cards.length; i++) {
+                var ms = parseInt(cards[i].getAttribute('data-prayer-at-ms'), 10);
+                if (!isNaN(ms) && ms > now) {
+                    return { card: cards[i], atMs: ms, isTomorrow: false };
+                }
             }
+            if (fajrTomorrowMs > now) {
+                for (i = 0; i < cards.length; i++) {
+                    if (cards[i].getAttribute('data-prayer-key') === 'Fajr') {
+                        return { card: cards[i], atMs: fajrTomorrowMs, isTomorrow: true };
+                    }
+                }
+            }
+            return null;
+        }
+
+        function formatCountdown(atMs) {
+            var diff = atMs - Date.now();
+            if (diff <= 0) return '\u2014';
             var h = Math.floor(diff / 3600000);
             var m = Math.floor((diff % 3600000) / 60000);
-            el.textContent = h > 0
+            return h > 0
                 ? tplH.replace(/%H%/g, String(h)).replace(/%M%/g, String(m))
                 : tplM.replace(/%M%/g, String(m));
         }
-        tick();
-        setInterval(tick, 30000);
+
+        function syncPrayerNext() {
+            var next = pickNextPrayer();
+            var cards = root.querySelectorAll('[data-prayer-card]');
+            var i;
+            for (i = 0; i < cards.length; i++) {
+                var c = cards[i];
+                var on = next && c === next.card;
+                c.classList.remove('prayer-card--idle', 'prayer-card--next');
+                c.classList.add(on ? 'prayer-card--next' : 'prayer-card--idle');
+                var badge = c.querySelector('.zc-prayer-next-badge');
+                if (badge) badge.classList.toggle('hidden', !on);
+                var lbl = c.querySelector('.prayer-card__label');
+                if (lbl) lbl.classList.toggle('mt-4', !!on);
+                var cd = c.querySelector('.zc-prayer-countdown');
+                if (cd) {
+                    if (on && next) {
+                        cd.classList.remove('hidden');
+                        cd.setAttribute('data-prayer-countdown-ms', String(next.atMs));
+                        cd.textContent = formatCountdown(next.atMs);
+                    } else {
+                        cd.classList.add('hidden');
+                        cd.removeAttribute('data-prayer-countdown-ms');
+                        cd.textContent = '';
+                    }
+                }
+                var tom = c.querySelector('.zc-prayer-next-tomorrow');
+                if (tom) tom.classList.toggle('hidden', !on || !next || !next.isTomorrow);
+            }
+        }
+
+        syncPrayerNext();
+        setInterval(syncPrayerNext, 15000);
     })();
     </script>
 @endsection

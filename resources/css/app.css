@@ -122,6 +122,28 @@ html.dark {
 }
 
 @layer components {
+    /* Prayer times: client JS toggles --next vs --idle when the “next” salāh advances */
+    .prayer-card--idle {
+        background-color: var(--color-surface-container-low);
+        border-color: color-mix(in srgb, var(--color-outline-variant) 10%, transparent);
+    }
+
+    .prayer-card--next {
+        background-color: color-mix(in srgb, rgb(240 253 244) 90%, var(--color-surface-container-low));
+        border-color: rgb(22 163 74);
+        box-shadow:
+            0 0 0 2px color-mix(in srgb, rgb(22 163 74) 35%, transparent),
+            0 4px 20px rgba(22, 163, 74, 0.12);
+    }
+
+    .dark .prayer-card--next {
+        background-color: color-mix(in srgb, rgb(20 83 45) 30%, var(--color-surface-container-high));
+        border-color: rgb(74 222 128);
+        box-shadow:
+            0 0 0 2px color-mix(in srgb, rgb(74 222 128) 40%, transparent),
+            0 4px 20px rgba(74, 222, 128, 0.08);
+    }
+
     .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
