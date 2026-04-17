@@ -27,28 +27,19 @@
                             class="flex items-center justify-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-2 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
                             aria-expanded="false"
                             aria-haspopup="dialog"
-                            aria-controls="zc-notify-dropdown"
+                            aria-controls="zc-notify-dialog"
                             title="{{ __('zcstats.notify_heading') }}"
                         >
                             <span class="material-symbols-outlined text-xl" aria-hidden="true">notifications</span>
                         </button>
-                        <div
-                            id="zc-notify-dropdown"
-                            class="hidden max-md:fixed max-md:inset-0 max-md:z-[70] max-md:flex max-md:flex-col max-md:justify-end md:absolute md:inset-auto md:right-0 md:top-full md:mt-2 md:z-[60] md:block md:w-[min(22rem,calc(100vw-2rem))] md:rounded-2xl md:border md:border-outline-variant/20 md:bg-surface-container-lowest md:dark:bg-surface-container-high md:shadow-[0_12px_40px_rgba(25,28,32,0.12)] md:dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] md:overflow-hidden"
-                            role="dialog"
-                            aria-label="{{ __('zcstats.notify_heading') }}"
-                            aria-modal="true"
+                        <dialog
+                            id="zc-notify-dialog"
+                            class="m-auto w-[min(22rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] max-h-[min(85vh,32rem)] rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-0 text-on-surface shadow-[0_12px_40px_rgba(25,28,32,0.12)] dark:bg-surface-container-high dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop:bg-black/45 dark:backdrop:bg-black/55"
+                            aria-labelledby="zc-notify-dialog-title"
                         >
-                            <button
-                                type="button"
-                                id="zc-notify-backdrop"
-                                class="max-md:flex-1 max-md:min-h-0 max-md:w-full max-md:border-0 max-md:bg-black/45 max-md:p-0 max-md:cursor-default md:hidden dark:max-md:bg-black/55"
-                                aria-label="{{ __('zcstats.notify_close_overlay') }}"
-                                tabindex="-1"
-                            ></button>
                             <div
                                 id="zc-notify-panel"
-                                class="p-4 max-h-[min(75vh,28rem)] overflow-y-auto max-md:shrink-0 max-md:rounded-t-3xl max-md:border-t max-md:border-x border-outline-variant/20 max-md:bg-surface-container-lowest max-md:dark:bg-surface-container-high max-md:shadow-[0_-12px_40px_rgba(25,28,32,0.12)] max-md:dark:shadow-[0_-12px_40px_rgba(0,0,0,0.35)] max-md:pb-[calc(1rem+env(safe-area-inset-bottom,0px))] md:max-h-[min(70vh,28rem)]"
+                                class="relative flex max-h-[min(85vh,32rem)] flex-col overflow-hidden"
                                 data-digest-url="{{ url('/live-digest.json') }}"
                                 data-prayer-enabled="{{ config('services.prayer_times.enabled', true) ? '1' : '0' }}"
                                 data-prayer-labels="{{ e(json_encode($zcPrayerLabels, JSON_UNESCAPED_UNICODE)) }}"
@@ -69,8 +60,17 @@
                                 data-app-locale="{{ app()->getLocale() }}"
                                 data-notify-requires-https="{{ e(__('zcstats.notify_requires_https')) }}"
                             >
+                                <button
+                                    type="button"
+                                    id="zc-notify-close"
+                                    class="absolute right-2 top-2 z-10 flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
+                                    aria-label="{{ __('zcstats.notify_close_overlay') }}"
+                                >
+                                    <span class="material-symbols-outlined text-xl" aria-hidden="true">close</span>
+                                </button>
+                                <div class="max-h-[min(85vh,32rem)] overflow-y-auto overscroll-contain p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pt-12">
                                 <div class="space-y-3">
-                                    <p class="text-xs font-extrabold text-on-surface leading-snug">{{ __('zcstats.notify_heading') }}</p>
+                                    <p id="zc-notify-dialog-title" class="text-xs font-extrabold text-on-surface leading-snug pr-8">{{ __('zcstats.notify_heading') }}</p>
                                     <div class="flex flex-col gap-2.5">
                                         <label class="flex items-start gap-2.5 cursor-pointer text-xs font-semibold text-on-surface">
                                             <input type="checkbox" id="zc-notify-prayer" class="mt-0.5 rounded border-outline-variant/40 text-primary focus:ring-primary/30" @disabled(! config('services.prayer_times.enabled', true))>
@@ -88,8 +88,9 @@
                                     </div>
                                     <p id="zc-notify-status" class="text-[10px] text-on-surface-variant leading-relaxed min-h-[1rem]" role="status"></p>
                                 </div>
+                                </div>
                             </div>
-                        </div>
+                        </dialog>
                     </div>
                     <button type="button" id="zc-theme-toggle" class="flex items-center justify-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-2 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-label-dark="{{ __('zcstats.theme_use_dark') }}" data-label-light="{{ __('zcstats.theme_use_light') }}">
                         <span class="material-symbols-outlined zc-theme-icon text-xl" aria-hidden="true">dark_mode</span>

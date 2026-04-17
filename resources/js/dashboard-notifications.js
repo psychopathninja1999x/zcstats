@@ -37,13 +37,13 @@ export function initDashboardNotifications() {
     const panel = document.getElementById('zc-notify-panel');
     const wrap = document.getElementById('zc-notify-wrap');
     const menuBtn = document.getElementById('zc-notify-menu-btn');
-    const dropdown = document.getElementById('zc-notify-dropdown');
+    const notifyDialog = document.getElementById('zc-notify-dialog');
     const cbPrayer = document.getElementById('zc-notify-prayer');
     const cbLive = document.getElementById('zc-notify-live');
     const btn = document.getElementById('zc-notify-enable');
     const statusEl = document.getElementById('zc-notify-status');
 
-    if (!panel || !wrap || !menuBtn || !dropdown || !cbPrayer || !cbLive || !btn || !statusEl) {
+    if (!panel || !wrap || !menuBtn || !notifyDialog || !cbPrayer || !cbLive || !btn || !statusEl) {
         return;
     }
 
@@ -53,17 +53,11 @@ export function initDashboardNotifications() {
 
     wrap.hidden = false;
 
-    function setNotifyBodyScrollLock(lock) {
-        if (!window.matchMedia('(max-width: 767px)').matches) {
-            return;
-        }
-        document.body.style.overflow = lock ? 'hidden' : '';
-    }
-
     function closeNotifyMenu() {
-        dropdown.classList.add('hidden');
+        if (notifyDialog.open) {
+            notifyDialog.close();
+        }
         menuBtn.setAttribute('aria-expanded', 'false');
-        setNotifyBodyScrollLock(false);
     }
 
     function openNotifyMenu() {
@@ -75,16 +69,17 @@ export function initDashboardNotifications() {
                 localeBtn.setAttribute('aria-expanded', 'false');
             }
         }
-        dropdown.classList.remove('hidden');
+        if (!notifyDialog.open) {
+            notifyDialog.showModal();
+        }
         menuBtn.setAttribute('aria-expanded', 'true');
-        setNotifyBodyScrollLock(true);
     }
 
     function toggleNotifyMenu() {
-        if (dropdown.classList.contains('hidden')) {
-            openNotifyMenu();
-        } else {
+        if (notifyDialog.open) {
             closeNotifyMenu();
+        } else {
+            openNotifyMenu();
         }
     }
 
@@ -93,26 +88,14 @@ export function initDashboardNotifications() {
         toggleNotifyMenu();
     });
 
-    document.addEventListener('click', () => {
-        closeNotifyMenu();
-    });
-
-    wrap.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-
-    const notifyBackdrop = document.getElementById('zc-notify-backdrop');
-    if (notifyBackdrop) {
-        notifyBackdrop.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeNotifyMenu();
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
+    notifyDialog.addEventListener('click', (e) => {
+        if (e.target === notifyDialog) {
             closeNotifyMenu();
         }
+    });
+
+    document.getElementById('zc-notify-close')?.addEventListener('click', () => {
+        closeNotifyMenu();
     });
 
     if (!isSecureNotificationContext()) {
