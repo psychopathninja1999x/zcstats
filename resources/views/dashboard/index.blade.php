@@ -88,6 +88,7 @@
                                         <p class="text-xs text-on-surface-variant self-center">{{ __('zcstats.ph_no_holiday_today') }}</p>
                                     @endif
                                 </div>
+                                <p class="text-[10px] text-on-surface-variant/80 max-w-2xl leading-relaxed">{{ __('zcstats.ph_holidays_note_islamic_short') }}</p>
                             </div>
                         @endisset
                     </div>
@@ -219,6 +220,7 @@
                             @if(! empty($phUpcoming['note_key']))
                                 <p class="text-[11px] text-on-surface-variant mb-3">{{ __('zcstats.'.$phUpcoming['note_key'], ['year' => (int) $phUpcoming['today']->format('Y')]) }}</p>
                             @endif
+                            <p class="text-[11px] text-on-surface-variant/90 mb-3 leading-relaxed">{{ __('zcstats.ph_holidays_note_islamic') }}</p>
                             <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm" role="list">
                                 @foreach($phUpcoming['upcoming'] as $h)
                                     <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-outline-variant/10 sm:border-0 pb-2 sm:pb-0">

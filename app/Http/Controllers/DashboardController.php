@@ -82,7 +82,7 @@ class DashboardController extends Controller
                         __('zcstats.ph_calendar_heading'),
                         __('zcstats.ph_holidays_heading'),
                     ],
-                    ['dashboard', 'overview', 'export', 'download', 'json', 'status', 'live', 'zcstats', 'everything', 'zamboanga', 'todo', 'gaylingo', 'glg', 'beki', 'swardspeak', 'lodi', 'language', 'locale', 'holiday', 'holidays', 'philippines', 'proclamation', 'pista', 'regular holiday']
+                    ['dashboard', 'overview', 'export', 'download', 'json', 'status', 'live', 'zcstats', 'everything', 'zamboanga', 'todo', 'gaylingo', 'glg', 'beki', 'swardspeak', 'lodi', 'language', 'locale', 'holiday', 'holidays', 'philippines', 'proclamation', 'pista', 'regular holiday', 'eid', 'eidul', 'eid al-fitr', 'eid al-adha', 'ramadan', 'hijri', 'islamic holiday', 'muslim holiday', 'ncmf']
                 )),
             ],
             [
