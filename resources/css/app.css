@@ -598,4 +598,57 @@ html.dark {
     .leaflet-popup-content-wrapper {
         border-radius: 0.75rem;
     }
+
+    /* Pull-to-refresh (touch / narrow viewports; see pull-to-refresh.js) */
+    .zc-ptr {
+        position: fixed;
+        top: max(0.5rem, env(safe-area-inset-top, 0px));
+        left: 50%;
+        z-index: 10050;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        max-width: min(22rem, calc(100vw - 2rem));
+        padding: 0.4rem 0.85rem;
+        border-radius: 9999px;
+        background: var(--color-surface-container-low);
+        border: 1px solid color-mix(in srgb, var(--color-outline-variant) 45%, transparent);
+        box-shadow: 0 6px 24px rgba(25, 28, 32, 0.1);
+        font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--color-on-surface-variant);
+        letter-spacing: 0.02em;
+        text-align: center;
+        line-height: 1.25;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-50%, -140%);
+        transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .zc-ptr.zc-ptr--visible {
+        transform: translate(-50%, 0);
+    }
+
+    .zc-ptr.zc-ptr--ready {
+        color: var(--color-primary);
+        border-color: color-mix(in srgb, var(--color-primary) 38%, transparent);
+        background: color-mix(in srgb, var(--color-primary-fixed) 22%, var(--color-surface-container-low));
+    }
+
+    .zc-ptr__icon {
+        font-size: 1.05rem;
+        width: 1.05rem;
+        height: 1.05rem;
+        flex-shrink: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .zc-ptr,
+        .zc-ptr__icon {
+            transition: none !important;
+        }
+    }
 }

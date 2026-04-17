@@ -23,6 +23,8 @@ return [
     'greeting_afternoon' => 'Good afternoon',
     'greeting_evening' => 'Good evening',
     'last_updated' => 'Last updated:',
+    'ptr_pull' => 'Pull down to refresh',
+    'ptr_release' => 'Release to refresh',
     'weather_unavailable' => '— (weather unavailable)',
     'overall_status' => 'Overall status:',
     'status_live_weather' => 'live weather',

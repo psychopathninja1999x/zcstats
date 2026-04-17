@@ -23,6 +23,8 @@ return [
     'greeting_afternoon' => 'Buenas tardes',
     'greeting_evening' => 'Buenas noches',
     'last_updated' => 'Ultimo actualizado:',
+    'ptr_pull' => 'Hala pabajo para refresca',
+    'ptr_release' => 'Soltá para refresca',
     'weather_unavailable' => '— (no tiene clima)',
     'overall_status' => 'Estado general:',
     'status_live_weather' => 'clima vivo',

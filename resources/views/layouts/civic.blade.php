@@ -31,7 +31,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
-<body class="text-on-surface flex flex-col min-h-screen pb-40 md:pb-44">
+<body
+    class="text-on-surface flex flex-col min-h-screen pb-40 md:pb-44"
+    data-ptr-pull="{{ __('zcstats.ptr_pull') }}"
+    data-ptr-release="{{ __('zcstats.ptr_release') }}"
+>
     @yield('body')
 </body>
 </html>

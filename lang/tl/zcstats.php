@@ -23,6 +23,8 @@ return [
     'greeting_afternoon' => 'Magandang hapon',
     'greeting_evening' => 'Magandang gabi',
     'last_updated' => 'Huling na-update:',
+    'ptr_pull' => 'Hilahin pababa para mag-refresh',
+    'ptr_release' => 'Bitawan para mag-refresh',
     'weather_unavailable' => '— (walang panahon)',
     'overall_status' => 'Pangkalahatang katayuan:',
     'status_live_weather' => 'live na panahon',

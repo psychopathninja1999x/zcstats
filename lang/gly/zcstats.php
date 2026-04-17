@@ -23,6 +23,8 @@ return [
     'greeting_afternoon' => 'Good afternoon, mars',
     'greeting_evening' => 'Good evening, bhie — push pa rin, everloo werk',
     'last_updated' => 'Last na-update:',
+    'ptr_pull' => 'Pull down, bhie — refresh ang chika',
+    'ptr_release' => 'Bitaw na — mag-refresh na',
     'weather_unavailable' => '— (wiz weather tea, char — urky)',
     'overall_status' => 'Overall status (quality control ng tea):',
     'status_live_weather' => 'live na weather — fresh from the sky',
