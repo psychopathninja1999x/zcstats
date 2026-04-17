@@ -59,23 +59,10 @@
                                 data-push-patch-url="{{ route('push.update') }}"
                                 data-push-delete-url="{{ route('push.destroy') }}"
                                 data-app-locale="{{ app()->getLocale() }}"
+                                data-notify-requires-https="{{ e(__('zcstats.notify_requires_https')) }}"
                             >
                                 <div class="space-y-3">
-                                    <div>
-                                        <p class="text-xs font-extrabold text-on-surface leading-snug">{{ __('zcstats.notify_heading') }}</p>
-                                        <details class="mt-1.5 rounded-lg border border-outline-variant/15 bg-surface-container-high/30 dark:bg-surface-container/40 px-2.5 py-1.5">
-                                            <summary class="text-[11px] font-semibold text-primary cursor-pointer select-none list-none flex items-center gap-1 [&::-webkit-details-marker]:hidden">
-                                                <span class="material-symbols-outlined text-base shrink-0" aria-hidden="true">info</span>
-                                                <span>{{ __('zcstats.notify_details_toggle') }}</span>
-                                            </summary>
-                                            <div class="text-[11px] text-on-surface-variant mt-2 pt-2 border-t border-outline-variant/10 leading-relaxed space-y-2">
-                                                <p>{{ __('zcstats.notify_hint') }}</p>
-                                                @if(config('webpush.enabled'))
-                                                    <p>{{ __('zcstats.notify_push_hint') }}</p>
-                                                @endif
-                                            </div>
-                                        </details>
-                                    </div>
+                                    <p class="text-xs font-extrabold text-on-surface leading-snug">{{ __('zcstats.notify_heading') }}</p>
                                     <div class="flex flex-col gap-2.5">
                                         <label class="flex items-start gap-2.5 cursor-pointer text-xs font-semibold text-on-surface">
                                             <input type="checkbox" id="zc-notify-prayer" class="mt-0.5 rounded border-outline-variant/40 text-primary focus:ring-primary/30" @disabled(! config('services.prayer_times.enabled', true))>
@@ -103,11 +90,40 @@
                         <span class="material-symbols-outlined text-on-surface-variant text-base sm:text-lg shrink-0" aria-hidden="true">schedule</span>
                         <time id="zc-header-clock" class="text-[10px] sm:text-xs font-bold tabular-nums text-on-surface whitespace-nowrap" datetime="" aria-label="{{ __('zcstats.header_clock_timezone') }}"></time>
                     </div>
-                    <div class="inline-flex flex-wrap items-center justify-end gap-0.5 rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-0.5 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] max-w-[min(100%,14rem)] sm:max-w-none" role="group" aria-label="{{ __('zcstats.language') }}">
-                        <a href="{{ route('locale.switch', 'en') }}" class="px-1.5 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_en') }}</a>
-                        <a href="{{ route('locale.switch', 'tl') }}" class="px-1.5 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'tl' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_tl') }}</a>
-                        <a href="{{ route('locale.switch', 'cbk') }}" title="{{ __('zcstats.lang_cbk_title') }}" class="px-1.5 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'cbk' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_cbk') }}</a>
-                        <a href="{{ route('locale.switch', 'gly') }}" title="{{ __('zcstats.lang_gly_title') }}" class="px-1.5 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'gly' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_gly') }}</a>
+                    @php
+                        $localeCode = match (app()->getLocale()) {
+                            'tl' => __('zcstats.lang_tl'),
+                            'cbk' => __('zcstats.lang_cbk'),
+                            'gly' => __('zcstats.lang_gly'),
+                            default => __('zcstats.lang_en'),
+                        };
+                    @endphp
+                    <div class="relative shrink-0" id="zc-locale-wrap">
+                        <button
+                            type="button"
+                            id="zc-locale-menu-btn"
+                            class="inline-flex items-center gap-1 rounded-full border border-outline-variant/25 bg-surface-container-high/60 px-2 sm:px-2.5 py-1.5 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
+                            aria-expanded="false"
+                            aria-haspopup="listbox"
+                            aria-controls="zc-locale-dropdown"
+                            title="{{ __('zcstats.language') }}"
+                        >
+                            <span class="material-symbols-outlined text-base sm:text-lg shrink-0" aria-hidden="true">translate</span>
+                            <span class="text-[10px] sm:text-xs font-bold tabular-nums">{{ $localeCode }}</span>
+                        </button>
+                        <div
+                            id="zc-locale-dropdown"
+                            class="hidden absolute right-0 top-full mt-2 min-w-[9rem] rounded-2xl border border-outline-variant/20 bg-surface-container-lowest dark:bg-surface-container-high shadow-[0_12px_40px_rgba(25,28,32,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] z-[60] overflow-hidden"
+                            role="listbox"
+                            aria-label="{{ __('zcstats.language') }}"
+                        >
+                            <nav class="flex flex-col p-1 gap-0.5">
+                                <a href="{{ route('locale.switch', 'en') }}" class="px-3 py-2 rounded-xl text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'en' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_en') }}</a>
+                                <a href="{{ route('locale.switch', 'tl') }}" class="px-3 py-2 rounded-xl text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'tl' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_tl') }}</a>
+                                <a href="{{ route('locale.switch', 'cbk') }}" title="{{ __('zcstats.lang_cbk_title') }}" class="px-3 py-2 rounded-xl text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'cbk' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_cbk') }}</a>
+                                <a href="{{ route('locale.switch', 'gly') }}" title="{{ __('zcstats.lang_gly_title') }}" class="px-3 py-2 rounded-xl text-[10px] sm:text-xs font-bold transition-colors {{ app()->getLocale() === 'gly' ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-surface-container-high' }}">{{ __('zcstats.lang_gly') }}</a>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>

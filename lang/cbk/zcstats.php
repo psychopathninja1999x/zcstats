@@ -149,8 +149,7 @@ return [
     'prayer_countdown_m' => 'en :minutes m',
 
     'notify_heading' => 'Alertas (este device)',
-    'notify_details_toggle' => 'Como funciona',
-    'notify_hint' => 'Usa el notification del browser. Mas bueno si tiene el app install o el tab abierto. No sale del server el alerta—el telefono puede limita background.',
+    'notify_requires_https' => 'El notification necesita pagina seguro (https). Usa https en el server o http://localhost (no usa LAN IP con http solo). Web Push tambien necesita HTTPS.',
     'notify_opt_prayer' => 'Hora del sala (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'El hora del sala ta off na settings',
     'notify_opt_live' => 'Si el datos del dashboard ta cambia (clima, agua, kuryente, gasolina, lindol, bagyo, etc.)',
@@ -163,7 +162,6 @@ return [
     'notify_prayer_body' => 'Hora ya para :prayer',
     'notify_live_title' => 'ZCStats · actualiza el live data',
     'notify_live_body' => 'Tiene nuevo informacion na dashboard. Abri el app para refresh.',
-    'notify_push_hint' => 'Si Web Push ta on na server, puede llega alerta tambien si el site ta cerrado. Produccion necesita cron: * * * * * php artisan schedule:run',
     'notify_push_test_title' => 'ZCStats · prueba',
     'notify_push_test_body' => 'Si mira este, Web Push ta funciona.',
 

@@ -149,8 +149,7 @@ return [
     'prayer_countdown_m' => 'in :minutes m',
 
     'notify_heading' => 'Alerts (this device, lodi)',
-    'notify_details_toggle' => 'Paano ’to gumagana',
-    'notify_hint' => 'Browser notifications ang tea—best kapag naka-install ang PWA or open ang tab. Hindi push from server; baka i-snob ng OS ang background, bhie.',
+    'notify_requires_https' => 'Kailangan ng notifications ang HTTPS (secure page)—wag http + LAN IP lang. Localhost ok; Web Push = HTTPS din, bhie.',
     'notify_opt_prayer' => 'Prayer time (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'Prayer times off sa config, deads',
     'notify_opt_live' => 'Kapag may bagong chika sa dashboard (weather, tubig, kuryente, gas, lindol, bagyo, etc.)',
@@ -163,7 +162,6 @@ return [
     'notify_prayer_body' => 'Time for :prayer',
     'notify_live_title' => 'ZCStats · live data refresh',
     'notify_live_body' => 'May bagong data sa dashboard—open the app to refresh, lodi.',
-    'notify_push_hint' => 'Kapag naka-Web Push ang server, pede pa ring dumating ang notif kahit closed ang site—production needs cron * * * * * php artisan schedule:run, bhie.',
     'notify_push_test_title' => 'ZCStats · test push',
     'notify_push_test_body' => 'Kung nakita mo ’to, slay—Web Push werk.',
 

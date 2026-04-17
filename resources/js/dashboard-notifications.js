@@ -16,13 +16,16 @@ function getCsrfToken() {
     return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 }
 
-function canUseNotifications() {
+function hasNotificationApi() {
+    return typeof window !== 'undefined' && 'Notification' in window;
+}
+
+/** Browsers only allow notification permission on HTTPS (or localhost / 127.0.0.1). */
+function isSecureNotificationContext() {
     return (
-        typeof window !== 'undefined' &&
-        'Notification' in window &&
-        (window.isSecureContext === true ||
-            window.location.hostname === 'localhost' ||
-            window.location.hostname === '127.0.0.1')
+        window.isSecureContext === true ||
+        window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1'
     );
 }
 
@@ -35,8 +38,16 @@ export function initDashboardNotifications() {
     const wrap = document.getElementById('zc-notify-wrap');
     const menuBtn = document.getElementById('zc-notify-menu-btn');
     const dropdown = document.getElementById('zc-notify-dropdown');
+    const cbPrayer = document.getElementById('zc-notify-prayer');
+    const cbLive = document.getElementById('zc-notify-live');
+    const btn = document.getElementById('zc-notify-enable');
+    const statusEl = document.getElementById('zc-notify-status');
 
-    if (!panel || !wrap || !menuBtn || !dropdown || !canUseNotifications()) {
+    if (!panel || !wrap || !menuBtn || !dropdown || !cbPrayer || !cbLive || !btn || !statusEl) {
+        return;
+    }
+
+    if (!hasNotificationApi()) {
         return;
     }
 
@@ -48,6 +59,14 @@ export function initDashboardNotifications() {
     }
 
     function openNotifyMenu() {
+        const localeDd = document.getElementById('zc-locale-dropdown');
+        const localeBtn = document.getElementById('zc-locale-menu-btn');
+        if (localeDd && !localeDd.classList.contains('hidden')) {
+            localeDd.classList.add('hidden');
+            if (localeBtn) {
+                localeBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
         dropdown.classList.remove('hidden');
         menuBtn.setAttribute('aria-expanded', 'true');
     }
@@ -79,6 +98,15 @@ export function initDashboardNotifications() {
         }
     });
 
+    if (!isSecureNotificationContext()) {
+        statusEl.textContent = panel.getAttribute('data-notify-requires-https') || '';
+        cbPrayer.disabled = true;
+        cbLive.disabled = true;
+        btn.disabled = true;
+
+        return;
+    }
+
     const digestUrl = panel.getAttribute('data-digest-url') || '';
     const prayerEnabled = panel.getAttribute('data-prayer-enabled') === '1';
     const webpushEnabled = panel.getAttribute('data-webpush-enabled') === '1';
@@ -90,12 +118,8 @@ export function initDashboardNotifications() {
     }
 
     const icon = panel.getAttribute('data-notify-icon') || undefined;
-    const cbPrayer = document.getElementById('zc-notify-prayer');
-    const cbLive = document.getElementById('zc-notify-live');
-    const btn = document.getElementById('zc-notify-enable');
-    const statusEl = document.getElementById('zc-notify-status');
 
-    if (!digestUrl || !cbPrayer || !cbLive || !btn || !statusEl) {
+    if (!digestUrl) {
         return;
     }
 

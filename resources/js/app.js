@@ -6,9 +6,11 @@ import { initPullToRefresh } from './pull-to-refresh';
 import { initEarthquakeMap } from './earthquake-map';
 import { initTyphoonMap } from './typhoon-map';
 import { initDashboardNotifications } from './dashboard-notifications';
+import { initLocaleMenu } from './locale-menu';
 
 initThemeToggle();
 initPullToRefresh();
+initLocaleMenu();
 initDashboardNotifications();
 
 if (document.getElementById('zc-earthquake-map')) {

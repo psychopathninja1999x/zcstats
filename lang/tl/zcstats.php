@@ -149,8 +149,7 @@ return [
     'prayer_countdown_m' => 'sa :minutes min',
 
     'notify_heading' => 'Mga alerto (sa device na ito)',
-    'notify_details_toggle' => 'Paano ito gumagana',
-    'notify_hint' => 'Gumagamit ng notification ng browser. Mas mabisa kapag naka-install ang app o bukas ang tab. Hindi galing sa server ang alerto—maaaring limitahan ng telepono ang background.',
+    'notify_requires_https' => 'Kailangan ng notification ang secure na pahina. Gumamit ng https:// sa server, o buksan sa http://localhost (hindi raw LAN IP sa plain http). Kailangan din ng HTTPS ang Web Push.',
     'notify_opt_prayer' => 'Oras ng dasal (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'Naka-off ang oras ng dasal sa settings',
     'notify_opt_live' => 'Kapag may bagong datos sa dashboard (panahon, tubig, kuryente, gasolina, lindol, bagyo, atbp.)',
@@ -163,7 +162,6 @@ return [
     'notify_prayer_body' => 'Oras na para sa :prayer',
     'notify_live_title' => 'ZCStats · na-update ang live data',
     'notify_live_body' => 'May bagong impormasyon sa dashboard. Buksan ang app para mag-refresh.',
-    'notify_push_hint' => 'Kapag naka-on ang Web Push sa server, maaari ring dumating ang alerto kahit sarado ang site. Sa production kailangan ng cron: * * * * * php artisan schedule:run',
     'notify_push_test_title' => 'ZCStats · pagsubok',
     'notify_push_test_body' => 'Kung nakita mo ito, gumagana ang Web Push.',
 

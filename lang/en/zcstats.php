@@ -149,8 +149,7 @@ return [
     'prayer_countdown_m' => 'in :minutes m',
 
     'notify_heading' => 'Alerts (this device)',
-    'notify_details_toggle' => 'How this works',
-    'notify_hint' => 'Uses your browser’s notifications. Works best with the app installed or this tab open. Alerts are not sent from our server—your phone may limit background delivery.',
+    'notify_requires_https' => 'Notifications need a secure page. Use https:// on your server, or open the site via http://localhost (not a raw LAN IP over plain http). Web Push also requires HTTPS.',
     'notify_opt_prayer' => 'Prayer time (Fajr, Dhuhr, Asr, Maghrib, Isha)',
     'notify_opt_prayer_disabled' => 'Prayer times are off in settings',
     'notify_opt_live' => 'When dashboard data changes (weather, water, power, fuel, quakes, typhoons, etc.)',
@@ -163,7 +162,6 @@ return [
     'notify_prayer_body' => 'Time for :prayer',
     'notify_live_title' => 'ZCStats · live data updated',
     'notify_live_body' => 'New information is available on the dashboard. Open the app to refresh.',
-    'notify_push_hint' => 'With Web Push enabled on the server, alerts can also arrive when this site is closed. Production needs a cron entry: * * * * * php artisan schedule:run',
     'notify_push_test_title' => 'ZCStats · test',
     'notify_push_test_body' => 'If you see this, Web Push is working.',
 
