@@ -6,6 +6,7 @@ use App\Services\DaPriceMonitoringService;
 use App\Services\DtiBnpcSrpService;
 use App\Services\EarthquakeUsgsService;
 use App\Services\GasmotoFuelService;
+use App\Services\LiveDigestService;
 use App\Services\OpenWeatherService;
 use App\Services\PhilippineHolidaysService;
 use App\Services\PrayerTimesService;
@@ -28,7 +29,8 @@ class DashboardController extends Controller
         protected PrayerTimesService $prayerTimes,
         protected PhilippineHolidaysService $philippineHolidays,
         protected EarthquakeUsgsService $earthquakeUsgs,
-        protected TyphoonGdacsService $typhoonGdacs
+        protected TyphoonGdacsService $typhoonGdacs,
+        protected LiveDigestService $liveDigest
     ) {}
 
     public function index(): View
@@ -212,6 +214,17 @@ class DashboardController extends Controller
         }
 
         return $index;
+    }
+
+    /**
+     * Lightweight fingerprint of cached dashboard payloads so the client can poll for “live” changes.
+     */
+    public function liveDigest(): JsonResponse
+    {
+        return response()->json([
+            'digest' => $this->liveDigest->hash(),
+            'generated_at' => now()->toIso8601String(),
+        ]);
     }
 
     public function export(): JsonResponse

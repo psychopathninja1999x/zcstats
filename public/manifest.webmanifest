@@ -1,0 +1,18 @@
+{
+ "name": "ZCStats",
+    "short_name": "ZCStats",
+    "description": "Civic dashboard for Zamboanga City — weather, utilities, prayer times, and live public data.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#f6f8f7",
+    "theme_color": "#1a5f4a",
+    "icons": [
+        {
+            "src": "/images/zcstatslogo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

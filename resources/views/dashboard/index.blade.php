@@ -10,6 +10,92 @@
                     <img src="{{ asset('images/zcstatslogo.png') }}" alt="{{ __('zcstats.app_title') }}" width="160" height="48" decoding="async" class="h-9 sm:h-10 w-auto max-h-10 object-contain object-left">
                 </a>
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    @php
+                        $zcPrayerLabels = [
+                            'Fajr' => __('zcstats.prayer_Fajr'),
+                            'Sunrise' => __('zcstats.prayer_Sunrise'),
+                            'Dhuhr' => __('zcstats.prayer_Dhuhr'),
+                            'Asr' => __('zcstats.prayer_Asr'),
+                            'Maghrib' => __('zcstats.prayer_Maghrib'),
+                            'Isha' => __('zcstats.prayer_Isha'),
+                        ];
+                    @endphp
+                    <div id="zc-notify-wrap" class="relative" hidden>
+                        <button
+                            type="button"
+                            id="zc-notify-menu-btn"
+                            class="flex items-center justify-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-2 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
+                            aria-expanded="false"
+                            aria-haspopup="dialog"
+                            aria-controls="zc-notify-dropdown"
+                            title="{{ __('zcstats.notify_heading') }}"
+                        >
+                            <span class="material-symbols-outlined text-xl" aria-hidden="true">notifications</span>
+                        </button>
+                        <div
+                            id="zc-notify-dropdown"
+                            class="hidden absolute right-0 top-full mt-2 w-[min(calc(100vw-2rem),22rem)] rounded-2xl border border-outline-variant/20 bg-surface-container-lowest dark:bg-surface-container-high shadow-[0_12px_40px_rgba(25,28,32,0.12)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.45)] z-[60] overflow-hidden"
+                            role="dialog"
+                            aria-label="{{ __('zcstats.notify_heading') }}"
+                        >
+                            <div
+                                id="zc-notify-panel"
+                                class="p-4 max-h-[min(70vh,28rem)] overflow-y-auto"
+                                data-digest-url="{{ url('/live-digest.json') }}"
+                                data-prayer-enabled="{{ config('services.prayer_times.enabled', true) ? '1' : '0' }}"
+                                data-prayer-labels="{{ e(json_encode($zcPrayerLabels, JSON_UNESCAPED_UNICODE)) }}"
+                                data-notify-icon="{{ e(asset('images/zcstatslogo.png')) }}"
+                                data-notify-prayer-title="{{ e(__('zcstats.notify_prayer_title')) }}"
+                                data-notify-prayer-body="{{ e(__('zcstats.notify_prayer_body')) }}"
+                                data-notify-live-title="{{ e(__('zcstats.notify_live_title')) }}"
+                                data-notify-live-body="{{ e(__('zcstats.notify_live_body')) }}"
+                                data-notify-pick-one="{{ e(__('zcstats.notify_pick_one')) }}"
+                                data-notify-denied="{{ e(__('zcstats.notify_denied')) }}"
+                                data-notify-granted="{{ e(__('zcstats.notify_granted')) }}"
+                                data-notify-active="{{ e(__('zcstats.notify_active')) }}"
+                                data-webpush-enabled="{{ config('webpush.enabled') ? '1' : '0' }}"
+                                data-push-vapid-url="{{ route('push.vapid') }}"
+                                data-push-subscribe-url="{{ route('push.subscribe') }}"
+                                data-push-patch-url="{{ route('push.update') }}"
+                                data-push-delete-url="{{ route('push.destroy') }}"
+                                data-app-locale="{{ app()->getLocale() }}"
+                            >
+                                <div class="space-y-3">
+                                    <div>
+                                        <p class="text-xs font-extrabold text-on-surface leading-snug">{{ __('zcstats.notify_heading') }}</p>
+                                        <details class="mt-1.5 rounded-lg border border-outline-variant/15 bg-surface-container-high/30 dark:bg-surface-container/40 px-2.5 py-1.5">
+                                            <summary class="text-[11px] font-semibold text-primary cursor-pointer select-none list-none flex items-center gap-1 [&::-webkit-details-marker]:hidden">
+                                                <span class="material-symbols-outlined text-base shrink-0" aria-hidden="true">info</span>
+                                                <span>{{ __('zcstats.notify_details_toggle') }}</span>
+                                            </summary>
+                                            <div class="text-[11px] text-on-surface-variant mt-2 pt-2 border-t border-outline-variant/10 leading-relaxed space-y-2">
+                                                <p>{{ __('zcstats.notify_hint') }}</p>
+                                                @if(config('webpush.enabled'))
+                                                    <p>{{ __('zcstats.notify_push_hint') }}</p>
+                                                @endif
+                                            </div>
+                                        </details>
+                                    </div>
+                                    <div class="flex flex-col gap-2.5">
+                                        <label class="flex items-start gap-2.5 cursor-pointer text-xs font-semibold text-on-surface">
+                                            <input type="checkbox" id="zc-notify-prayer" class="mt-0.5 rounded border-outline-variant/40 text-primary focus:ring-primary/30" @disabled(! config('services.prayer_times.enabled', true))>
+                                            <span>@if(config('services.prayer_times.enabled', true)){{ __('zcstats.notify_opt_prayer') }}@else{{ __('zcstats.notify_opt_prayer_disabled') }}@endif</span>
+                                        </label>
+                                        <label class="flex items-start gap-2.5 cursor-pointer text-xs font-semibold text-on-surface">
+                                            <input type="checkbox" id="zc-notify-live" class="mt-0.5 rounded border-outline-variant/40 text-primary focus:ring-primary/30">
+                                            <span>{{ __('zcstats.notify_opt_live') }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <button type="button" id="zc-notify-enable" class="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs font-extrabold text-white shadow-sm hover:opacity-95 transition-opacity">
+                                            {{ __('zcstats.notify_enable') }}
+                                        </button>
+                                    </div>
+                                    <p id="zc-notify-status" class="text-[10px] text-on-surface-variant leading-relaxed min-h-[1rem]" role="status"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button type="button" id="zc-theme-toggle" class="flex items-center justify-center rounded-full border border-outline-variant/25 bg-surface-container-high/60 p-2 shadow-[inset_0_0_0_1px_rgba(193,199,209,0.08)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-label-dark="{{ __('zcstats.theme_use_dark') }}" data-label-light="{{ __('zcstats.theme_use_light') }}">
                         <span class="material-symbols-outlined zc-theme-icon text-xl" aria-hidden="true">dark_mode</span>
                     </button>

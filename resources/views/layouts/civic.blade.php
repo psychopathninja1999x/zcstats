@@ -18,9 +18,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ __('zcstats.meta_description') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#1a5f4a">
+    <meta name="sw-url" content="{{ url('sw.js') }}">
 
     <title>@yield('title', config('app.name'))</title>
 
+    <link rel="manifest" href="{{ url('manifest.webmanifest') }}">
     <link rel="icon" href="{{ asset('images/zcstatslogo.png') }}" type="image/png" sizes="any">
     <link rel="apple-touch-icon" href="{{ asset('images/zcstatslogo.png') }}">
 
